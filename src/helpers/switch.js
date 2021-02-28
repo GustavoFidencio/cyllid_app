@@ -30,7 +30,7 @@ export const Switch = ({ }) => {
                 ...styles.containerSwitch,
                 borderColor: valueAnimate.interpolate({
                     inputRange: [-1, 24],
-                    outputRange: [Color.BLUE, Color.DARK_ONE]
+                    outputRange: [Color.DARK_ONE, Color.BLUE]
                 })
             }}>
                 <Animated.View style={{
@@ -38,7 +38,7 @@ export const Switch = ({ }) => {
                     transform: [{ translateX: valueAnimate }],
                     backgroundColor: valueAnimate.interpolate({
                         inputRange: [-1, 24],
-                        outputRange: [Color.BLUE, Color.DARK_ONE]
+                        outputRange: [Color.DARK_ONE, Color.BLUE]
                     }),
                 }} />
             </Animated.View>

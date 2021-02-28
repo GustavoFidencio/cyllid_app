@@ -47,7 +47,7 @@ export default StyleSheet.create({
     },
     containerSwitch: {
         width: '100%',
-        marginTop: 30,
+        marginTop: 5,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -69,7 +69,7 @@ export default StyleSheet.create({
     },
     textSolicitarAcesso: {
         fontSize: 14,
-        marginTop: 40,
+        marginTop: 30,
         textAlign: 'center',
         color: Color.BLUE,
         marginBottom: 20,
