@@ -4,6 +4,7 @@ import React from 'react';
 import { View, Text, SafeAreaView, StatusBar, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 
 import Color from '../../assets/colors';
+import { DescText } from './helper/descText';
 import { Switch, InputValidation, TitleAnimated } from "../../helpers";
 
 export class Login extends React.PureComponent {
@@ -38,7 +39,7 @@ export class Login extends React.PureComponent {
                             />
                         </View>
                         <View style={styles.containerDescApp}>
-                            <TitleAnimated
+                            <DescText
                                 styled={styles.textDescApp}
                                 text={'Online, simples e prático.'}
                                 opacity={this.state.showKeyboard}

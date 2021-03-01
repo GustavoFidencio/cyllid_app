@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { Login } from '../screens';
+import { Login, Splash, Password } from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -23,10 +23,12 @@ export class StackNav extends React.PureComponent {
         return (
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='Login'
+                    initialRouteName='Splash'
                     screenOptions={this._getScreenOptions()}
                 >
                     <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="Splash" component={Splash} />
+                    <Stack.Screen name="Password" component={Password} />
                 </Stack.Navigator>
             </NavigationContainer>
         )

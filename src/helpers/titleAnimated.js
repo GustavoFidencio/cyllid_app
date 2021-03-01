@@ -47,14 +47,12 @@ export const TitleAnimated = ({ text, styled, opacity = 'default', sized = false
                         })
                     },
                 ],
-                opacity: opacity == 'default' ?
-                    valueAnimate.interpolate({
-                        inputRange: [0, 80],
-                        outputRange: [0, 1]
-                    })
-                    :
+                opacity:
                     sized ?
-                        1
+                        valueAnimate.interpolate({
+                            inputRange: [0, 80],
+                            outputRange: [0, 1]
+                        })
                         :
                         opacityAnimate,
                 fontSize: sized ?
