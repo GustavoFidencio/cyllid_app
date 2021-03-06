@@ -2,6 +2,13 @@ import { StyleSheet } from 'react-native';
 import Color from '../../assets/colors';
 
 export default StyleSheet.create({
+    containerAll: {
+        paddingTop: 43,
+        paddingHorizontal: 16,
+        backgroundColor: Color.DARK,
+        width: '100%',
+        height: '100%',
+    },
     containerSafeArea: {
         flex: 1,
         paddingTop: 43,

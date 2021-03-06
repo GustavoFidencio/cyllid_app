@@ -24,7 +24,7 @@ export const InputValidation = ({ title, placeholder, error, value, setValue }) 
     }, [error])
 
     return (
-        <>
+        <View style={{ flex: 1 }}>
             <Text style={styles.textUser}> {title} </Text>
             <Animated.View
                 style={{
@@ -59,12 +59,13 @@ export const InputValidation = ({ title, placeholder, error, value, setValue }) 
             >
                 Ops, usuário incorreto
             </Animated.Text>
-        </>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     input: {
+        height: '100%',
         paddingLeft: 15,
         color: '#c4c4c4',
     },
