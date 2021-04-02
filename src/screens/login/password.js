@@ -5,13 +5,14 @@ import { View, Text, SafeAreaView, StatusBar, TextInput, TouchableOpacity, Keybo
 
 import Color from '../../assets/colors';
 import { AnimatedUser } from './helper';
-import { InputValidation } from '../../helpers';
+import { Touchables } from './passwordHelper';
 
 export class Password extends React.PureComponent {
 
     constructor() {
         super();
         this.state = {
+            password: ''
         }
     }
 
@@ -19,46 +20,31 @@ export class Password extends React.PureComponent {
         return (
             <SafeAreaView style={styles.containerSafeArea}>
                 <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
-                <View style={{
-                    ...styles.containerSeparation,
-                    alignItems: 'center',
-                    paddingHorizontal: 16
-                }}>
-                    <View style={{ width: '100%', }}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                    {/* <View style={{ width: '100%', }}>
                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> Olá Giovane! </Text>
                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> É um prazer ter você aqui com a gente :) </Text>
                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> Nos informe sua senha e comece agora mesmo! </Text>
-                    </View>
+                    </View> */}
 
                     {/* <AnimatedUser>
                         <Text style={{ color: 'white', fontSize: 20 }}> teste </Text>
                     </AnimatedUser> */}
-                    <View style={{ height: 200, width: '100%', flexDirection: 'row' }}>
-                        <InputValidation
-                            title={'Senha'}
-                            placeholder={'123456'}
-                        />
-                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginTop: 35, paddingLeft: 8 }}>60</Text>
+                    {/* <View style={{ height: 200, width: '100%', flexDirection: 'row' }}> */}
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                        <Text style={{ color: 'white' }}>Senha</Text>
+                        <Text style={{ color: Color.BLUE }}>Esqueceu sua senha?</Text>
                     </View>
-                    <FlatList
-                        data={[
-                            { um: 5, dois: 4 },
-                            { um: 9, dois: 2 },
-                            { um: 1, dois: 0 },
-                            { um: 3, dois: 8 },
-                            { um: 6, dois: 7 },
-                        ]}
-                        renderItem={() => {
-                            return (
-                                <View>
-                                </View>
-                            )
-                        }}
-
+                    <Touchables
+                        onChange={password => this.setState({ password })}
                     />
-
-
                 </View>
+                <TouchableOpacity
+                    style={styles.buttonNext}
+                    onPress={() => this.setState({ error: !this.state.error })}
+                >
+                    <Text style={styles.textAvancar}> Avançar </Text>
+                </TouchableOpacity>
             </SafeAreaView>
         )
     }

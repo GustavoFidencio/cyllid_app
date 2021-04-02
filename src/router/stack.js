@@ -23,7 +23,7 @@ export class StackNav extends React.PureComponent {
         return (
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='Login'
+                    initialRouteName='Password'
                     screenOptions={this._getScreenOptions()}
                 >
                     <Stack.Screen name="Login" component={Login} />
