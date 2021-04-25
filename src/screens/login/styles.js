@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Color from '../../assets/colors';
+
+const { width, height } = Dimensions.get('window')
 
 export default StyleSheet.create({
     containerAll: {
@@ -17,7 +19,6 @@ export default StyleSheet.create({
     },
     containerApresentation: {
         width: '100%',
-        backgroundColor: Color.DARK,
     },
     textNameApp: {
         fontSize: 32,
@@ -54,7 +55,6 @@ export default StyleSheet.create({
     },
     containerSwitch: {
         width: '100%',
-        marginTop: 5,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -82,6 +82,6 @@ export default StyleSheet.create({
         marginBottom: 20,
     },
     container: {
-        width: '100%'
+        width: '100%',
     }
-}) 
+})

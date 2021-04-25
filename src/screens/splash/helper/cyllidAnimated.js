@@ -1,7 +1,9 @@
-import { Animated } from 'react-native';
+import { Animated, Image, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
-export const CyllidAnimated = ({ styled, finaly }) => {
+const { width, height } = Dimensions.get('window')
+
+export const CyllidAnimated = ({ finaly }) => {
 
     const [valueAnimate] = useState(new Animated.Value(100));
 
@@ -16,9 +18,8 @@ export const CyllidAnimated = ({ styled, finaly }) => {
     _animation(0, 1500)
 
     return (
-        <Animated.Text
+        <Animated.View
             style={{
-                ...styled,
                 transform: [
                     {
                         translateY: valueAnimate.interpolate({
@@ -28,12 +29,18 @@ export const CyllidAnimated = ({ styled, finaly }) => {
                     },
                 ],
                 opacity: valueAnimate.interpolate({
-                    inputRange: [0, 100],
+                    inputRange: [0, 90],
                     outputRange: [1, 0]
                 })
-            }}
-        >
-            Cyllid
-        </Animated.Text >
+            }}>
+            <Image
+                resizeMode='contain'
+                style={{
+                    width: width / 2,
+                    // height: 200
+                }}
+                source={require('../../../assets/img/logo.png')}
+            />
+        </Animated.View>
     )
 }

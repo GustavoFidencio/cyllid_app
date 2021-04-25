@@ -24,7 +24,7 @@ export const InputValidation = ({ title, placeholder, error, value, setValue }) 
     }, [error])
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ width: '100%' }}>
             <Text style={styles.textUser}> {title} </Text>
             <Animated.View
                 style={{

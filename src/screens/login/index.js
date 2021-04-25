@@ -1,7 +1,7 @@
 import styles from './styles';
 
 import React from 'react';
-import { View, Text, SafeAreaView, StatusBar, TextInput, TouchableOpacity, Keyboard } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
 
 import Color from '../../assets/colors';
 import { DescText } from './helper/descText';
@@ -28,13 +28,7 @@ export class Login extends React.PureComponent {
     render() {
         return (
             <SafeAreaView style={{ flexGrow: 0, backgroundColor: Color.DARK }}>
-                <View style={{
-                    height: '100%',
-                    width: '100%',
-                    backgroundColor: Color.DARK,
-                    paddingHorizontal: 16,
-                    paddingTop: 43,
-                }}>
+                <View style={styles.containerAll}>
                     <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
                     <View style={styles.containerSeparation}>
                         <View style={styles.containerApresentation}>
@@ -76,7 +70,7 @@ export class Login extends React.PureComponent {
                             </TouchableOpacity>
                             <Text style={styles.textSolicitarAcesso} >
                                 Solicitar acesso
-                        </Text>
+                            </Text>
                         </View>
                     </View>
                 </View>
