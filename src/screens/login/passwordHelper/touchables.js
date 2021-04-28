@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Animated, FlatList, TouchableOpacity, Text, Dimensions, View, TextComponent } from 'react-native';
+import React from 'react';
+import { FlatList, Text, View, StyleSheet } from 'react-native';
 
 import { CirclePass } from './circlePass';
 import Color from '../../../assets/colors';
@@ -77,26 +77,25 @@ export class Touchables extends React.PureComponent {
     render() {
         return (
             <>
-                <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', height: 50 }}>
-                    <View style={{ flexDirection: 'row', flex: 1, height: '100%' }}>
-                        <FlatList
-                            horizontal
-                            style={{ width: '100%', height: '100%' }}
-                            data={this.state.valueSelect}
-                            renderItem={({ item, index }) =>
-                                <CirclePass
-                                    index={index}
-                                    limit={this.state.err}
-                                />
-                            }
-                        />
-                    </View>
-                    <Text style={{ color: Color.BLUE, fontWeight: 'bold', fontSize: 25, paddingLeft: 8 }}>60</Text>
+                <View style={styles.containerList}>
+                    <FlatList
+                        horizontal
+                        style={styles.listCircles}
+                        data={this.state.valueSelect}
+                        keyExtractor={(_, index) => index.toString()}
+                        renderItem={({ _, index }) =>
+                            <CirclePass
+                                limit={this.state.err}
+                            />
+                        }
+                    />
+                    <Text style={styles.labelTiming}>60</Text>
                 </View>
                 <FlatList
                     numColumns={3}
                     data={this.state.numbers}
-                    style={{ width: '100%', flexDirection: 'row' }}
+                    style={styles.listTouchable}
+                    keyExtractor={(_, index) => index.toString()}
                     renderItem={({ item, index }) =>
                         <Touchable
                             item={item}
@@ -110,3 +109,26 @@ export class Touchables extends React.PureComponent {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    labelTiming: {
+        fontSize: 25,
+        paddingLeft: 8,
+        color: Color.BLUE,
+        fontWeight: 'bold',
+    },
+    containerList: {
+        height: 50,
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    listCircles: {
+        width: '100%',
+        height: '100%',
+    },
+    listTouchable: {
+        width: '100%',
+        flexDirection: 'row',
+    }
+})

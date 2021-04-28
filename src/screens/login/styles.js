@@ -5,16 +5,17 @@ const { width, height } = Dimensions.get('window')
 
 export default StyleSheet.create({
     containerAll: {
+        width: '100%',
+        height: '100%',
         paddingTop: 43,
         paddingHorizontal: 16,
         backgroundColor: Color.DARK,
-        width: '100%',
-        height: '100%',
     },
     containerSafeArea: {
         flex: 1,
         paddingTop: 43,
         paddingHorizontal: 16,
+        justifyContent: 'center',
         backgroundColor: Color.DARK,
     },
     containerApresentation: {
@@ -65,6 +66,7 @@ export default StyleSheet.create({
     },
     buttonNext: {
         padding: 10,
+        width: '100%',
         marginTop: 30,
         borderRadius: 30,
         alignItems: 'center',
@@ -83,5 +85,26 @@ export default StyleSheet.create({
     },
     container: {
         width: '100%',
-    }
+    },
+
+    //password
+    labelInstrucion: {
+        fontSize: 25,
+        color: 'white',
+        fontWeight: 'bold',
+        marginBottom: 25,
+    },
+    labelPassword: {
+        color: 'white'
+    },
+    labelExchangePassword: {
+        color: Color.BLUE
+    },
+    containerLabels: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    
+
 })

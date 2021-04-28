@@ -1,31 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Text, Easing, Dimensions, StyleSheet, Animated, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { TouchableOpacity, Text, Dimensions, StyleSheet, Animated } from 'react-native';
 
 import Color from '../../../assets/colors';
+import { Animate } from '../../../services';
 
 export const Touchable = ({ item, index, remove, addValue }) => {
 
-    const [valueAnimate] = useState(new Animated.Value(0));
+    const valueAnimate = useRef(new Animated.Value(0)).current;
 
-    Animated.timing(valueAnimate, {
-        toValue: 100,
-        duration: 1000,
-        useNativeDriver: false,
-        easing: Easing.inOut(Easing.elastic(1))
-    }).start();
+    useEffect(() => {
+        Animate.elasticPersonalizado(100, valueAnimate, 1000)
+    }, []);
 
-    // useEffect(() => {
-    //     if (limit)
-    //         _animation(100, 1500)
-    // }, [limit])
+    const opacity = valueAnimate.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 1]
+    })
 
     return (
-        <Animated.View style={{
-            opacity: valueAnimate.interpolate({
-                inputRange: [0, 100],
-                outputRange: [0, 1]
-            })
-        }}>
+        <Animated.View style={{ opacity }}>
             <TouchableOpacity
                 style={{
                     ...styles.touchableBackground,
@@ -59,8 +52,8 @@ const styles = StyleSheet.create({
         backgroundColor: Color.DARK_ONE,
     },
     textTouchable: {
-        color: 'white',
         fontSize: 20,
+        color: 'white',
         fontWeight: 'bold',
-    }
+    },
 })

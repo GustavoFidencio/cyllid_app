@@ -34,7 +34,20 @@ export class Animate {
                     duration: time,
                     toValue: value,
                     useNativeDriver: false,
-                    easing: Easing.bounce
+                    easing: Easing.bounce,
+                }
+            ).start(() => resolve());
+        })
+    }
+
+    static elasticPersonalizado(value, state, time = 1500) {
+        return new Promise(resolve => {
+            Animated.timing(state,
+                {
+                    duration: time,
+                    toValue: value,
+                    useNativeDriver: false,
+                    easing: Easing.inOut(Easing.elastic(1)),
                 }
             ).start(() => resolve());
         })
