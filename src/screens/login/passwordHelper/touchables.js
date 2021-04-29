@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, Text, View, StyleSheet } from 'react-native';
 
+import { Seconds } from './seconds';
 import { CirclePass } from './circlePass';
 import Color from '../../../assets/colors';
 import { Touchable } from './touchable';
@@ -38,6 +39,10 @@ export class Touchables extends React.PureComponent {
                 { um: false }
             ]
         })
+    }
+
+    _refresh() {
+        this._getNumbers()
     }
 
 
@@ -83,13 +88,15 @@ export class Touchables extends React.PureComponent {
                         style={styles.listCircles}
                         data={this.state.valueSelect}
                         keyExtractor={(_, index) => index.toString()}
-                        renderItem={({ _, index }) =>
+                        renderItem={() =>
                             <CirclePass
                                 limit={this.state.err}
                             />
                         }
                     />
-                    <Text style={styles.labelTiming}>60</Text>
+                    <Seconds
+                        refresh={() => this._refresh()}
+                    />
                 </View>
                 <FlatList
                     numColumns={3}

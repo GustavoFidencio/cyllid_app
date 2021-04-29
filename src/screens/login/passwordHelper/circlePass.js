@@ -8,7 +8,9 @@ export const CirclePass = ({ limit = false }) => {
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        if (limit) Animate.elasticPersonalizado(valueAnimate, 100, 1500)
+        (async () => {
+            if (limit) Animate.elasticPersonalizado(100, valueAnimate, 1500)
+        })();
     }, [limit])
 
     const backgroundColor = valueAnimate.interpolate({

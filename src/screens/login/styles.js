@@ -1,7 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Color from '../../assets/colors';
-
-const { width, height } = Dimensions.get('window')
 
 export default StyleSheet.create({
     containerAll: {
@@ -14,7 +12,6 @@ export default StyleSheet.create({
     containerSafeArea: {
         flex: 1,
         paddingTop: 43,
-        paddingHorizontal: 16,
         justifyContent: 'center',
         backgroundColor: Color.DARK,
     },
@@ -105,6 +102,6 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    
+
 
 })
