@@ -16,13 +16,13 @@ export class Login extends React.PureComponent {
             error: false,
             showKeyboard: false
         }
-        this.KeyboardShow = Keyboard.addListener('keyboardDidShow', () => this.setState({ showKeyboard: true }));
         this.KeyboardHide = Keyboard.addListener('keyboardDidHide', () => this.setState({ showKeyboard: false }));
+        this.KeyboardShow = Keyboard.addListener('keyboardDidShow', () => this.setState({ showKeyboard: true }));
     }
 
     componentWillUnmount() {
-        this.KeyboardShow.remove();
         this.KeyboardHide.remove();
+        this.KeyboardShow.remove();
     }
 
     render() {

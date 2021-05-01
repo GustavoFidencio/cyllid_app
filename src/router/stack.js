@@ -55,7 +55,7 @@ export class StackNav extends React.PureComponent {
         return (
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='Password'
+                    initialRouteName='Splash'
                     screenOptions={this._getScreenOptions()}
                 >
                     <Stack.Screen

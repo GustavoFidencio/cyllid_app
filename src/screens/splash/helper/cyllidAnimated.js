@@ -1,46 +1,68 @@
-import { Animated, Image, Dimensions } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, memo, useRef, } from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
+import Color from 'cyllid/src/assets/colors';
+import { Animate } from 'cyllid/src/services';
 
-export const CyllidAnimated = ({ finaly }) => {
+export const CyllidAnimated = memo(({ finaly }) => {
 
-    const [valueAnimate] = useState(new Animated.Value(100));
+    const valueAnimate = useRef(new Animated.Value(100)).current;
 
-    const _animation = (value, delay) => {
-        Animated.timing(valueAnimate, {
-            toValue: value,
-            duration: delay,
-            useNativeDriver: false,
-        }).start(() => finaly());
-    }
+    useEffect(() => {
+        (async () => {
+            Animate.smooth(0, valueAnimate, 5800)
+                .then(() => finaly())
+        })();
+    }, [])
 
-    _animation(0, 1500)
+    const transform = [{
+        translateY: valueAnimate.interpolate({
+            inputRange: [0, 100],
+            outputRange: [-width, 0],
+            extrapolate: 'clamp',
+        })
+    }];
+
+    const scale = valueAnimate.interpolate({
+        inputRange: [0, 100],
+        outputRange: [1.2, 1],
+    })
 
     return (
-        <Animated.View
-            style={{
-                transform: [
-                    {
-                        translateY: valueAnimate.interpolate({
-                            inputRange: [0, 100],
-                            outputRange: [0, 5]
-                        })
-                    },
-                ],
-                opacity: valueAnimate.interpolate({
-                    inputRange: [0, 90],
-                    outputRange: [1, 0]
-                })
-            }}>
-            <Image
+        <View style={styles.container}>
+            <Animated.View style={{ ...styles.containerGradiend, transform }} >
+                <View style={styles.backgroundTopGradient} />
+                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.image} colors={[Color.DARK, 'transparent']} />
+            </Animated.View>
+            <Animated.Image
                 resizeMode='contain'
-                style={{
-                    width: width / 2,
-                    // height: 200
-                }}
+                style={{ ...styles.image, transform: [{ scale }] }}
                 source={require('../../../assets/img/logo.png')}
             />
-        </Animated.View>
+        </View>
     )
-}
+})
+
+const { width } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+    image: {
+        width: width / 2,
+        height: width / 2,
+    },
+    container: {
+        height: width / 2,
+    },
+    containerGradiend: {
+        zIndex: 2,
+        width: width / 2,
+        height: width / 2,
+        position: 'absolute',
+    },
+    backgroundTopGradient: {
+        width: width / 2,
+        height: width / 2,
+        backgroundColor: Color.DARK,
+    }
+})

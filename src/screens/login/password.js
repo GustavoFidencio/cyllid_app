@@ -34,15 +34,15 @@ export class Password extends React.PureComponent {
                         {/* <View style={{ height: 200, width: '100%', flexDirection: 'row' }}> */}
                         <Text style={styles.labelInstrucion}>
                             Agora insira sua senha!
-                    </Text>
+                        </Text>
                         <View
                             style={styles.containerLabels}>
                             <Text style={styles.labelPassword}>
                                 Senha
-                        </Text>
+                            </Text>
                             <Text style={styles.labelExchangePassword}>
                                 Esqueceu sua senha?
-                        </Text>
+                            </Text>
                         </View>
                         <Touchables
                             onChange={password => this.setState({ password })}
@@ -54,7 +54,7 @@ export class Password extends React.PureComponent {
                     >
                         <Text style={styles.textAvancar}>
                             Avançar
-                    </Text>
+                        </Text>
                     </TouchableOpacity>
                 </SafeAreaView>
             </View>

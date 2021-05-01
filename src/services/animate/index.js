@@ -2,51 +2,51 @@ import { Animated, Easing } from 'react-native';
 
 export class Animate {
 
-    static default(value, state, time = 1500) {
+    static default(toValue, state, duration = 1500, useNativeDriver = false) {
         return new Promise(resolve => {
             Animated.timing(state,
                 {
-                    duration: time,
-                    toValue: value,
-                    useNativeDriver: false,
+                    toValue,
+                    duration,
+                    useNativeDriver,
                 }
             ).start(() => resolve());
         })
     }
 
-    static smooth(value, state, time = 1500) {
+    static smooth(toValue, state, duration = 1500, useNativeDriver = false) {
         return new Promise(resolve => {
             Animated.timing(state,
                 {
-                    duration: time,
-                    toValue: value,
-                    useNativeDriver: false,
+                    duration,
+                    toValue,
+                    useNativeDriver,
                     easing: Easing.out(Easing.exp),
                 }
             ).start(() => resolve());
         })
     }
 
-    static elastic(value, state, time = 1500) {
+    static elastic(toValue, state, duration = 1500, useNativeDriver = false) {
         return new Promise(resolve => {
             Animated.timing(state,
                 {
-                    duration: time,
-                    toValue: value,
-                    useNativeDriver: false,
+                    duration,
+                    toValue,
+                    useNativeDriver,
                     easing: Easing.bounce,
                 }
             ).start(() => resolve());
         })
     }
 
-    static elasticPersonalizado(value, state, time = 1500) {
+    static elasticPersonalizado(toValue, state, duration = 1500, useNativeDriver = false) {
         return new Promise(resolve => {
             Animated.timing(state,
                 {
-                    duration: time,
-                    toValue: value,
-                    useNativeDriver: false,
+                    duration,
+                    toValue,
+                    useNativeDriver,
                     easing: Easing.inOut(Easing.elastic(1)),
                 }
             ).start(() => resolve());
