@@ -11,8 +11,8 @@ export const CyllidAnimated = memo(({ finaly }) => {
 
     useEffect(() => {
         (async () => {
+            setTimeout(() => finaly(), 2000);
             Animate.smooth(0, valueAnimate, 5800)
-                .then(() => finaly())
         })();
     }, [])
 

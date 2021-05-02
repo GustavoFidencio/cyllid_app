@@ -25,14 +25,13 @@ export class Splash extends React.PureComponent {
     _nextAction() {
         if (this.state.auth) {
 
-        } else {
-            setTimeout(() => this.props.navigation.replace('Login'), 1000)
-        }
+        } else
+            this.props.navigation.replace('Login')
     }
 
     render() {
         return (
-            <SafeAreaView style={{ backgroundColor: Color.DARK, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <SafeAreaView style={styles.safeArea}>
                 <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
                 <CyllidAnimated
                     finaly={this.nextAction}

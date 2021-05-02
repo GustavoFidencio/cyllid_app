@@ -4,6 +4,7 @@ import React from 'react';
 import { View, Text, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
 
 import Color from '../../assets/colors';
+import { StorageAuth } from './storage';
 import { DescText } from './helper/descText';
 import { Switch, InputValidation, TitleAnimated } from "../../helpers";
 
@@ -23,6 +24,11 @@ export class Login extends React.PureComponent {
     componentWillUnmount() {
         this.KeyboardHide.remove();
         this.KeyboardShow.remove();
+    }
+
+    _validateUser() {
+        StorageAuth.checkUser()
+
     }
 
     render() {
@@ -64,7 +70,8 @@ export class Login extends React.PureComponent {
                             </View>
                             <TouchableOpacity
                                 style={styles.buttonNext}
-                                onPress={() => this.setState({ error: !this.state.error })}
+                                // onPress={() => this.setState({ error: !this.state.error })}
+                                onPress={() => this._validateUser()}
                             >
                                 <Text style={styles.textAvancar}> Avançar </Text>
                             </TouchableOpacity>
