@@ -2,6 +2,7 @@ import styles from './styles';
 
 import React from 'react';
 import { Text, SafeAreaView, StatusBar, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Color from '../../assets/colors';
 import { CyllidAnimated, NameUser } from './helper';
@@ -18,15 +19,20 @@ export class Splash extends React.PureComponent {
     }
 
     componentDidMount() {
-        let token = false;
-        this.setState({ auth: token });
+        this._checkToken();
+    }
+
+    _checkToken() {
+        AsyncStorage.getItem('token')
+            .then(auth => this.setState({ auth }))
     }
 
     _nextAction() {
         if (this.state.auth) {
 
-        } else
+        } else {
             this.props.navigation.replace('Login')
+        }
     }
 
     render() {

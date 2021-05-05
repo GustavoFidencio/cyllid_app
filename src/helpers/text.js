@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const Text = React.memo(({ children, style, lines = 1 }) =>
+import { Text } from 'react-native';
+
+export const TextClean = React.memo(({ children, style, lines = 1 }) =>
     <Text
         style={style}
         numberOfLines={lines}

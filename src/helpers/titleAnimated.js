@@ -55,7 +55,7 @@ export const TitleAnimated = memo(({ text, styled, opacity, sized = false }) => 
                 opacity: sized ? opacityDefault : opacityAnimate,
             }}
         >
-            { text}
+            {text}
         </Animated.Text >
     )
 })

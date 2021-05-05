@@ -1,12 +1,12 @@
 import styles from './styles';
 
 import React from 'react';
-import { View, Text, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
+import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
 
 import Color from '../../assets/colors';
 import { StorageAuth } from './storage';
 import { DescText } from './helper/descText';
-import { Switch, InputValidation, TitleAnimated } from "../../helpers";
+import { Switch, InputValidation, TitleAnimated, TextClean, Load, } from "../../helpers";
 
 export class Login extends React.PureComponent {
 
@@ -15,7 +15,8 @@ export class Login extends React.PureComponent {
         this.state = {
             name: '',
             error: false,
-            showKeyboard: false
+            isLoad: false,
+            showKeyboard: false,
         }
         this.KeyboardHide = Keyboard.addListener('keyboardDidHide', () => this.setState({ showKeyboard: false }));
         this.KeyboardShow = Keyboard.addListener('keyboardDidShow', () => this.setState({ showKeyboard: true }));
@@ -27,8 +28,11 @@ export class Login extends React.PureComponent {
     }
 
     _validateUser() {
-        StorageAuth.checkUser()
-
+        this.setState({ isLoad: true })
+        StorageAuth.checkUser(this.state.name)
+            .then(() => this.props.navigation.navigate('Password'))
+            .catch(() => this.setState({ error: !this.state.error }))
+            .finally(() => this.setState({ isLoad: false }))
     }
 
     render() {
@@ -65,19 +69,27 @@ export class Login extends React.PureComponent {
                                 }}
                             />
                             <View style={styles.containerSwitch}>
-                                <Text style={styles.textLembrar}> Lembrar</Text>
+                                <TextClean style={styles.textLembrar}>
+                                    Lembrar
+                                </TextClean>
                                 <Switch />
                             </View>
                             <TouchableOpacity
                                 style={styles.buttonNext}
-                                // onPress={() => this.setState({ error: !this.state.error })}
                                 onPress={() => this._validateUser()}
                             >
-                                <Text style={styles.textAvancar}> Avançar </Text>
+                                {
+                                    this.state.isLoad ?
+                                        <Load />
+                                        :
+                                        <TextClean style={styles.textAvancar}>
+                                            Avançar
+                                        </TextClean>
+                                }
                             </TouchableOpacity>
-                            <Text style={styles.textSolicitarAcesso} >
+                            <TextClean style={styles.textSolicitarAcesso} >
                                 Solicitar acesso
-                            </Text>
+                            </TextClean>
                         </View>
                     </View>
                 </View>
