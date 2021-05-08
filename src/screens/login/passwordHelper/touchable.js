@@ -17,22 +17,37 @@ export const Touchable = ({ item, index, remove, addValue }) => {
         outputRange: [0, 1]
     })
 
+    const getNumber = () => {
+        if (index + 1 > 9) {
+            return '0'
+        } else {
+            return `${index + 1}`
+        }
+    }
+
     return (
         <Animated.View style={{ opacity }}>
             <TouchableOpacity
                 style={{
                     ...styles.touchableBackground,
                     marginTop: index >= 3 ? 16 : 0,
-                    marginLeft: index == 0 || index == 3 ? 0 : 16,
+                    marginLeft:
+                        index == 0 || index == 3
+                            || index == 6 || index == 9 ? // quando tirar os botoes temporario apagar essa linha
+                            0 : 16,
                 }}
-                onPress={() => !item.um && !item.dois ? remove() : addValue(item)}
+                // onPress={() => !item.um && !item.dois ? remove() : addValue(item)}
+                onPress={() => addValue(getNumber())}
             >
                 <Text style={styles.textTouchable} >
-                    {
+                    {/* {
                         !item.um && !item.dois ?
                             'Excluir'
                             :
                             `${item.um} e ${item.dois}`
+                    } */}
+                    {
+                        getNumber()
                     }
                 </Text>
             </TouchableOpacity>

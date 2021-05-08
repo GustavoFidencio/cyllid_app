@@ -1,6 +1,7 @@
 import styles from './styles';
 
 import React from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
 
 import Color from '../../assets/colors';
@@ -30,7 +31,10 @@ export class Login extends React.PureComponent {
     _validateUser() {
         this.setState({ isLoad: true })
         StorageAuth.checkUser(this.state.name)
-            .then(() => this.props.navigation.navigate('Password'))
+            .then(async () => {
+                await AsyncStorage.setItem('user', this.state.name)
+                this.props.navigation.navigate('Password')
+            })
             .catch(() => this.setState({ error: !this.state.error }))
             .finally(() => this.setState({ isLoad: false }))
     }

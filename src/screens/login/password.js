@@ -1,63 +1,53 @@
 import styles from './styles';
 
 import React from 'react';
-import { View, Text, SafeAreaView, StatusBar, TextInput, TouchableOpacity, Keyboard, FlatList } from 'react-native';
+import { View, SafeAreaView, StatusBar, TextInput, TouchableOpacity, Keyboard, FlatList } from 'react-native';
 
 import Color from '../../assets/colors';
+import { TextClean } from '../../helpers';
 import { AnimatedUser } from './helper';
-import { Touchables } from './passwordHelper';
+import { TouchableTemporari } from './passwordHelper';
 
-export class Password extends React.PureComponent {
+export const Password = ({ }) => {
 
-    constructor() {
-        super();
-        this.state = {
-            password: '',
+    return (
+        <View style={{ paddingHorizontal: 16, flex: 1, backgroundColor: Color.DARK }}>
+            <SafeAreaView style={styles.containerSafeArea}>
+                <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
+                <View style={{ justifyContent: 'center' }}>
+                    {/* <View style={{ width: '100%', }}>
+                        <TextClean style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> Olá Giovane! </TextClean>
+                        <TextClean style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> É um prazer ter você aqui com a gente :) </TextClean> */}
+                    {/* </View> */}
 
-        }
-    }
-
-    render() {
-        return (
-            <View style={{ paddingHorizontal: 16, flex: 1, backgroundColor: Color.DARK }}>
-                <SafeAreaView style={styles.containerSafeArea}>
-                    <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
-                    <View style={{ justifyContent: 'center' }}>
-                        {/* <View style={{ width: '100%', }}>
-                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> Olá Giovane! </Text>
-                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> É um prazer ter você aqui com a gente :) </Text> */}
-                        {/* </View> */}
-
-                        {/* <AnimatedUser>
-                        <Text style={{ color: 'white', fontSize: 20 }}> teste </Text>
+                    {/* <AnimatedUser>
+                        <TextClean style={{ color: 'white', fontSize: 20 }}> teste </TextClean>
                     </AnimatedUser> */}
-                        {/* <View style={{ height: 200, width: '100%', flexDirection: 'row' }}> */}
-                        <Text style={styles.labelInstrucion}>
-                            Agora insira sua senha!
-                        </Text>
-                        <View
-                            style={styles.containerLabels}>
-                            <Text style={styles.labelPassword}>
-                                Senha
-                            </Text>
-                            <Text style={styles.labelExchangePassword}>
-                                Esqueceu sua senha?
-                            </Text>
-                        </View>
-                        <Touchables
-                            onChange={password => this.setState({ password })}
-                        />
+                    {/* <View style={{ height: 200, width: '100%', flexDirection: 'row' }}> */}
+                    <TextClean style={styles.labelInstrucion}>
+                        Agora insira sua senha!
+                        </TextClean>
+                    <View style={styles.containerLabels}>
+                        <TextClean style={styles.labelPassword}>
+                            Senha
+                        </TextClean>
+                        <TextClean style={styles.labelExchangePassword}>
+                            Esqueceu sua senha?
+                        </TextClean>
                     </View>
-                    <TouchableOpacity
+                    <TouchableTemporari
+
+                    />
+                </View>
+                {/* <TouchableOpacity
                         style={styles.buttonNext}
                         onPress={() => this.setState({ error: !this.state.error })}
                     >
-                        <Text style={styles.textAvancar}>
+                        <TextClean style={styles.textAvancar}>
                             Avançar
-                        </Text>
-                    </TouchableOpacity>
-                </SafeAreaView>
-            </View>
-        )
-    }
+                        </TextClean>
+                    </TouchableOpacity> */}
+            </SafeAreaView>
+        </View>
+    )
 }
