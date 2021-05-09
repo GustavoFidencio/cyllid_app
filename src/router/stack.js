@@ -3,11 +3,12 @@ import { Animated } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { Login, Splash, Password } from '../screens';
+import { Login, Splash, Password, Home } from '../screens';
 
 const Stack = createStackNavigator();
 
 export class StackNav extends React.PureComponent {
+
     constructor() {
         super();
     }
@@ -70,6 +71,10 @@ export class StackNav extends React.PureComponent {
                     <Stack.Screen
                         name="Password"
                         component={Password}
+                    />
+                    <Stack.Screen
+                        name="Home"
+                        component={Home}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

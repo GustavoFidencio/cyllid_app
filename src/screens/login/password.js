@@ -8,7 +8,7 @@ import { TextClean } from '../../helpers';
 import { AnimatedUser } from './helper';
 import { TouchableTemporari } from './passwordHelper';
 
-export const Password = ({ }) => {
+export const Password = ({ navigation }) => {
 
     return (
         <View style={{ paddingHorizontal: 16, flex: 1, backgroundColor: Color.DARK }}>
@@ -36,7 +36,7 @@ export const Password = ({ }) => {
                         </TextClean>
                     </View>
                     <TouchableTemporari
-
+                        navigation={navigation}
                     />
                 </View>
                 {/* <TouchableOpacity

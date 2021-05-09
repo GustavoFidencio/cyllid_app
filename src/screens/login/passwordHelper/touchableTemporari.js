@@ -6,7 +6,7 @@ import { CirclePass } from './circlePass';
 import Color from '../../../assets/colors';
 import { Touchable } from './touchable';
 import { StorageAuth } from '../storage';
-import { TextClean } from 'cyllid/src/helpers';
+import { TextClean, Load } from 'cyllid/src/helpers';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -17,6 +17,7 @@ export class TouchableTemporari extends React.PureComponent {
         this.state = {
             err: false,
             numbers: [],
+            isLoad: false,
             valueSelect: '',
         }
         this._deleteVal = this._deleteVal.bind(this);
@@ -46,15 +47,17 @@ export class TouchableTemporari extends React.PureComponent {
     }
 
     async _checkPassword() {
+        this.setState({ isLoad: true })
         let user = await AsyncStorage.getItem('user')
         StorageAuth.validPassword(user, this.state.valueSelect)
             .then(res => {
                 console.log(res);
+                this.props.navigation.replace('Home');
             })
             .catch(err => {
-                console.log(err);
-                this.setState({ err: true }, () => this.setState({ err: false, valueSelect: '' }))
+                this.setState({ err: !this.state.err, valueSelect: '' })
             })
+            .finally(() => this.setState({ isLoad: false }))
     }
 
     render() {
@@ -68,10 +71,14 @@ export class TouchableTemporari extends React.PureComponent {
                         keyExtractor={(_, index) => index.toString()}
                         renderItem={() =>
                             <CirclePass
-                                limit={this.state.err}
+                            // limit={this.state.err}
                             />
                         }
                     />
+                    {
+                        this.state.isLoad &&
+                        <Load size={30} />
+                    }
                 </View>
                 <View style={styles.containerButtons} >
                     {
@@ -80,7 +87,8 @@ export class TouchableTemporari extends React.PureComponent {
                                 <Touchable
                                     item={item}
                                     index={index}
-                                    // remove={this._removeItem}
+                                    err={this.state.err}
+                                    disabled={this.state.isLoad}
                                     addValue={this._onChange}
                                 />
                             )

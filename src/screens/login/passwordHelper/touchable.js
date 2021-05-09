@@ -4,17 +4,28 @@ import { TouchableOpacity, Text, Dimensions, StyleSheet, Animated } from 'react-
 import Color from '../../../assets/colors';
 import { Animate } from '../../../services';
 
-export const Touchable = ({ item, index, remove, addValue }) => {
+export const Touchable = ({ item, index, remove, addValue, disabled, err }) => {
 
+    const colorErr = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         Animate.elasticPersonalizado(100, valueAnimate, 1000)
     }, []);
 
+    useEffect(() => {
+        console.log(err);
+        Animate.default(err ? 100 : 0, colorErr, 2300)
+    }, [err]);
+
     const opacity = valueAnimate.interpolate({
         inputRange: [0, 100],
         outputRange: [0, 1]
+    })
+
+    const colorre = colorErr.interpolate({
+        inputRange: [0, 20, 50, 70, 100],
+        outputRange: ['white', 'red', 'white', 'red', 'white']
     })
 
     const getNumber = () => {
@@ -28,6 +39,7 @@ export const Touchable = ({ item, index, remove, addValue }) => {
     return (
         <Animated.View style={{ opacity }}>
             <TouchableOpacity
+                disabled={disabled}
                 style={{
                     ...styles.touchableBackground,
                     marginTop: index >= 3 ? 16 : 0,
@@ -39,7 +51,10 @@ export const Touchable = ({ item, index, remove, addValue }) => {
                 // onPress={() => !item.um && !item.dois ? remove() : addValue(item)}
                 onPress={() => addValue(getNumber())}
             >
-                <Text style={styles.textTouchable} >
+                <Animated.Text style={{
+                    ...styles.textTouchable,
+                    color: colorre
+                }} >
                     {/* {
                         !item.um && !item.dois ?
                             'Excluir'
@@ -49,7 +64,7 @@ export const Touchable = ({ item, index, remove, addValue }) => {
                     {
                         getNumber()
                     }
-                </Text>
+                </Animated.Text>
             </TouchableOpacity>
         </Animated.View>
     )
