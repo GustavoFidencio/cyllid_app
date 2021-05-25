@@ -7,11 +7,11 @@ export class RequestValidPassword extends Request {
         const url = Routes.validPassword;
         const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
         let data = {
+            password,
+            username,
             grant_type: 'password',
             client_id: 'cyllid_mobile',
             client_secret: '10f4d90c1964ee44aea12cd9bb6028a0',
-            username,
-            password
         };
         super(url, "POST", headers, data)
     }

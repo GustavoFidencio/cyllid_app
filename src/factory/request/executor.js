@@ -3,7 +3,7 @@ import axios from 'axios';
 export class Executor {
 
     static run(Request) {
-        // console.log(Request.method);
+        console.log(Request);
         return axios({
             method: Request.method,
             header: Request.header,

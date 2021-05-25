@@ -28,8 +28,9 @@ export class Splash extends React.PureComponent {
     }
 
     _nextAction() {
-        if (this.state.auth) {
-
+        if (false) {
+            // if (this.state.auth) {
+            this.props.navigation.replace('Home')
         } else {
             this.props.navigation.replace('Login')
         }
