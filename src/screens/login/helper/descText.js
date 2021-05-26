@@ -1,7 +1,7 @@
 import { Animated } from 'react-native';
 import React, { useEffect, memo, useRef, useState } from 'react';
 
-import { Animate } from '../../../services/animate';
+import { Animate } from 'cyllid/src/services';
 
 export const DescText = memo(({ text, styled, opacity }) => {
 

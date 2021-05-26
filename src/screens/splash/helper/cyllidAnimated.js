@@ -4,6 +4,9 @@ import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
+import Logo from 'cyllid/src/assets/img/logo.svg';
+
+const { width } = Dimensions.get('window');
 
 export const CyllidAnimated = memo(({ finaly }) => {
 
@@ -35,16 +38,16 @@ export const CyllidAnimated = memo(({ finaly }) => {
                 <View style={styles.backgroundTopGradient} />
                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.image} colors={[Color.DARK, 'transparent']} />
             </Animated.View>
-            <Animated.Image
-                resizeMode='contain'
-                style={{ ...styles.image, transform: [{ scale }] }}
-                source={require('../../../assets/img/logo.png')}
-            />
+            <Animated.View style={{ transform: [{ scale }] }}>
+                <Logo
+                    width={width / 2}
+                    height={width / 2}
+                />
+            </Animated.View>
         </View>
     )
 })
 
-const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     image: {

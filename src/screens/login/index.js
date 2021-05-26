@@ -6,7 +6,7 @@ import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react
 
 import Color from '../../assets/colors';
 import { StorageAuth } from './storage';
-import { DescText } from './helper/descText';
+import { DescText, Ilustrator } from './helper';
 import { Switch, InputValidation, TitleAnimated, TextClean, Load, } from "../../helpers";
 
 export class Login extends React.PureComponent {
@@ -61,6 +61,9 @@ export class Login extends React.PureComponent {
                                 />
                             </View>
                         </View>
+                        <Ilustrator
+                            show={!this.state.showKeyboard}
+                        />
                         <View style={styles.container}>
                             <InputValidation
                                 title={'Usuário'}
