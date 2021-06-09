@@ -48,7 +48,6 @@ export const CyllidAnimated = memo(({ finaly }) => {
     )
 })
 
-
 const styles = StyleSheet.create({
     image: {
         width: width / 2,

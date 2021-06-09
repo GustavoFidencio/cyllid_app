@@ -13,7 +13,6 @@ export class Splash extends React.PureComponent {
         super();
         this.state = {
             auth: '',
-
         }
         this.nextAction = this._nextAction.bind(this);
     }

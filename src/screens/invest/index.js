@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 
 import Color from 'cyllid/src/assets/colors';
 
-export const HomeInitial = ({ }) => {
+export const Invest = ({ }) => {
 
     return (
         <View style={{
@@ -15,7 +15,7 @@ export const HomeInitial = ({ }) => {
                     color: 'white'
                 }}
             >
-                Home
+                Invest
             </Text>
         </View>
     )

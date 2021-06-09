@@ -50,13 +50,8 @@ export class TouchableTemporari extends React.PureComponent {
         this.setState({ isLoad: true })
         let user = await AsyncStorage.getItem('user')
         StorageAuth.validPassword(user, this.state.valueSelect)
-            .then(res => {
-                console.log(res);
-                this.props.navigation.replace('Home');
-            })
-            .catch(err => {
-                this.setState({ err: !this.state.err, valueSelect: '' })
-            })
+            .then(() => this.props.navigation.replace('Home'))
+            .catch(err => this.setState({ err: !this.state.err, valueSelect: '' }))
             .finally(() => this.setState({ isLoad: false }))
     }
 

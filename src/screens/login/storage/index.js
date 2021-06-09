@@ -15,24 +15,20 @@ export class StorageAuth {
     static validPassword(name, password) {
         return new Promise((resolve, reject) => {
             Executor.run(new RequestValidPassword(name, password))
-                .then(res => {
-                    console.log(res.data);
+                .then(res =>
                     this.setToken(res.data)
                         .finally(() =>
                             this.getDataUser()
-                                .then(() =>
-                                    resolve()
-                                )
+                                .then(() => resolve())
                         )
-                })
+                )
                 .catch(err => reject(err))
         })
     }
 
     static setToken({ access_token, expires_in, refresh_token }) {
-        console.log(access_token, expires_in, refresh_token);
         return new Promise(async resolve => {
-            axios.defaults.headers.common['Authorization'] = access_token;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
             await AsyncStorage.multiSet([
                 ['token', access_token],
                 ['expires_in', expires_in],
@@ -43,13 +39,9 @@ export class StorageAuth {
     }
 
     static getDataUser() {
-        console.log('get data user iniciando ');
         return new Promise((resolve, reject) => {
             Executor.run(new RequestDataUser())
-                .then(res => {
-                    console.log(res);
-                    resolve()
-                })
+                .then(res => resolve())
                 .catch(err => reject(err.response));
         })
     }

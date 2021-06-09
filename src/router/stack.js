@@ -3,7 +3,8 @@ import { Animated } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { Login, Splash, Password, Home } from '../screens';
+import { TabNav } from './tab';
+import { Login, Splash, Password } from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -56,7 +57,7 @@ export class StackNav extends React.PureComponent {
         return (
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='Splash'
+                    initialRouteName='TabNav'
                     screenOptions={this._getScreenOptions()}
                 >
                     <Stack.Screen
@@ -73,8 +74,8 @@ export class StackNav extends React.PureComponent {
                         component={Password}
                     />
                     <Stack.Screen
-                        name="Home"
-                        component={Home}
+                        name="TabNav"
+                        component={TabNav}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
