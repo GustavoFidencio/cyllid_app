@@ -4,22 +4,19 @@ import React, { useEffect, useRef, memo } from 'react';
 import { Icon } from 'cyllid/src/helpers';
 import { Animate } from 'cyllid/src/services';
 
-export const IconButtons = memo(({ screens, item, width, select, index }) => {
+export const IconButtons = memo(({ screens, item, width, select }) => {
 
     const opacity = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
-        if (select.name == item.icon.name)
-            Animate.default(0, opacity, 300)
-        else
-            Animate.default(1, opacity, 800)
+        (async () => {
+            if (select.name == item.icon.name) Animate.default(0, opacity, 300)
+            else Animate.default(1, opacity, 800)
+        })();
     }, [select])
 
     return (
-        <Animated.View
-            key={index}
-            style={{ ...styles.container, width: width / screens.length, opacity }}
-        >
+        <Animated.View style={{ ...styles.container, width: width / screens.length, opacity }}>
             <Icon
                 size={30}
                 color={'gray'}

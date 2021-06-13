@@ -2,6 +2,40 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AntDesign.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf
+	&lt;array&gt;
+		&lt;string&gt;AntDesign.ttf&lt;/string&gt;
+		&lt;string&gt;Entypo.ttf&lt;/string&gt;
+		&lt;string&gt;EvilIcons.ttf&lt;/string&gt;
+		&lt;string&gt;Feather.ttf&lt;/string&gt;
+		&lt;string&gt;FontAwesome.ttf&lt;/string&gt;
+		&lt;string&gt;FontAwesome5_Brands.ttf&lt;/string&gt;
+		&lt;string&gt;FontAwesome5_Regular.ttf&lt;/string&gt;
+		&lt;string&gt;FontAwesome5_Solid.ttf&lt;/string&gt;
+		&lt;string&gt;Fontisto.ttf&lt;/string&gt;
+		&lt;string&gt;Foundation.ttf&lt;/string&gt;
+		&lt;string&gt;Ionicons.ttf&lt;/string&gt;
+		&lt;string&gt;MaterialCommunityIcons.ttf&lt;/string&gt;
+		&lt;string&gt;MaterialIcons.ttf&lt;/string&gt;
+		&lt;string&gt;Octicons.t</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicos.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

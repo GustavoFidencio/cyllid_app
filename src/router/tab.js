@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Animated, StyleSheet, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View, Animated, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 
 import { Animate } from 'cyllid/src/services';
 import Colors from 'cyllid/src/assets/colors';
 import { HomeInitial, Invest, User } from '../screens';
-import Bola from 'cyllid/src/assets/img/redonda.svg';
+import Curve from 'cyllid/src/assets/img/redonda.svg';
 import { CircleSelect, IconButtons } from './commons';
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +25,6 @@ export const TabNav = ({ }) => {
     const tabBarOptions = {
         style: styles.tab,
         showLabel: false,
-        activeTintColor: 'white',
     }
 
     const screens = [
@@ -48,48 +47,51 @@ export const TabNav = ({ }) => {
         outputRange: [(width / screens.length) * 0 + 8, (width / screens.length) * 1 + 8]
     })
 
-    //quando ele navega de uma lado para o outro e passa por um item do meio ele tem que sumir tbm, fazer isso
-
     return (
-        <View style={styles.container}>
-            <Tab.Navigator
-                initialRouteName='Home'
-                tabBarOptions={tabBarOptions}
-            >
-                {screens.map((item, index) =>
-                    <Tab.Screen
-                        key={index}
-                        name={`${item.name}`}
-                        component={item.name}
-                        listeners={{ tabPress: () => setSelect(index) }}
-                    />
-                )}
-            </Tab.Navigator>
-            <Animated.View style={styles.containerButtons}>
-                <Animated.View style={{ ...styles.containerButtonsLeft, width: distanceSelect }} />
-                <View style={styles.itemSelect}>
-                    <Bola width={125} height={50} />
-                    <CircleSelect
-                        item={screens[indexSelect]}
-                        select={indexSelect}
-                    />
-                </View>
-                <View style={styles.containerButtonsRight} />
-                <View style={styles.containerIcons}>
-                    {
-                        screens.map((item, index) =>
-                            <IconButtons
-                                item={item}
-                                index={index}
-                                width={width}
-                                screens={screens}
-                                select={screens[indexSelect].icon}
+        <>
+            <View style={styles.container}>
+                <Tab.Navigator
+                    initialRouteName='Home'
+                    tabBarOptions={tabBarOptions}
+                >
+                    {screens.map((item, index) =>
+                        <Tab.Screen
+                            key={index}
+                            name={`${item.name}`}
+                            component={item.name}
+                            listeners={{ tabPress: () => setSelect(index) }}
+                        />
+                    )}
+                </Tab.Navigator>
+                <>
+                    <Animated.View style={styles.containerButtons}>
+                        <Animated.View style={{ ...styles.containerButtonsLeft, width: distanceSelect }} />
+                        <View style={styles.itemSelect}>
+                            <Curve width={125} height={50} />
+                            <CircleSelect
+                                select={indexSelect}
+                                item={screens[indexSelect]}
                             />
-                        )
-                    }
-                </View>
-            </Animated.View>
-        </View >
+                        </View>
+                        <View style={styles.containerButtonsRight} />
+                        <View style={styles.containerIcons}>
+                            {
+                                screens.map((item, index) =>
+                                    <IconButtons
+                                        key={index}
+                                        item={item}
+                                        width={width}
+                                        screens={screens}
+                                        select={screens[indexSelect].icon}
+                                    />
+                                )
+                            }
+                        </View>
+                    </Animated.View>
+                    <SafeAreaView style={styles.safeArea} />
+                </>
+            </View >
+        </>
     )
 }
 
@@ -101,14 +103,15 @@ const styles = StyleSheet.create({
     tab: {
         opacity: 0,
         zIndex: 10,
+        zIndex: 9999,
         borderTopWidth: 0,
+        position: 'absolute'
     },
     containerButtons: {
         bottom: 0,
         height: 50,
         width: '100%',
         flexDirection: 'row',
-        position: 'absolute',
         backgroundColor: Colors.DARK,
     },
     itemSelect: {
@@ -129,5 +132,9 @@ const styles = StyleSheet.create({
     containerIcons: {
         position: 'absolute',
         flexDirection: 'row',
+    },
+    safeArea: {
+        flexGrow: 0,
+        backgroundColor: 'white',
     }
 })
