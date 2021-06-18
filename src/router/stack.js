@@ -1,27 +1,22 @@
 import * as React from 'react';
-import { Animated } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { Animated, SafeAreaView, StyleSheet } from 'react-native';
 
 import { TabNav } from './tab';
+import Color from 'cyllid/src/assets/colors'
 import { Login, Splash, Password } from '../screens';
 
 const Stack = createStackNavigator();
 
-export class StackNav extends React.PureComponent {
+export const StackNav = () => {
 
-    constructor() {
-        super();
+    const _getScreenOptions = {
+        headerTitle: false,
+        headerTransparent: true,
     }
 
-    _getScreenOptions() {
-        return {
-            headerTitle: false,
-            headerTransparent: true,
-        }
-    }
-
-    animatedBottom({ current, next, inverted, layouts: { screen } }) {
+    const _animatedBottom = ({ current, next, inverted, layouts: { screen } }) => {
         const progress = Animated.add(
             current.progress.interpolate({
                 inputRange: [0, 1],
@@ -53,17 +48,17 @@ export class StackNav extends React.PureComponent {
         };
     };
 
-    render() {
-        return (
+    return (
+        <SafeAreaView style={styles.container}>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='Splash'
-                    screenOptions={this._getScreenOptions()}
+                    initialRouteName='TabNav'
+                    screenOptions={_getScreenOptions}
                 >
                     <Stack.Screen
                         name="Login"
                         component={Login}
-                        options={{ cardStyleInterpolator: this.animatedBottom }}
+                        options={{ cardStyleInterpolator: _animatedBottom }}
                     />
                     <Stack.Screen
                         name="Splash"
@@ -79,6 +74,13 @@ export class StackNav extends React.PureComponent {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
-        )
-    }
+        </SafeAreaView>
+    )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Color.DARK
+    }
+})

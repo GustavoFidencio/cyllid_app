@@ -5,7 +5,6 @@ import LottieView from 'lottie-react-native';
 import { SafeAreaView, StatusBar, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { NameUser } from './helper';
 import Color from 'cyllid/src/assets/colors';
 import Animation from 'cyllid/src/assets/videos/splash.json';
 
@@ -13,8 +12,11 @@ export const Splash = ({ navigation }) => {
 
     const _checkToken = () => {
         AsyncStorage.getItem('token')
-            .then(() => navigation.replace('TabNav'))
-            .catch(() => navigation.replace('Login'))
+            .then(token => {
+                console.log(token);
+                if (token) navigation.replace('TabNav')
+                else navigation.replace('Login')
+            })
     }
 
     return (
@@ -28,9 +30,7 @@ export const Splash = ({ navigation }) => {
                     onAnimationFinish={_checkToken}
                 />
             </View>
-            {/* <NameUser
-
-                /> */}
+            {/* <NameUser /> */}
         </SafeAreaView>
     )
 }

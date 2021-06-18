@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Animated, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
+import { View, Animated, StyleSheet, Dimensions, SafeAreaView, Vibration } from 'react-native';
 
 import { Animate } from 'cyllid/src/services';
 import Colors from 'cyllid/src/assets/colors';
@@ -17,6 +17,7 @@ export const TabNav = () => {
     const distance = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
+        // Vibration.vibrate([100, 1000])
         setTimeout(() => Animate.smooth(indexSelect, distance, 800), 85)
     }, [indexSelect])
 
