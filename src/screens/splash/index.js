@@ -1,51 +1,36 @@
 import styles from './styles';
 
 import React from 'react';
-import { Text, SafeAreaView, StatusBar, View } from 'react-native';
+import LottieView from 'lottie-react-native';
+import { SafeAreaView, StatusBar, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import Color from '../../assets/colors';
-import { CyllidAnimated, NameUser } from './helper';
+import { NameUser } from './helper';
+import Color from 'cyllid/src/assets/colors';
+import Animation from 'cyllid/src/assets/videos/splash.json';
 
-export class Splash extends React.PureComponent {
+export const Splash = ({ navigation }) => {
 
-    constructor() {
-        super();
-        this.state = {
-            auth: '',
-        }
-        this.nextAction = this._nextAction.bind(this);
-    }
-
-    componentDidMount() {
-        this._checkToken();
-    }
-
-    _checkToken() {
+    const _checkToken = () => {
         AsyncStorage.getItem('token')
-            .then(auth => this.setState({ auth }))
+            .then(() => navigation.replace('TabNav'))
+            .catch(() => navigation.replace('Login'))
     }
 
-    _nextAction() {
-        if (false) {
-            // if (this.state.auth) {
-            this.props.navigation.replace('Home')
-        } else {
-            this.props.navigation.replace('Login')
-        }
-    }
-
-    render() {
-        return (
-            <SafeAreaView style={styles.safeArea}>
-                <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
-                <CyllidAnimated
-                    finaly={this.nextAction}
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
+            <View style={styles.animation} >
+                <LottieView
+                    autoPlay
+                    loop={false}
+                    source={Animation}
+                    onAnimationFinish={_checkToken}
                 />
-                {/* <NameUser
+            </View>
+            {/* <NameUser
 
                 /> */}
-            </SafeAreaView>
-        )
-    }
+        </SafeAreaView>
+    )
 }

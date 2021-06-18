@@ -1,6 +1,6 @@
 import { Animated, Easing } from 'react-native';
 
-export class Animate {
+export class AnimatePromise {
 
     static default(toValue, state, duration = 1500, useNativeDriver = false) {
         return new Promise(resolve => {

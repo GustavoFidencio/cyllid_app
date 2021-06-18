@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
-import Color from '../../assets/colors';
+import Color from 'cyllid/src/assets/colors';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
     safeArea: {
@@ -7,6 +9,9 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Color.DARK,
-    }
-
+    },
+    animation: {
+        width: width / 1.5,
+        height: width / 1.5,
+    },
 })

@@ -4,16 +4,16 @@ import React, { useEffect, useRef, memo } from 'react';
 import { Icon } from 'cyllid/src/helpers';
 import { Animate } from 'cyllid/src/services';
 
-export const IconButtons = memo(({ screens, item, width, select }) => {
+export const IconButtons = memo(({ screens, item, width, indexSelect }) => {
 
     const opacity = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
         (async () => {
-            if (select.name == item.icon.name) Animate.default(0, opacity, 300)
+            if (screens[indexSelect].icon.name == item.icon.name) Animate.default(0, opacity, 300)
             else Animate.default(1, opacity, 800)
         })();
-    }, [select])
+    }, [indexSelect])
 
     return (
         <Animated.View style={{ ...styles.container, width: width / screens.length, opacity }}>
