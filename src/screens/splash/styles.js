@@ -11,7 +11,7 @@ export default StyleSheet.create({
         backgroundColor: Color.DARK,
     },
     animation: {
-        width: width / 1.5,
-        height: width / 1.5,
+        width: width / 2.5,
+        height: width / 2.5,
     },
 })

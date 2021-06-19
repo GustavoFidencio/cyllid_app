@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Color from '../../assets/colors';
+import Color from 'cyllid/src/assets/colors';
 
 export default StyleSheet.create({
     containerAll: {
@@ -8,6 +8,7 @@ export default StyleSheet.create({
         paddingTop: 43,
         paddingHorizontal: 16,
         backgroundColor: Color.DARK,
+        justifyContent: 'space-between',
     },
     containerSafeArea: {
         flex: 1,
@@ -34,6 +35,7 @@ export default StyleSheet.create({
     },
     containerSeparation: {
         flex: 1,
+        height: '100%',
         justifyContent: 'space-between',
     },
     textUser: {
@@ -64,7 +66,7 @@ export default StyleSheet.create({
     buttonNext: {
         padding: 10,
         width: '100%',
-        marginTop: 30,
+        marginTop: 20,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
@@ -73,35 +75,11 @@ export default StyleSheet.create({
     textAvancar: {
         color: 'white',
     },
-    textSolicitarAcesso: {
-        fontSize: 14,
-        marginTop: 30,
-        textAlign: 'center',
-        color: Color.BLUE,
-        marginBottom: 20,
-    },
     container: {
         width: '100%',
     },
-
-    //password
-    labelInstrucion: {
-        fontSize: 25,
-        color: 'white',
-        fontWeight: 'bold',
-        marginBottom: 25,
+    safeArea: {
+        flexGrow: 0,
+        backgroundColor: Color.DARK,
     },
-    labelPassword: {
-        color: 'white'
-    },
-    labelExchangePassword: {
-        color: Color.BLUE
-    },
-    containerLabels: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-
-
 })

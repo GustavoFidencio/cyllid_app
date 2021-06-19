@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
+import HapticFeedback from "react-native-haptic-feedback";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Animated, StyleSheet, Dimensions, SafeAreaView, Vibration } from 'react-native';
+import { View, Animated, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 
 import { Animate } from 'cyllid/src/services';
 import Colors from 'cyllid/src/assets/colors';
 import { HomeInitial, Invest, User } from '../../screens'
 import { CircleSelect, IconButtons } from './commons';
-import Curve from 'cyllid/src/assets/img/redonda.svg';
+import Curve from 'cyllid/src/assets/img/footerTab.svg';
 
 const Tab = createBottomTabNavigator();
 const { width } = Dimensions.get('window');
@@ -17,7 +18,7 @@ export const TabNav = () => {
     const distance = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        // Vibration.vibrate([100, 1000])
+        HapticFeedback.trigger("impactLight");
         setTimeout(() => Animate.smooth(indexSelect, distance, 800), 85)
     }, [indexSelect])
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-import Color from '../../../assets/colors';
+import Color from 'cyllid/src/assets/colors';
 
 export class Seconds extends React.PureComponent {
 

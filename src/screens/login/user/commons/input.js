@@ -1,13 +1,13 @@
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Animated, Easing, StyleSheet, TextInput, Text } from 'react-native';
 
-import Color from '../assets/colors'
+import Color from 'cyllid/src/assets/colors'
 
- export const InputValidation = ({ title, placeholder, error, value, setValue, setShow }) => {
+export const Input = ({ title, placeholder, error, value, setValue, setShow }) => {
 
-    const [valueAnimate] = useState(new Animated.Value(0));
+    const valueAnimate = useRef(new Animated.Value(100)).current;
 
-    const animation = val => {
+    const _animation = val => {
         Animated.timing(valueAnimate, {
             toValue: val,
             duration: 1500,
@@ -17,27 +17,25 @@ import Color from '../assets/colors'
     }
 
     useEffect(() => {
-        if (error)
-            animation(100)
-        else
-            animation(0)
+        if (error) _animation(100)
+        else _animation(0)
     }, [error])
+
+    const borderColor = valueAnimate.interpolate({
+        inputRange: [0, 100],
+        outputRange: ['transparent', Color.ERROR]
+    });
+
+    const opacity = valueAnimate.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 1]
+    })
 
     return (
         <View style={{ width: '100%' }}>
             <Text style={styles.textUser}> {title} </Text>
-            <Animated.View
-                style={{
-                    ...styles.backgroundInput,
-                    borderColor: valueAnimate.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: ['transparent', Color.ERROR]
-                    })
-                }}
-            >
+            <Animated.View style={{ ...styles.backgroundInput, borderColor }} >
                 <TextInput
-                    onFocus={() => console.log("focus ")}
-                    onBlur={() => console.log("saiu de foco")}
                     value={value}
                     selectTextOnFocus
                     spellCheck={false}
@@ -46,20 +44,14 @@ import Color from '../assets/colors'
                     autoCapitalize='none'
                     autoCompleteType={'off'}
                     placeholder={placeholder}
+                    onBlur={() => setShow(false)}
+                    onFocus={() => setShow(true)}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     onChangeText={val => setValue(val)}
                 />
             </Animated.View>
-            <Animated.Text
-                style={{
-                    ...styles.textError,
-                    opacity: valueAnimate.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: [0, 1]
-                    })
-                }}
-            >
+            <Animated.Text style={{ ...styles.textError, opacity }}>
                 Ops, usuário incorreto
             </Animated.Text>
         </View>

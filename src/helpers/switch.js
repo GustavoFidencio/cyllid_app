@@ -1,50 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Animated, Easing, StyleSheet } from 'react-native';
+import HapticFeedback from "react-native-haptic-feedback";
+import React, { useState, useEffect, useRef, memo } from 'react';
+import { TouchableOpacity, Animated, StyleSheet } from 'react-native';
 
-import Color from '../assets/colors'
+import Color from 'cyllid/src/assets/colors';
+import { Animate } from 'cyllid/src/services';
 
-export const Switch = ({ }) => {
+export const Switch = memo(() => {
 
     const [value, setVal] = useState(false);
-    const [valueAnimate] = useState(new Animated.Value(-1));
+    const valueAnimate = useRef(new Animated.Value(-1)).current;
 
-    const animation = (val, delay = 600) => {
-        Animated.timing(valueAnimate, {
-            toValue: val,
-            duration: delay,
-            useNativeDriver: false,
-            easing: Easing.out(Easing.exp),
-        }).start();
-    }
+    useEffect(() =>
+        Animate.smooth(value ? 24 : -1, valueAnimate, 600)
+    , [value])
 
-    useEffect(() => {
-        if (value)
-            animation(24)
-        else
-            animation(-1)
-    }, [value])
+    const borderColor = valueAnimate.interpolate({
+        inputRange: [-1, 24],
+        outputRange: [Color.DARK_ONE, Color.BLUE]
+    });
+
+    const backgroundColor = valueAnimate.interpolate({
+        inputRange: [-1, 24],
+        outputRange: [Color.DARK_ONE, Color.BLUE]
+    });
 
     return (
-        <TouchableOpacity onPress={() => setVal(!value)} activeOpacity={1} >
-            <Animated.View style={{
-                ...styles.containerSwitch,
-                borderColor: valueAnimate.interpolate({
-                    inputRange: [-1, 24],
-                    outputRange: [Color.DARK_ONE, Color.BLUE]
-                })
-            }}>
+        <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+                setVal(!value)
+                HapticFeedback.trigger("impactLight");
+            }}
+        >
+            <Animated.View style={{ ...styles.containerSwitch, borderColor }}>
                 <Animated.View style={{
+                    backgroundColor,
                     ...styles.circleSwitch,
                     transform: [{ translateX: valueAnimate }],
-                    backgroundColor: valueAnimate.interpolate({
-                        inputRange: [-1, 24],
-                        outputRange: [Color.DARK_ONE, Color.BLUE]
-                    }),
                 }} />
             </Animated.View>
         </TouchableOpacity>
     )
-}
+})
 
 const styles = StyleSheet.create({
     containerSwitch: {

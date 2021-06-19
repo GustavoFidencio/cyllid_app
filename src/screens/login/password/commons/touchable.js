@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { TouchableOpacity, Text, Dimensions, StyleSheet, Animated } from 'react-native';
 
-import Color from '../../../assets/colors';
-import { Animate } from '../../../services';
+import Color from 'cyllid/src/assets/colors';
+import { Animate } from 'cyllid/src/services';
 
 export const Touchable = ({ item, index, remove, addValue, disabled, err }) => {
 

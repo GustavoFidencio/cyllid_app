@@ -3,9 +3,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { FlatList, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import { CirclePass } from './circlePass';
-import Color from '../../../assets/colors';
 import { Touchable } from './touchable';
-import { StorageAuth } from '../storage';
+import { StorageAuth } from '../../storage';
+import Color from 'cyllid/src/assets/colors';
 import { TextClean, Load } from 'cyllid/src/helpers';
 
 const WIDTH = Dimensions.get('window').width;

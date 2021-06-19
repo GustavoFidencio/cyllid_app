@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 
-import { Animate } from '../../../services';
+import { Animate } from 'cyllid/src/services';
 
 export const CirclePass = ({ limit = false }) => {
 

@@ -3,10 +3,9 @@ import styles from './styles';
 import React from 'react';
 import { View, SafeAreaView, StatusBar, TextInput, TouchableOpacity, Keyboard, FlatList } from 'react-native';
 
-import Color from '../../assets/colors';
-import { TextClean } from '../../helpers';
-import { AnimatedUser } from './helper';
-import { TouchableTemporari } from './passwordHelper';
+import Color from 'cyllid/src/assets/colors';
+import { TextClean } from 'cyllid/src/helpers';
+import { TouchableTemporari, AnimatedUser } from './commons';
 
 export const Password = ({ navigation }) => {
 
@@ -26,7 +25,7 @@ export const Password = ({ navigation }) => {
                     {/* <View style={{ height: 200, width: '100%', flexDirection: 'row' }}> */}
                     <TextClean style={styles.labelInstrucion}>
                         Agora insira sua senha!
-                        </TextClean>
+                    </TextClean>
                     <View style={styles.containerLabels}>
                         <TextClean style={styles.labelPassword}>
                             Senha

@@ -5,7 +5,7 @@ import { Animated, SafeAreaView, StyleSheet } from 'react-native';
 
 import { TabNav } from './tab';
 import Color from 'cyllid/src/assets/colors'
-import { Login, Splash, Password } from '../screens';
+import { Login, Splash, } from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -49,32 +49,30 @@ export const StackNav = () => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <NavigationContainer>
-                <Stack.Navigator
-                    initialRouteName='TabNav'
-                    screenOptions={_getScreenOptions}
-                >
-                    <Stack.Screen
-                        name="Login"
-                        component={Login}
-                        options={{ cardStyleInterpolator: _animatedBottom }}
-                    />
-                    <Stack.Screen
-                        name="Splash"
-                        component={Splash}
-                    />
-                    <Stack.Screen
-                        name="Password"
-                        component={Password}
-                    />
-                    <Stack.Screen
-                        name="TabNav"
-                        component={TabNav}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </SafeAreaView>
+        <NavigationContainer>
+            <Stack.Navigator
+                initialRouteName='Login'
+                screenOptions={_getScreenOptions}
+            >
+                <Stack.Screen
+                    name="Login"
+                    component={Login}
+                    options={{ cardStyleInterpolator: _animatedBottom }}
+                />
+                <Stack.Screen
+                    name="Splash"
+                    component={Splash}
+                />
+                {/* <Stack.Screen
+                    name="Password"
+                    component={Password}
+                /> */}
+                <Stack.Screen
+                    name="TabNav"
+                    component={TabNav}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
     )
 }
 

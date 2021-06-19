@@ -3,8 +3,8 @@ import { FlatList, Text, View, StyleSheet } from 'react-native';
 
 import { Seconds } from './seconds';
 import { CirclePass } from './circlePass';
-import Color from '../../../assets/colors';
 import { Touchable } from './touchable';
+import Color from 'cyllid/src/assets/colors';
 
 export class Touchables extends React.PureComponent {
 
