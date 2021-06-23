@@ -92,6 +92,7 @@ export class Login extends React.PureComponent {
                             </View>
                             <SolicitAcces
                                 show={!showKeyboard}
+                                navigation={this.props.navigation}
                             />
                         </View>
                     </View>

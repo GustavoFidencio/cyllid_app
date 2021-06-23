@@ -5,7 +5,7 @@ import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 import { TextClean } from 'cyllid/src/helpers';
 
-export const SolicitAcces = ({ show }) => {
+export const SolicitAcces = ({ show, navigation }) => {
 
     const valueAnimate = useRef(new Animated.Value(100)).current;
 
@@ -29,7 +29,7 @@ export const SolicitAcces = ({ show }) => {
             <TouchableOpacity
                 disabled={!show}
                 style={styles.button}
-                onPress={() => console.log('solicitar acesso')}
+                onPress={() => navigation.navigate('SolicitAccess')}
             >
                 <TextClean style={styles.text} >
                     Solicitar acesso

@@ -5,7 +5,12 @@ import { Animated, SafeAreaView, StyleSheet } from 'react-native';
 
 import { TabNav } from './tab';
 import Color from 'cyllid/src/assets/colors'
-import { Login, Splash, } from '../screens';
+import {
+    Login,
+    Splash,
+    Password,
+    SolicitAccess
+} from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -51,7 +56,7 @@ export const StackNav = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName='Login'
+                initialRouteName='Splash'
                 screenOptions={_getScreenOptions}
             >
                 <Stack.Screen
@@ -63,13 +68,17 @@ export const StackNav = () => {
                     name="Splash"
                     component={Splash}
                 />
-                {/* <Stack.Screen
+                <Stack.Screen
                     name="Password"
                     component={Password}
-                /> */}
+                />
                 <Stack.Screen
                     name="TabNav"
                     component={TabNav}
+                />
+                <Stack.Screen
+                    name="SolicitAccess"
+                    component={SolicitAccess}
                 />
             </Stack.Navigator>
         </NavigationContainer>

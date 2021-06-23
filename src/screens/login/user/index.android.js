@@ -4,9 +4,9 @@ import React from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
 
-import Color from 'cyllid/src/assets/colors';
 import { StorageAuth } from '../storage';
-import { DescText, Ilustrator } from './commons';
+import Color from 'cyllid/src/assets/colors';
+import { DescText, Ilustrator, SolicitAcces } from './commons';
 import { Switch, InputValidation, TitleAnimated, TextClean, Load, } from "cyllid/src/helpers";
 
 export class Login extends React.PureComponent {
@@ -40,6 +40,7 @@ export class Login extends React.PureComponent {
     }
 
     render() {
+        const { showKeyboard } = this.state;
         return (
             <SafeAreaView style={{ flexGrow: 0, backgroundColor: Color.DARK }}>
                 <View style={styles.containerAll}>
@@ -50,19 +51,19 @@ export class Login extends React.PureComponent {
                                 <TitleAnimated sized
                                     text={'Cyllid'}
                                     styled={styles.textNameApp}
-                                    opacity={this.state.showKeyboard}
+                                    opacity={showKeyboard}
                                 />
                             </View>
                             <View style={styles.containerDescApp}>
                                 <DescText
                                     styled={styles.textDescApp}
                                     text={'Online, simples e prático.'}
-                                    opacity={this.state.showKeyboard}
+                                    opacity={showKeyboard}
                                 />
                             </View>
                         </View>
                         <Ilustrator
-                            show={!this.state.showKeyboard}
+                            show={!showKeyboard}
                         />
                         <View style={styles.container}>
                             <InputValidation
@@ -94,10 +95,11 @@ export class Login extends React.PureComponent {
                                         </TextClean>
                                 }
                             </TouchableOpacity>
-                            <TextClean style={styles.textSolicitarAcesso} >
-                                Solicitar acesso
-                            </TextClean>
                         </View>
+                        <SolicitAcces
+                            show={!showKeyboard}
+                            navigation={this.props.navigation}
+                        />
                     </View>
                 </View>
             </SafeAreaView>

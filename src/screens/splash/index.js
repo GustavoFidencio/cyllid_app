@@ -13,7 +13,6 @@ export const Splash = ({ navigation }) => {
     const _checkToken = () => {
         AsyncStorage.getItem('token')
             .then(token => {
-                console.log(token);
                 if (token) navigation.replace('TabNav')
                 else navigation.replace('Login')
             })
