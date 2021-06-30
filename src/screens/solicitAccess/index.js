@@ -1,34 +1,28 @@
 import styles from './styles';
-import React, { useEffect, useRef } from 'react';
-import { View, SafeAreaView, Animated } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react';
+import { SafeAreaView, Animated } from 'react-native'
 
-import { AnimateText } from './commons';
 import { Animate } from 'cyllid/src/services';
+import { WelcomeAnimate, HelloAnimate, ListPhases } from './commons';
 
 export const SolicitAccess = () => {
 
+    const [show, setShow] = useState(false);
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        Animate.default(100, valueAnimate, 4500)
-    }, [])
+        Animate.default(110, valueAnimate, 4800, _setShow)
+    }, []);
 
-    const fadedPrimay = valueAnimate.interpolate({
-        inputRange: [0, 12, 20, 35],
-        outputRange: [0, 1, 1, 0],
-        extrapolate: 'clamp',
-    });
+    const _setShow = () => setShow(true);
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <Animated.Text style={{ ...styles.labelHello, opacity: fadedPrimay }}>
-                Olá
-            </Animated.Text>
-            <View style={styles.containerComprimentation}>
-                <AnimateText
-                    faded={valueAnimate}
-                />
-            </View>
+            <HelloAnimate faded={valueAnimate} />
+            <WelcomeAnimate faded={valueAnimate} />
+            <ListPhases
+                show={show}
+            />
         </SafeAreaView>
     )
 }

@@ -1,13 +1,19 @@
 
 import React, { memo } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 
-export const AnimateText = memo(({ faded }) => {
+export const WelcomeAnimate = memo(({ faded }) => {
 
-    const frase = ['Será', 'um', 'prazer', 'ter', 'você', 'aqui', 'com', 'a', 'gente!']
+    const frase = ['Será', 'um', 'prazer', 'ter', 'você', 'aqui', 'com', 'a', 'gente!'];
+
+    const maxHeight = faded.interpolate({
+        inputRange: [100, 110],
+        outputRange: [100, 0],
+        extrapolate: 'clamp'
+    });
 
     return (
-        <View style={{ flexDirection: 'row' }}>
+        <Animated.View style={{ ...styles.container, maxHeight }}>
             {
                 frase.map((item, index) => {
                     let secondsForIndex = 5.8;
@@ -18,22 +24,29 @@ export const AnimateText = memo(({ faded }) => {
                             style={{
                                 ...styles.text,
                                 opacity: faded.interpolate({
-                                    inputRange: [seconds - 12, seconds + secondsForIndex],
-                                    outputRange: [0, 1],
+                                    inputRange: [seconds - 12, seconds + secondsForIndex, 100, 110],
+                                    outputRange: [0, 1, 1, 0],
                                     extrapolate: 'clamp',
                                 }),
                             }}
                         >
                             {` ${item}`}
                         </Animated.Text>
-                    )
+                    ) 
                 })
             }
-        </View>
+        </Animated.View>
     )
 })
 
 const styles = StyleSheet.create({
+    container: {
+        width: '91%',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        position: 'absolute',
+        justifyContent: 'center',
+    },
     text: {
         fontSize: 20,
         color: 'white',

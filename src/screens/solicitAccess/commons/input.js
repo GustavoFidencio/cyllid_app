@@ -4,29 +4,58 @@ import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const Input = memo(({ title, placeholder, error, value, setValue, setShow }) => {
+export const Input = memo(({ placeholder, error, value, setValue, setShow, title }) => {
 
-    const valueAnimate = useRef(new Animated.Value(100)).current;
+    const err = useRef(new Animated.Value(0)).current;
+    const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        if (error) Animate.smooth(100, valueAnimate)
-        else Animate.smooth(0, valueAnimate)
+        if (error) Animate.smooth(100, err)
+        else Animate.smooth(0, err)
     }, [error])
 
-    const borderColor = valueAnimate.interpolate({
+    useEffect(() => {
+        setTimeout(() => {
+            Animate.smooth(100, valueAnimate, 800)
+        }, 600);
+    }, [])
+
+    const borderColor = err.interpolate({
         inputRange: [0, 100],
         outputRange: ['transparent', Color.ERROR]
     });
 
-    const opacity = valueAnimate.interpolate({
+    const opacity = err.interpolate({
         inputRange: [0, 100],
         outputRange: [0, 1]
-    })
+    });
+
+    const width = valueAnimate.interpolate({
+        extrapolate: 'clamp',
+        inputRange: [20, 100],
+        outputRange: ['0%', '100%'],
+    });
+
+    const opacityBackground = valueAnimate.interpolate({
+        inputRange: [20, 100],
+        outputRange: [0, 1]
+    });
 
     return (
-        <View style={{ width: '100%' }}>
+        <Animated.View
+            style={{
+                width: '100%',
+                opacity: opacityBackground,
+            }}
+        >
             <Text style={styles.textUser}> {title} </Text>
-            <Animated.View style={{ ...styles.backgroundInput, borderColor }} >
+            <Animated.View
+                style={{
+                    ...styles.backgroundInput,
+                    borderColor,
+                    width: width,
+                }}
+            >
                 <TextInput
                     value={value}
                     selectTextOnFocus
@@ -46,7 +75,7 @@ export const Input = memo(({ title, placeholder, error, value, setValue, setShow
             <Animated.Text style={{ ...styles.textError, opacity }}>
                 Ops, usuário incorreto
             </Animated.Text>
-        </View>
+        </Animated.View>
     )
 })
 
@@ -55,21 +84,24 @@ const styles = StyleSheet.create({
         height: '100%',
         paddingLeft: 15,
         color: '#c4c4c4',
+        fontFamily: 'Nunito-Italic',
+
     },
     backgroundInput: {
         height: 40,
         width: '100%',
-        marginTop: 10,
+        marginTop: 5,
         borderRadius: 6,
         borderWidth: 1.5,
         backgroundColor: Color.DARK_ONE,
     },
-    textUser: {
-        fontSize: 14,
-        color: 'white',
-    },
     textError: {
         top: 1,
         color: Color.ERROR,
-    }
+    },
+    textUser: {
+        fontSize: 14,
+        color: 'white',
+        fontFamily: 'Nunito-SemiBold',
+    },
 })

@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, memo } from 'react';
 import { Animated, Dimensions } from 'react-native';
+import React, { useRef, useEffect, memo } from 'react';
 
 import { Animate } from '../services';
 

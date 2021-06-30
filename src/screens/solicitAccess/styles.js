@@ -8,13 +8,4 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Color.DARK,
     },
-    labelHello:{
-        fontSize: 24,
-        color: 'white',
-        fontFamily: 'Nunito-LightItalic',
-    },
-    containerComprimentation:{
-        height: 25,
-        position: 'absolute',
-    }
 })
