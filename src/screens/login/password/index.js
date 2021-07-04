@@ -1,51 +1,39 @@
 import styles from './styles';
 
 import React from 'react';
-import { View, SafeAreaView, StatusBar, TextInput, TouchableOpacity, Keyboard, FlatList } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 
-import Color from 'cyllid/src/assets/colors';
-import { TextClean } from 'cyllid/src/helpers';
-import { TouchableTemporari, AnimatedUser } from './commons';
+import { TouchableTemporari } from './commons';
+import { TextClean, Icon } from 'cyllid/src/helpers';
 
-export const Password = ({ navigation }) => {
+export const Password = ({ navigation, route, }) => {
+
+    const _goBack = () =>  navigation.replace('Login');
 
     return (
-        <View style={{ paddingHorizontal: 16, flex: 1, backgroundColor: Color.DARK }}>
-            <SafeAreaView style={styles.containerSafeArea}>
-                <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
-                <View style={{ justifyContent: 'center' }}>
-                    {/* <View style={{ width: '100%', }}>
-                        <TextClean style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> Olá Giovane! </TextClean>
-                        <TextClean style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}> É um prazer ter você aqui com a gente :) </TextClean> */}
-                    {/* </View> */}
-
-                    {/* <AnimatedUser>
-                        <TextClean style={{ color: 'white', fontSize: 20 }}> teste </TextClean>
-                    </AnimatedUser> */}
-                    {/* <View style={{ height: 200, width: '100%', flexDirection: 'row' }}> */}
-                    <TextClean style={styles.labelInstrucion}>
-                        Agora insira sua senha!
+        <View style={styles.container}>
+            <TouchableOpacity
+                onPress={_goBack}
+                style={styles.goBack}
+            >
+                <Icon size={40} name={'left'} lib={'antdesign'} />
+            </TouchableOpacity>
+            <SafeAreaView style={styles.safeArea}>
+                <TextClean style={styles.labelInstrucion}>
+                    Agora insira sua senha!
+                </TextClean>
+                <View style={styles.containerLabels}>
+                    <TextClean style={styles.labelPass}>
+                        Senha
                     </TextClean>
-                    <View style={styles.containerLabels}>
-                        <TextClean style={styles.labelPassword}>
-                            Senha
-                        </TextClean>
-                        <TextClean style={styles.labelExchangePassword}>
-                            Esqueceu sua senha?
-                        </TextClean>
-                    </View>
-                    <TouchableTemporari
-                        navigation={navigation}
-                    />
+                    <TextClean style={styles.labelExchange}>
+                        Esqueceu sua senha?
+                    </TextClean>
                 </View>
-                {/* <TouchableOpacity
-                        style={styles.buttonNext}
-                        onPress={() => this.setState({ error: !this.state.error })}
-                    >
-                        <TextClean style={styles.textAvancar}>
-                            Avançar
-                        </TextClean>
-                    </TouchableOpacity> */}
+                <TouchableTemporari
+                    navigation={navigation}
+                    user={route.params.user}
+                />
             </SafeAreaView>
         </View>
     )

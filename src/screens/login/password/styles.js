@@ -8,10 +8,10 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 25,
     },
-    labelPassword: {
+    labelPass: {
         color: 'white'
     },
-    labelExchangePassword: {
+    labelExchange: {
         color: Color.BLUE
     },
     containerLabels: {
@@ -19,4 +19,18 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    safeArea: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    container: {
+        flex: 1,
+        paddingHorizontal: 16,
+        backgroundColor: Color.DARK,
+    },
+    goBack: {
+        padding: 8,
+        paddingTop: 16,
+        position: 'absolute',
+    }
 })

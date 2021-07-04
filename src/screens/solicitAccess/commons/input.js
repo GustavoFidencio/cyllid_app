@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, memo } from 'react';
-import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
+import { Animated, StyleSheet, TextInput, Text } from 'react-native';
 
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const Input = memo(({ placeholder, error, value, setValue, setShow, title }) => {
+export const Input = memo(({ placeholder, error, value, setValue, title }) => {
 
     const err = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
@@ -15,9 +15,7 @@ export const Input = memo(({ placeholder, error, value, setValue, setShow, title
     }, [error])
 
     useEffect(() => {
-        setTimeout(() => {
-            Animate.smooth(100, valueAnimate, 800)
-        }, 600);
+        setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600);
     }, [])
 
     const borderColor = err.interpolate({
@@ -65,8 +63,6 @@ export const Input = memo(({ placeholder, error, value, setValue, setShow, title
                     autoCapitalize='none'
                     autoCompleteType={'off'}
                     placeholder={placeholder}
-                    onBlur={() => setShow(false)}
-                    onFocus={() => setShow(true)}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     onChangeText={val => setValue(val)}

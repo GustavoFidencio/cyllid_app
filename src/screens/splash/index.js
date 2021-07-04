@@ -1,21 +1,28 @@
 import styles from './styles';
 
-import React from 'react';
 import LottieView from 'lottie-react-native';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { NameUser } from './commons';
 import Color from 'cyllid/src/assets/colors';
 import Animation from 'cyllid/src/assets/videos/splash.json';
 
 export const Splash = ({ navigation }) => {
 
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            let storage = await AsyncStorage.getItem('user');
+            setUser(storage)
+        })();
+    }, [])
+
     const _checkToken = () => {
-        AsyncStorage.getItem('token')
-            .then(token => {
-                if (token) navigation.replace('TabNav')
-                else navigation.replace('Login')
-            })
+        if (user) navigation.replace('Password', { user })
+        else navigation.replace('Login')
     }
 
     return (
@@ -29,7 +36,10 @@ export const Splash = ({ navigation }) => {
                     onAnimationFinish={_checkToken}
                 />
             </View>
-            {/* <NameUser /> */}
+            {
+                user != null &&
+                <NameUser name={user} />
+            }
         </SafeAreaView>
     )
 }

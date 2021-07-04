@@ -6,8 +6,8 @@ import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react
 
 import { StorageAuth } from '../storage';
 import Color from 'cyllid/src/assets/colors';
-import { DescText, Ilustrator, SolicitAcces } from './commons';
-import { Switch, InputValidation, TitleAnimated, TextClean, Load, } from "cyllid/src/helpers";
+import { DescText, Ilustrator, SolicitAcces, Switch } from './commons';
+import { InputValidation, TitleAnimated, TextClean, Load, } from "cyllid/src/helpers";
 
 export class Login extends React.PureComponent {
 
@@ -17,10 +17,12 @@ export class Login extends React.PureComponent {
             name: '',
             error: false,
             isLoad: false,
+            remember: false,
             showKeyboard: false,
         }
         this.KeyboardHide = Keyboard.addListener('keyboardDidHide', () => this.setState({ showKeyboard: false }));
         this.KeyboardShow = Keyboard.addListener('keyboardDidShow', () => this.setState({ showKeyboard: true }));
+        this._validateUser = this._validateUser.bind(this);
     }
 
     componentWillUnmount() {
@@ -32,7 +34,9 @@ export class Login extends React.PureComponent {
         this.setState({ isLoad: true })
         StorageAuth.checkUser(this.state.name)
             .then(async () => {
-                await AsyncStorage.setItem('user', this.state.name)
+                if (this.state.remember) {
+                    await AsyncStorage.setItem('user', this.state.name)
+                }
                 this.props.navigation.navigate('Password')
             })
             .catch(() => this.setState({ error: !this.state.error }))
@@ -62,9 +66,7 @@ export class Login extends React.PureComponent {
                                 />
                             </View>
                         </View>
-                        <Ilustrator
-                            show={!showKeyboard}
-                        />
+                        <Ilustrator show={!showKeyboard} />
                         <View style={styles.container}>
                             <InputValidation
                                 title={'Usuário'}
@@ -80,11 +82,14 @@ export class Login extends React.PureComponent {
                                 <TextClean style={styles.textLembrar}>
                                     Lembrar
                                 </TextClean>
-                                <Switch />
+                                <Switch
+                                    value={this.state.remember}
+                                    setValue={remember => this.setState({ remember })}
+                                />
                             </View>
                             <TouchableOpacity
                                 style={styles.buttonNext}
-                                onPress={() => this._validateUser()}
+                                onPress={this._validateUser}
                             >
                                 {
                                     this.state.isLoad ?

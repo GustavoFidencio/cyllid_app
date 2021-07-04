@@ -9,12 +9,9 @@ export const Touchable = ({ item, index, remove, addValue, disabled, err }) => {
     const colorErr = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => {
-        Animate.elasticPersonalizado(100, valueAnimate, 1000)
-    }, []);
+    useEffect(() => Animate.elasticPersonalizado(100, valueAnimate, 1000), []);
 
     useEffect(() => {
-        console.log(err);
         Animate.default(err ? 100 : 0, colorErr, 2300)
     }, [err]);
 
@@ -29,11 +26,8 @@ export const Touchable = ({ item, index, remove, addValue, disabled, err }) => {
     })
 
     const getNumber = () => {
-        if (index + 1 > 9) {
-            return '0'
-        } else {
-            return `${index + 1}`
-        }
+        if (index + 1 > 9) return '0'
+        else return `${index + 1}`
     }
 
     return (
@@ -51,19 +45,8 @@ export const Touchable = ({ item, index, remove, addValue, disabled, err }) => {
                 // onPress={() => !item.um && !item.dois ? remove() : addValue(item)}
                 onPress={() => addValue(getNumber())}
             >
-                <Animated.Text style={{
-                    ...styles.textTouchable,
-                    color: colorre
-                }} >
-                    {/* {
-                        !item.um && !item.dois ?
-                            'Excluir'
-                            :
-                            `${item.um} e ${item.dois}`
-                    } */}
-                    {
-                        getNumber()
-                    }
+                <Animated.Text style={{ ...styles.textTouchable, color: colorre }} >
+                    {getNumber()}
                 </Animated.Text>
             </TouchableOpacity>
         </Animated.View>

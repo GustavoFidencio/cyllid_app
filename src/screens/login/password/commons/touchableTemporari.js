@@ -1,107 +1,92 @@
-import React from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, { useState, useCallback, useEffect } from 'react';
 import { FlatList, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import { CirclePass } from './circlePass';
 import { Touchable } from './touchable';
 import { StorageAuth } from '../../storage';
 import Color from 'cyllid/src/assets/colors';
-import { TextClean, Load } from 'cyllid/src/helpers';
+import { Load, Icon } from 'cyllid/src/helpers';
+
+export const TouchableTemporari = ({ navigation, user }) => {
+
+    const [err, setError] = useState(false);
+    const [isLoad, setLoad] = useState(false);
+    const [valueSelect, setSelect] = useState('');
+
+    const _deleteVal = () => setSelect(valueSelect.substring(0, valueSelect.length - 1))
+
+    useEffect(() => {
+        console.log(valueSelect);
+    }, [valueSelect])
+
+    const _onChange = useCallback((numbers) => {
+        _setVal(numbers)
+            .finally(() => {
+                console.log(valueSelect.length);
+                if (valueSelect.length == 6) _checkPassword()
+            })
+    }, [valueSelect])
+
+    const _setVal = (numbers) => {
+        return new Promise(resolve => {
+            if (valueSelect.length == 0) setSelect(`${numbers}`)
+            else setSelect(`${valueSelect}${numbers}`)
+            resolve()
+        })
+    }
+
+    const _checkPassword = () => {
+        setLoad(true)
+        console.log(user, valueSelect);
+        StorageAuth.validPassword(user, valueSelect)
+            .then(() => navigation.replace('Home'))
+            .catch(err => {
+                setError(err);
+                setSelect('');
+            })
+            .finally(() => setLoad(false))
+    }
+
+    return (
+        <>
+            <View style={styles.containerList}>
+                <FlatList
+                    horizontal
+                    data={valueSelect}
+                    style={styles.listCircles}
+                    keyExtractor={(_, index) => index.toString()}
+                    renderItem={(_, index) => <CirclePass key={index + 1} />}
+                />
+                {
+                    isLoad && <Load size={30} />
+                }
+            </View>
+            <View style={styles.containerButtons} >
+                {
+                    Array(10).fill("").map((item, index) =>
+                        <Touchable
+                            err={err}
+                            key={index}
+                            item={item}
+                            index={index}
+                            disabled={isLoad}
+                            addValue={_onChange}
+                        />
+                    )
+                }
+                <TouchableOpacity
+                    onPress={_deleteVal}
+                    style={styles.buttonExclude}
+                    disabled={valueSelect.length == 0}
+                >
+                    <Icon size={30} lib={'Feather'} color={'white'} name={'delete'} />
+                </TouchableOpacity>
+            </View>
+        </>
+    )
+}
 
 const WIDTH = Dimensions.get('window').width;
-
-export class TouchableTemporari extends React.PureComponent {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            err: false,
-            numbers: [],
-            isLoad: false,
-            valueSelect: '',
-        }
-        this._deleteVal = this._deleteVal.bind(this);
-        this._onChange = this._onChange.bind(this);
-        // this._removeItem = this._removeItem.bind(this);
-        this._checkPassword = this._checkPassword.bind(this);
-    }
-
-    _deleteVal() {
-        const { valueSelect } = this.state;
-        this.setState({ valueSelect: valueSelect.substring(0, valueSelect.length - 1) })
-    }
-
-    // _removeItem() {
-    //     if (this.state.valueSelect.length == 1) this.setState({ valueSelect: [] })
-    //     else this.state.valueSelect.splice(1, 1)
-    //     this.forceUpdate()
-    // }
-
-    _onChange(numbers) {
-        if (this.state.valueSelect.length <= 5) {
-            this.setState({ valueSelect: this.state.valueSelect += numbers })
-            this.forceUpdate()
-            if (this.state.valueSelect.length == 6)
-                this._checkPassword()
-        }
-    }
-
-    async _checkPassword() {
-        this.setState({ isLoad: true })
-        let user = await AsyncStorage.getItem('user')
-        StorageAuth.validPassword(user, this.state.valueSelect)
-            .then(() => this.props.navigation.replace('Home'))
-            .catch(err => this.setState({ err: !this.state.err, valueSelect: '' }))
-            .finally(() => this.setState({ isLoad: false }))
-    }
-
-    render() {
-        return (
-            <>
-                <View style={styles.containerList}>
-                    <FlatList
-                        horizontal
-                        style={styles.listCircles}
-                        data={this.state.valueSelect}
-                        keyExtractor={(_, index) => index.toString()}
-                        renderItem={() =>
-                            <CirclePass
-                            // limit={this.state.err}
-                            />
-                        }
-                    />
-                    {
-                        this.state.isLoad &&
-                        <Load size={30} />
-                    }
-                </View>
-                <View style={styles.containerButtons} >
-                    {
-                        Array(10).fill("").map((item, index) => {
-                            return (
-                                <Touchable
-                                    item={item}
-                                    index={index}
-                                    err={this.state.err}
-                                    disabled={this.state.isLoad}
-                                    addValue={this._onChange}
-                                />
-                            )
-                        })
-                    }
-                </View>
-                <TouchableOpacity
-                    onPress={this._deleteVal}
-                    style={styles.buttonExclude}
-                >
-                    <TextClean style={styles.textButton}>
-                        X
-                    </TextClean>
-                </TouchableOpacity>
-            </>
-        )
-    }
-}
 
 const styles = StyleSheet.create({
     labelTiming: {
@@ -138,9 +123,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: (WIDTH - 64) / 3,
     },
-    textButton: {
-        fontSize: 30,
-        color: Color.BLUE,
-        fontWeight: 'bold',
-    }
 })

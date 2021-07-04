@@ -9,14 +9,20 @@ const phases = [Basic, Important, AccessApp];
 
 export const ListPhases = memo(({ show }) => {
 
+    let teste = useRef(null);
     const scrollX = useRef(new Animated.Value(0)).current;
 
-    const _renderItem = Item => <Item.item />
+    const _next = index => {
+        teste.current.scrollToIndex({ animated: true, index })
+    }
+
+    const _renderItem = Item => <Item.item next={() => _next(Item.index + 1)} />
 
     return (
         show &&
         <>
             <FlatList
+                ref={teste}
                 horizontal
                 data={phases}
                 pagingEnabled

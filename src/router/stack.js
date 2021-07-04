@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { Animated, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Animated, SafeAreaView, StyleSheet } from 'react-native';
 
 import { TabNav } from './tab';
 import Color from 'cyllid/src/assets/colors'
@@ -53,6 +53,8 @@ export const StackNav = () => {
         };
     };
 
+    const _noneArrow = () => <View></View>
+
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -62,32 +64,30 @@ export const StackNav = () => {
                 <Stack.Screen
                     name="Login"
                     component={Login}
+                    options={{ header: _noneArrow }}
                     options={{ cardStyleInterpolator: _animatedBottom }}
                 />
                 <Stack.Screen
                     name="Splash"
                     component={Splash}
+                    options={{ header: _noneArrow }}
                 />
                 <Stack.Screen
                     name="Password"
                     component={Password}
+                    options={{ header: _noneArrow }}
                 />
                 <Stack.Screen
                     name="TabNav"
                     component={TabNav}
+                    options={{ header: _noneArrow }}
                 />
                 <Stack.Screen
                     name="SolicitAccess"
                     component={SolicitAccess}
+                    options={{ header: _noneArrow }}
                 />
             </Stack.Navigator>
         </NavigationContainer>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Color.DARK
-    }
-})

@@ -1,32 +1,45 @@
 import LottieView from 'lottie-react-native';
-import React, { useEffect, useRef } from 'react';
-import { View, Text, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { Input } from '../input';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
-import { TextClean, Load } from "cyllid/src/helpers";
+import { TextClean, Load, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
 
 const { width } = Dimensions.get('window');
 
-export const Basic = ({ }) => {
+export const Basic = ({ next }) => {
 
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
+    const [name, setName] = useState('');
+    const [sobName, setSobname] = useState('');
+
     useEffect(() => {
-        setTimeout(() => {
-            Animate.smooth(100, valueAnimate, 800)
-        }, 600);
+        setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600);
     }, [])
 
     const opacity = valueAnimate.interpolate({
         inputRange: [0, 100],
         outputRange: [0, 1]
-    })
+    });
+
+    const _goBack = () => navigation.replace('Login');
+
+    const _validRegisters = () => {
+        if (name.length >= 3 && sobName.length >= 3) next()
+    }
 
     return (
-        <View style={styles.container}>
+        <Animated.View style={{ ...styles.container, opacity }} >
+            <TouchableOpacity
+                onPress={_goBack}
+                style={styles.goBack}
+            >
+                <Icon size={40} name={'left'} lib={'antdesign'} />
+            </TouchableOpacity>
             <View style={styles.videoAnimation}>
                 <LottieView
                     autoPlay
@@ -39,25 +52,22 @@ export const Basic = ({ }) => {
             </TextClean>
             <View style={styles.containerInputs}>
                 <Input
+                    value={name}
                     title={'Nome'}
                     placeholder={'Ex: Giovane'}
-                    setShow={() => console.log('oi')}
+                    setValue={val => setName(val)}
                 />
                 <Input
+                    value={sobName}
                     title={'Sobrenome'}
                     placeholder={'Ex: Santos Silva'}
-                    setShow={() => console.log('oi')}
+                    setValue={val => setSobname(val)}
                 />
             </View>
-            <Animated.View style={{
-                width: '100%',
-                opacity
-            }}>
+            <View style={{ width: '100%' }}>
                 <TouchableOpacity
+                    onPress={_validRegisters}
                     style={styles.buttonNext}
-                    onPress={() => {
-                        console.log('oi moço');
-                    }}
                 >
                     {/* this.state.isLoad ?
                         <Load />
@@ -66,8 +76,8 @@ export const Basic = ({ }) => {
                         Avançar
                     </TextClean>
                 </TouchableOpacity>
-            </Animated.View>
-        </View>
+            </View>
+        </Animated.View>
     )
 }
 
@@ -84,8 +94,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     videoAnimation: {
-        width: width * .6,
-        height: width * .6,
+        flex: 1,
+        width: '100%',
+        maxWidth: width * .6,
+        maxHeight: width * .6,
     },
     textAvancar: {
         fontSize: 17,
@@ -106,5 +118,10 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Nunito-SemiBold',
     },
-
+    goBack: {
+        left: 0,
+        padding: 8,
+        paddingTop: 16,
+        position: 'absolute',
+    }
 })
