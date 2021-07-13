@@ -52,9 +52,10 @@ export const Important = ({ next }) => {
             </TextClean>
             <View style={styles.containerInputs}>
                 <Input
+                    type={'cpf'}
                     value={cpf}
                     title={'CPF'}
-                    placeholder={'Ex: 153.523.974-1'}
+                    placeholder={'Ex: 153.523.974-01'}
                     setValue={val => setCpf(val)}
                 />
                 <Input

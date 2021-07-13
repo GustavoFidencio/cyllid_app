@@ -6,9 +6,9 @@ import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { TouchableTemporari } from './commons';
 import { TextClean, Icon } from 'cyllid/src/helpers';
 
-export const Password = ({ navigation, route, }) => {
+export const Password = ({ navigation, route }) => {
 
-    const _goBack = () =>  navigation.replace('Login');
+    const _goBack = () => navigation.replace('Login');
 
     return (
         <View style={styles.container}>

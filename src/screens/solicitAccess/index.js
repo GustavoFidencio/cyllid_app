@@ -10,9 +10,7 @@ export const SolicitAccess = () => {
     const [show, setShow] = useState(false);
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => {
-        Animate.default(110, valueAnimate, 4800, _setShow)
-    }, []);
+    useEffect(() => Animate.default(110, valueAnimate, 4800, _setShow), []);
 
     const _setShow = () => setShow(true);
 

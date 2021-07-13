@@ -1,28 +1,36 @@
-import React, { useRef, memo, useEffect } from 'react';
+import React, { useRef, memo } from 'react';
 import { Animated, FlatList, StyleSheet, View } from 'react-native';
 
 import { Basic } from './basic';
 import { Important } from './important';
 import { AccessApp } from './accessApp';
 
-const phases = [Basic, Important, AccessApp];
+const phases = [
+    { Comp: Basic },
+    { Comp: Important },
+    { Comp: AccessApp }
+];
 
 export const ListPhases = memo(({ show }) => {
 
-    let teste = useRef(null);
+    let list = useRef(null);
     const scrollX = useRef(new Animated.Value(0)).current;
 
     const _next = index => {
-        teste.current.scrollToIndex({ animated: true, index })
+        if (index == phases.length) {
+            console.log('opa');
+        } else {
+            list.current.scrollToIndex({ animated: true, index })
+        }
     }
 
-    const _renderItem = Item => <Item.item next={() => _next(Item.index + 1)} />
+    const _renderItem = ({ item, index }) => <item.Comp next={() => _next(index + 1)} />
 
     return (
         show &&
         <>
             <FlatList
-                ref={teste}
+                ref={list}
                 horizontal
                 data={phases}
                 pagingEnabled
@@ -32,6 +40,7 @@ export const ListPhases = memo(({ show }) => {
                 decelerationRate={`fast`}
                 renderItem={_renderItem}
                 maxToRenderPerBatch={1}
+                keyboardShouldPersistTaps="handled"
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(_, index) => String(index)}
                 onScroll={Animated.event(

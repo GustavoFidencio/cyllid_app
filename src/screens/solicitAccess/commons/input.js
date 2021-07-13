@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, memo } from 'react';
-import { Animated, StyleSheet, TextInput, Text } from 'react-native';
+import { Animated, StyleSheet, Text } from 'react-native';
+import TextInputMask from 'react-native-text-input-mask';
 
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const Input = memo(({ placeholder, error, value, setValue, title }) => {
+export const Input = memo(({ placeholder, error, value, setValue, title, type = 'default' }) => {
 
     const err = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
@@ -42,19 +43,16 @@ export const Input = memo(({ placeholder, error, value, setValue, title }) => {
     return (
         <Animated.View
             style={{
-                width: '100%',
-                opacity: opacityBackground,
+                width: '100%', opacity: opacityBackground,
             }}
         >
             <Text style={styles.textUser}> {title} </Text>
             <Animated.View
                 style={{
-                    ...styles.backgroundInput,
-                    borderColor,
-                    width: width,
+                    borderColor, width: width, ...styles.backgroundInput,
                 }}
             >
-                <TextInput
+                <TextInputMask
                     value={value}
                     selectTextOnFocus
                     spellCheck={false}
@@ -65,11 +63,15 @@ export const Input = memo(({ placeholder, error, value, setValue, title }) => {
                     placeholder={placeholder}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
+                    mask={
+                        type != 'default' &&
+                        "[000].[000].[000]-[00]"
+                    }
                     onChangeText={val => setValue(val)}
                 />
             </Animated.View>
             <Animated.Text style={{ ...styles.textError, opacity }}>
-                Ops, usuário incorreto
+                Mínimo 3 caracteres
             </Animated.Text>
         </Animated.View>
     )
@@ -81,9 +83,9 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         color: '#c4c4c4',
         fontFamily: 'Nunito-Italic',
-
     },
     backgroundInput: {
+        top: -5,
         height: 40,
         width: '100%',
         marginTop: 5,
@@ -92,7 +94,8 @@ const styles = StyleSheet.create({
         backgroundColor: Color.DARK_ONE,
     },
     textError: {
-        top: 1,
+        left: 2,
+        top: -5,
         color: Color.ERROR,
     },
     textUser: {

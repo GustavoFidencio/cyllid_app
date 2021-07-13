@@ -16,23 +16,13 @@ export const TouchableTemporari = ({ navigation, user }) => {
     const _deleteVal = () => setSelect(valueSelect.substring(0, valueSelect.length - 1))
 
     useEffect(() => {
-        console.log(valueSelect);
+        if (valueSelect.length == 6) _checkPassword()
+        console.log(valueSelect, 'useeffect');
     }, [valueSelect])
 
-    const _onChange = useCallback((numbers) => {
-        _setVal(numbers)
-            .finally(() => {
-                console.log(valueSelect.length);
-                if (valueSelect.length == 6) _checkPassword()
-            })
-    }, [valueSelect])
-
-    const _setVal = (numbers) => {
-        return new Promise(resolve => {
-            if (valueSelect.length == 0) setSelect(`${numbers}`)
-            else setSelect(`${valueSelect}${numbers}`)
-            resolve()
-        })
+    const _onChange = (numbers) => {
+        if (valueSelect.length == 0) setSelect(`${numbers}`)
+        else setSelect(`${valueSelect}${numbers}`)
     }
 
     const _checkPassword = () => {

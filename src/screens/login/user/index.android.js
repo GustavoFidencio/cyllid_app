@@ -20,9 +20,9 @@ export class Login extends React.PureComponent {
             remember: false,
             showKeyboard: false,
         }
+        this._validateUser = this._validateUser.bind(this);
         this.KeyboardHide = Keyboard.addListener('keyboardDidHide', () => this.setState({ showKeyboard: false }));
         this.KeyboardShow = Keyboard.addListener('keyboardDidShow', () => this.setState({ showKeyboard: true }));
-        this._validateUser = this._validateUser.bind(this);
     }
 
     componentWillUnmount() {
@@ -34,10 +34,8 @@ export class Login extends React.PureComponent {
         this.setState({ isLoad: true })
         StorageAuth.checkUser(this.state.name)
             .then(async () => {
-                if (this.state.remember) {
-                    await AsyncStorage.setItem('user', this.state.name)
-                }
-                this.props.navigation.navigate('Password')
+                if (this.state.remember) await AsyncStorage.setItem('user', this.state.name)
+                this.props.navigation.navigate('Password', { user: this.state.name })
             })
             .catch(() => this.setState({ error: !this.state.error }))
             .finally(() => this.setState({ isLoad: false }))

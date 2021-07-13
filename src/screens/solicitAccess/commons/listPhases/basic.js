@@ -3,34 +3,36 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { Input } from '../input';
+import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
-import { TextClean, Load, Icon } from "cyllid/src/helpers";
+import { TextClean, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
-
-const { width } = Dimensions.get('window');
 
 export const Basic = ({ next }) => {
 
+    const [name, setName] = useState('');
+    const [isErr, setErr] = useState([false, false]);
+    const [sobName, setSobname] = useState('');
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
-    const [name, setName] = useState('');
-    const [sobName, setSobname] = useState('');
+    useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [name]);
 
-    useEffect(() => {
-        setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600);
-    }, [])
+    useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [sobName]);
+
+    useEffect(() => { setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600) }, [])
+
+    const _goBack = () => navigation.replace('Login');
+
+    const _validRegisters = () => {
+        let error = StoragePhases.validBasic(name, sobName, next);
+        setErr(error);
+    }
 
     const opacity = valueAnimate.interpolate({
         inputRange: [0, 100],
         outputRange: [0, 1]
     });
-
-    const _goBack = () => navigation.replace('Login');
-
-    const _validRegisters = () => {
-        if (name.length >= 3 && sobName.length >= 3) next()
-    }
 
     return (
         <Animated.View style={{ ...styles.container, opacity }} >
@@ -54,24 +56,23 @@ export const Basic = ({ next }) => {
                 <Input
                     value={name}
                     title={'Nome'}
+                    error={isErr[0]}
                     placeholder={'Ex: Giovane'}
                     setValue={val => setName(val)}
                 />
                 <Input
+                    error={isErr[1]}
                     value={sobName}
                     title={'Sobrenome'}
                     placeholder={'Ex: Santos Silva'}
                     setValue={val => setSobname(val)}
                 />
             </View>
-            <View style={{ width: '100%' }}>
+            <View style={{ width: '100%' }} >
                 <TouchableOpacity
                     onPress={_validRegisters}
                     style={styles.buttonNext}
                 >
-                    {/* this.state.isLoad ?
-                        <Load />
-                        : */}
                     <TextClean style={styles.textAvancar}>
                         Avançar
                     </TextClean>
@@ -80,6 +81,8 @@ export const Basic = ({ next }) => {
         </Animated.View>
     )
 }
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
@@ -123,5 +126,5 @@ const styles = StyleSheet.create({
         padding: 8,
         paddingTop: 16,
         position: 'absolute',
-    }
+    },
 })
