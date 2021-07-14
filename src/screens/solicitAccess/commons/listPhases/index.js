@@ -1,9 +1,12 @@
-import React, { useRef, memo } from 'react';
-import { Animated, FlatList, StyleSheet, View } from 'react-native';
+import React, { useRef, memo, useState } from 'react';
+import { Animated, FlatList, StyleSheet, View, } from 'react-native';
 
 import { Basic } from './basic';
+import { Progress } from '../';
 import { Important } from './important';
 import { AccessApp } from './accessApp';
+import { StoragePhases } from './storage';
+import { StorageSolicitAccess } from '../../storage';
 
 const phases = [
     { Comp: Basic },
@@ -14,21 +17,37 @@ const phases = [
 export const ListPhases = memo(({ show }) => {
 
     let list = useRef(null);
+    const [user, setUser] = useState({});
     const scrollX = useRef(new Animated.Value(0)).current;
 
-    const _next = index => {
-        if (index == phases.length) {
-            console.log('opa');
-        } else {
-            list.current.scrollToIndex({ animated: true, index })
-        }
+    const _solicitAccess = val => {
+        StorageSolicitAccess.solicitAccess(user, val)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
-    const _renderItem = ({ item, index }) => <item.Comp next={() => _next(index + 1)} />
+    const _next = (index, val) => {
+        if (index != phases.length) _setUser(val, index);
+        else _solicitAccess(val);
+    }
+
+    const _setUser = async (val, index) => {
+        setUser(await StoragePhases.setUser(val, user));
+        list.current.scrollToIndex({ animated: true, index });
+    }
+
+    const _renderItem = ({ item, index }) => <item.Comp next={val => _next(index + 1, val)} />
 
     return (
         show &&
         <>
+            <Progress
+
+            />
             <FlatList
                 ref={list}
                 horizontal
@@ -36,6 +55,7 @@ export const ListPhases = memo(({ show }) => {
                 pagingEnabled
                 bounces={false}
                 style={styles.flat}
+                scrollEnabled={false}
                 initialNumToRender={1}
                 decelerationRate={`fast`}
                 renderItem={_renderItem}
@@ -48,33 +68,6 @@ export const ListPhases = memo(({ show }) => {
                     { useNativeDriver: false }
                 )}
             />
-            <View
-                style={{
-                    flexDirection: 'row',
-                    paddingVertical: 10
-                }}
-            >
-                <View style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 99,
-                    backgroundColor: 'white',
-                }} />
-                <View style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 99,
-                    backgroundColor: 'white',
-                    marginLeft: 5
-                }} />
-                <View style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 99,
-                    backgroundColor: 'white',
-                    marginLeft: 5
-                }} />
-            </View>
         </>
     )
 })
@@ -84,4 +77,12 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
     },
+    containerProgress: {
+        height: 10,
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        paddingHorizontal: 2,
+        justifyContent: 'space-around',
+    }
 })

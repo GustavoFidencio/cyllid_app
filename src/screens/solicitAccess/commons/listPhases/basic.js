@@ -68,16 +68,16 @@ export const Basic = ({ next }) => {
                     setValue={val => setSobname(val)}
                 />
             </View>
-            <View style={{ width: '100%' }} >
-                <TouchableOpacity
-                    onPress={_validRegisters}
-                    style={styles.buttonNext}
-                >
-                    <TextClean style={styles.textAvancar}>
-                        Avançar
-                    </TextClean>
-                </TouchableOpacity>
-            </View>
+            {/* <View style={{ width: '100%' }} > */}
+            <TouchableOpacity
+                onPress={_validRegisters}
+                style={styles.buttonNext}
+            >
+                <TextClean style={styles.textAvancar}>
+                    Avançar
+                </TextClean>
+            </TouchableOpacity>
+            {/* </View> */}
         </Animated.View>
     )
 }

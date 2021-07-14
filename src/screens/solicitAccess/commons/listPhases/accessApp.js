@@ -1,38 +1,32 @@
 import LottieView from 'lottie-react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { Input } from '../input';
+import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
-import { Animate } from 'cyllid/src/services';
 import { TextClean, Load, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
-
-const { width } = Dimensions.get('window');
 
 export const AccessApp = ({ next }) => {
 
     const [user, setUser] = useState('');
     const [password, setPass] = useState('');
-    const valueAnimate = useRef(new Animated.Value(0)).current;
+    const [isErr, setErr] = useState([false, false]);
 
-    useEffect(() => {
-        setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600);
-    }, [])
+    useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [user]);
 
-    const opacity = valueAnimate.interpolate({
-        inputRange: [0, 100],
-        outputRange: [0, 1]
-    });
+    useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [password]);
 
     const _goBack = () => navigation.replace('Login');
 
     const _validRegisters = () => {
-        if (name.length >= 3 && sobName.length >= 3) next()
+        let error = StoragePhases.validBasic(user, password, next);
+        setErr(error);
     }
 
     return (
-        <Animated.View style={{ ...styles.container, opacity }} >
+        <Animated.View style={styles.container} >
             <TouchableOpacity
                 onPress={_goBack}
                 style={styles.goBack}
@@ -52,11 +46,13 @@ export const AccessApp = ({ next }) => {
             <View style={styles.containerInputs}>
                 <Input
                     value={user}
+                    error={isErr[0]}
                     placeholder={'Ex: Josi'}
                     title={'Nome de usuario'}
                     setValue={val => setUser(val)}
                 />
                 <Input
+                    error={isErr[1]}
                     value={password}
                     title={'Senha do aplicativo'}
                     setValue={val => setPass(val)}
@@ -79,6 +75,8 @@ export const AccessApp = ({ next }) => {
         </Animated.View>
     )
 }
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {

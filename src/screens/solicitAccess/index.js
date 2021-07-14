@@ -1,6 +1,6 @@
 import styles from './styles';
+import { SafeAreaView, Animated } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, Animated } from 'react-native'
 
 import { Animate } from 'cyllid/src/services';
 import { WelcomeAnimate, HelloAnimate, ListPhases } from './commons';

@@ -5,7 +5,7 @@ import TextInputMask from 'react-native-text-input-mask';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const Input = memo(({ placeholder, error, value, setValue, title, type = 'default' }) => {
+export const Input = memo(({ placeholder, error, value, setValue, title, type = 'default', labelError = 'Mínimo 3 caracteres' }) => {
 
     const err = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
@@ -15,9 +15,7 @@ export const Input = memo(({ placeholder, error, value, setValue, title, type = 
         else Animate.smooth(0, err)
     }, [error])
 
-    useEffect(() => {
-        setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600);
-    }, [])
+    useEffect(() => { setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600) }, [])
 
     const borderColor = err.interpolate({
         inputRange: [0, 100],
@@ -41,11 +39,7 @@ export const Input = memo(({ placeholder, error, value, setValue, title, type = 
     });
 
     return (
-        <Animated.View
-            style={{
-                width: '100%', opacity: opacityBackground,
-            }}
-        >
+        <Animated.View style={{ width: '100%', opacity: opacityBackground }} >
             <Text style={styles.textUser}> {title} </Text>
             <Animated.View
                 style={{
@@ -71,7 +65,7 @@ export const Input = memo(({ placeholder, error, value, setValue, title, type = 
                 />
             </Animated.View>
             <Animated.Text style={{ ...styles.textError, opacity }}>
-                Mínimo 3 caracteres
+                {labelError}
             </Animated.Text>
         </Animated.View>
     )

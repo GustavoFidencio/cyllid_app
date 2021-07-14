@@ -1,39 +1,33 @@
 import LottieView from 'lottie-react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { Input } from '../input';
+import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 import { TextClean, Load, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
 
-const { width } = Dimensions.get('window');
-
 export const Important = ({ next }) => {
-
-    const valueAnimate = useRef(new Animated.Value(0)).current;
 
     const [cpf, setCpf] = useState('');
     const [email, setEmail] = useState('');
+    const [isErr, setErr] = useState([false, false]);
 
-    useEffect(() => {
-        setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600);
-    }, [])
+    useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [cpf]);
 
-    const opacity = valueAnimate.interpolate({
-        inputRange: [0, 100],
-        outputRange: [0, 1]
-    });
+    useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [email]);
 
     const _goBack = () => navigation.replace('Login');
 
     const _validRegisters = () => {
-        if (cpf.length >= 3 && email.length >= 3) next()
+        let error = StoragePhases.validImportant(cpf, email, next);
+        setErr(error);
     }
 
     return (
-        <Animated.View style={{ ...styles.container, opacity }} >
+        <Animated.View style={styles.container}>
             <TouchableOpacity
                 onPress={_goBack}
                 style={styles.goBack}
@@ -55,14 +49,17 @@ export const Important = ({ next }) => {
                     type={'cpf'}
                     value={cpf}
                     title={'CPF'}
-                    placeholder={'Ex: 153.523.974-01'}
+                    error={isErr[0]}
                     setValue={val => setCpf(val)}
+                    labelError={'CPF incompleto'}
+                    placeholder={'Ex: 153.523.974-01'}
                 />
                 <Input
                     title={'E-mail'}
                     value={email}
-                    placeholder={'Ex: gustavo@gmail.com'}
+                    error={isErr[1]}
                     setValue={val => setEmail(val)}
+                    placeholder={'Ex: gustavo@gmail.com'}
                 />
             </View>
             <View style={{ width: '100%' }}>
@@ -81,6 +78,8 @@ export const Important = ({ next }) => {
         </Animated.View>
     )
 }
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
