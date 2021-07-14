@@ -8,7 +8,7 @@ import Color from 'cyllid/src/assets/colors';
 import { TextClean, Load, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
 
-export const AccessApp = ({ next }) => {
+export const AccessApp = ({ next, back }) => {
 
     const [user, setUser] = useState('');
     const [password, setPass] = useState('');
@@ -18,8 +18,6 @@ export const AccessApp = ({ next }) => {
 
     useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [password]);
 
-    const _goBack = () => navigation.replace('Login');
-
     const _validRegisters = () => {
         let error = StoragePhases.validBasic(user, password, next);
         setErr(error);
@@ -28,7 +26,7 @@ export const AccessApp = ({ next }) => {
     return (
         <Animated.View style={styles.container} >
             <TouchableOpacity
-                onPress={_goBack}
+                onPress={back}
                 style={styles.goBack}
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />

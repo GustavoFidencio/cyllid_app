@@ -9,7 +9,7 @@ import { Animate } from 'cyllid/src/services';
 import { TextClean, Load, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
 
-export const Important = ({ next }) => {
+export const Important = ({ next, back }) => {
 
     const [cpf, setCpf] = useState('');
     const [email, setEmail] = useState('');
@@ -19,8 +19,6 @@ export const Important = ({ next }) => {
 
     useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [email]);
 
-    const _goBack = () => navigation.replace('Login');
-
     const _validRegisters = () => {
         let error = StoragePhases.validImportant(cpf, email, next);
         setErr(error);
@@ -29,7 +27,7 @@ export const Important = ({ next }) => {
     return (
         <Animated.View style={styles.container}>
             <TouchableOpacity
-                onPress={_goBack}
+                onPress={back}
                 style={styles.goBack}
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />

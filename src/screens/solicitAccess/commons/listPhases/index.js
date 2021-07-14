@@ -1,5 +1,5 @@
 import React, { useRef, memo, useState } from 'react';
-import { Animated, FlatList, StyleSheet, View, } from 'react-native';
+import { Animated, FlatList, StyleSheet, View } from 'react-native';
 
 import { Basic } from './basic';
 import { Progress } from '../';
@@ -14,7 +14,7 @@ const phases = [
     { Comp: AccessApp }
 ];
 
-export const ListPhases = memo(({ show }) => {
+export const ListPhases = memo(({ show, navigation }) => {
 
     let list = useRef(null);
     const [user, setUser] = useState({});
@@ -35,18 +35,27 @@ export const ListPhases = memo(({ show }) => {
         else _solicitAccess(val);
     }
 
+    const _back = (index) => {
+        if (index == 0) navigation.goBack();
+        else list.current.scrollToIndex({ animated: true, index: index - 1 });
+    }
+
     const _setUser = async (val, index) => {
         setUser(await StoragePhases.setUser(val, user));
         list.current.scrollToIndex({ animated: true, index });
     }
 
-    const _renderItem = ({ item, index }) => <item.Comp next={val => _next(index + 1, val)} />
+    const _renderItem = ({ item, index }) =>
+        <item.Comp
+            back={() => _back(index)}
+            next={val => _next(index + 1, val)}
+        />
 
     return (
         show &&
         <>
             <Progress
-
+                valueAnimate={scrollX}
             />
             <FlatList
                 ref={list}

@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animate } from 'cyllid/src/services';
 import { WelcomeAnimate, HelloAnimate, ListPhases } from './commons';
 
-export const SolicitAccess = () => {
+export const SolicitAccess = ({ navigation }) => {
 
     const [show, setShow] = useState(false);
     const valueAnimate = useRef(new Animated.Value(0)).current;
@@ -20,6 +20,7 @@ export const SolicitAccess = () => {
             <WelcomeAnimate faded={valueAnimate} />
             <ListPhases
                 show={show}
+                navigation={navigation}
             />
         </SafeAreaView>
     )

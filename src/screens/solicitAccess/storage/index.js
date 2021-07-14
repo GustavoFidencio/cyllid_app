@@ -1,5 +1,3 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
 import { Executor, RequestSolicitAccess } from 'cyllid/src/factory/request';
 
 export class StorageSolicitAccess {

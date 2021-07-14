@@ -1,23 +1,22 @@
-import React, { memo, useEffect, useState, useRef } from "react";
-import { View, Text, Animated, StyleSheet, Dimensions } from "react-native";
+import React, { memo, useEffect, useRef } from "react";
+import { View, Animated, StyleSheet, Dimensions } from "react-native";
 
 import Color from 'cyllid/src/assets/colors';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-export const Progress = memo(({ }) => {
+export const Progress = memo(({ valueAnimate }) => {
 
-    const valueAnimate = useRef(new Animated.Value(0)).current
-
-    useEffect(() => {
-        console.log("didmount");
-    }, [])
+    const largeProgress = valueAnimate.interpolate({
+        inputRange: [0, width * 2],
+        outputRange: [width / 3.1, width]
+    });
 
     return (
         <View>
             <View style={styles.containerProgress}>
                 {
-                    Array(3).fill("").map((item, index) =>
+                    Array(3).fill("").map((_, index) =>
                         <Animated.View
                             key={index}
                             style={styles.itemBackground}
@@ -25,8 +24,8 @@ export const Progress = memo(({ }) => {
                     )
                 }
             </View>
-            <View style={{
-                width: 100,
+            <Animated.View style={{
+                width: largeProgress,
                 ...styles.containerProgressBlue,
             }}>
                 {
@@ -37,7 +36,7 @@ export const Progress = memo(({ }) => {
                         />
                     )
                 }
-            </View>
+            </Animated.View>
         </View>
     )
 })

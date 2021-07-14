@@ -9,7 +9,7 @@ import { Animate } from 'cyllid/src/services';
 import { TextClean, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
 
-export const Basic = ({ next }) => {
+export const Basic = ({ next, back }) => {
 
     const [name, setName] = useState('');
     const [isErr, setErr] = useState([false, false]);
@@ -21,8 +21,6 @@ export const Basic = ({ next }) => {
     useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [sobName]);
 
     useEffect(() => { setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600) }, [])
-
-    const _goBack = () => navigation.replace('Login');
 
     const _validRegisters = () => {
         let error = StoragePhases.validBasic(name, sobName, next);
@@ -37,7 +35,7 @@ export const Basic = ({ next }) => {
     return (
         <Animated.View style={{ ...styles.container, opacity }} >
             <TouchableOpacity
-                onPress={_goBack}
+                onPress={back}
                 style={styles.goBack}
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />
