@@ -58,7 +58,7 @@ export const StackNav = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName='SolicitAccess'
+                initialRouteName='Splash'
                 screenOptions={_getScreenOptions}
             >
                 <Stack.Screen

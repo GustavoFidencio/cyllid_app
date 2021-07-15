@@ -22,6 +22,18 @@ export class StoragePhases {
         })
     }
 
+    static deleteInfo(state, index) {
+        let data = state;
+        if (index == 1) {
+            delete data.name
+            delete data.surname
+        } else {
+            delete data.cpf
+            delete data.email
+        }
+        return data;
+    }
+
     //basic/Access
     static validBasic(name, sobName, next) {
         let error = [false, false]; //nome nao pode ter espaço

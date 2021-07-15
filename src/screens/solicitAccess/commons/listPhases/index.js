@@ -35,9 +35,12 @@ export const ListPhases = memo(({ show, navigation }) => {
         else _solicitAccess(val);
     }
 
-    const _back = (index) => {
+    const _back = async (index) => {
         if (index == 0) navigation.goBack();
-        else list.current.scrollToIndex({ animated: true, index: index - 1 });
+        else {
+            setUser(await StoragePhases.deleteInfo(user, index));
+            list.current.scrollToIndex({ animated: true, index: index - 1 });
+        }
     }
 
     const _setUser = async (val, index) => {

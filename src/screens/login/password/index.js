@@ -1,8 +1,9 @@
 import styles from './styles';
 
 import React from 'react';
-import { View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity, StatusBar } from 'react-native';
 
+import Color from 'cyllid/src/assets/colors';
 import { TouchableTemporari } from './commons';
 import { TextClean, Icon } from 'cyllid/src/helpers';
 
@@ -12,6 +13,7 @@ export const Password = ({ navigation, route }) => {
 
     return (
         <View style={styles.container}>
+            <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
             <TouchableOpacity
                 onPress={_goBack}
                 style={styles.goBack}

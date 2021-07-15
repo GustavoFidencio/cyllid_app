@@ -1,97 +1,197 @@
 import React from 'react';
-import { Text, View, SafeAreaView, ScrollView } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient';
+import { Text, View, SafeAreaView, ScrollView, StatusBar } from 'react-native'
 
 import Color from 'cyllid/src/assets/colors';
-import { TextClean } from 'cyllid/src/helpers';
+import { TextClean, Icon } from 'cyllid/src/helpers';
 
 export const HomeInitial = ({ }) => {
 
     return (
         <SafeAreaView style={{
             flex: 1,
-            paddingHorizontal: 13,
             backgroundColor: Color.DARK,
+            // backgroundColor: 'white',
+
         }}>
-            <View style={{
-                marginTop: 20,
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-            }}>
-                <TextClean
-                    style={{
-                        color: 'white',
-                        fontSize: 20,
-                        fontFamily: 'Nunito-Bold',
-                    }}
-                >
-                    Giovane
-                </TextClean>
-                <TextClean
-                    style={{
-                        fontSize: 20,
-                        color: 'white',
-                        fontFamily: 'Nunito-Bold',
-                    }}
-                >
-                    Jun/21
-                </TextClean>
-            </View>
+            <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
             <View
                 style={{
-                    marginTop: 30
+                    flex: 1,
+                    paddingHorizontal: 13,
                 }}
             >
-                <TextClean
-                    style={{
-                        fontSize: 18,
-                        color: 'white',
-                        fontFamily: 'Nunito',
-                    }}
-                >
-                    Seu saldo hoje:
-                </TextClean>
                 <View
                     style={{
-                        flexDirection: 'row',
-                    }}
-                >
-                    <TextClean
-                        style={{
-                            fontSize: 13,
-                            color: Color.BLUE,
-                            fontFamily: 'Nunito-Bold',
-                            top: 3,
-                        }}
-                    >
-                        R$
-                    </TextClean>
-                    <TextClean
-                        style={{
-                            left: 5,
-                            fontSize: 30,
-                            color: Color.BLUE,
-                            fontFamily: 'Nunito-Black',
-                        }}
-                    >
-                        4.513,20
-                    </TextClean>
-                </View>
-            </View>
-            <ScrollView
-            >
-                <View
-                    style={{
-                        width: 170,
-                        height: 120,
-                        borderRadius: 15,
-                        // backgroundColor: 'rgba(256,256,256, .8)',
-                        backgroundColor: '#181548'
+                        backgroundColor: 'white'
                     }}
                 >
 
+                    <View style={{
+                        width: '100%',
+                        marginTop: 20,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                        <TextClean
+                            style={{
+                                fontSize: 20,
+                                color: 'white',
+                                fontFamily: 'Nunito-Bold',
+                            }}
+                        >
+                            Giovane
+                        </TextClean>
+                        <TextClean
+                            style={{
+                                fontSize: 20,
+                                color: 'white',
+                                fontFamily: 'Nunito-Bold',
+                            }}
+                        >
+                            Jun/21
+                        </TextClean>
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 30
+                        }}
+                    >
+                        <TextClean
+                            style={{
+                                fontSize: 18,
+                                color: 'white',
+                                fontFamily: 'Nunito',
+                            }}
+                        >
+                            Seu saldo hoje:
+                        </TextClean>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                            }}
+                        >
+                            <TextClean
+                                style={{
+                                    top: 3,
+                                    fontSize: 13,
+                                    color: Color.BLUE,
+                                    fontFamily: 'Nunito-Bold',
+                                }}
+                            >
+                                R$
+                            </TextClean>
+                            <TextClean
+                                style={{
+                                    left: 5,
+                                    fontSize: 30,
+                                    color: Color.BLUE,
+                                    fontFamily: 'Nunito-Black',
+                                }}
+                            >
+                                4.513,20
+                            </TextClean>
+                        </View>
+                    </View>
                 </View>
-            </ScrollView>
+
+
+            </View>
+            <View >
+                <ScrollView
+                    horizontal
+                    style={{
+                        top: 5,
+                        height: 165
+                    }}
+                    showsHorizontalScrollIndicator={false}
+                >
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        // colors={['#3CE8A4', '#1AD46D']}
+                        colors={['#1AD46D', '#1c6639']}
+                        style={{
+                            width: 220,
+                            height: 120,
+                            marginLeft: 13,
+                            borderWidth: 1,
+                            borderRadius: 11,
+                            flexDirection: 'row',
+                            borderColor: 'white',
+                            alignItems: 'flex-end',
+                            backgroundColor: 'green',
+                        }}
+                    >
+                        <TextClean
+                            style={{
+                                opacity: .5,
+                                fontSize: 42,
+                                color: 'white',
+                                fontFamily: 'Nunito-Black',
+                                left: 8
+                            }}
+                        >
+                            Entrada
+                        </TextClean>
+                        <Icon
+                            style={{
+                                top: 0,
+                                right: 10,
+                                opacity: .2,
+                                position: 'absolute',
+                            }}
+                            size={100}
+                            lib={'Feather'}
+                            color={'white'}
+                            name={'trending-up'}
+                        />
+                    </LinearGradient>
+
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        colors={['#C91920', '#951B22']}
+                        style={{
+                            width: 220,
+                            height: 120,
+                            marginLeft: 13,
+                            borderWidth: 1,
+                            marginRight: 13,
+                            borderRadius: 11,
+                            flexDirection: 'row',
+                            borderColor: 'white',
+                            alignItems: 'flex-end',
+                            backgroundColor: 'green',
+                        }}
+                    >
+                        <TextClean
+                            style={{
+                                opacity: .5,
+                                fontSize: 42,
+                                color: 'white',
+                                fontFamily: 'Nunito-Black',
+                                left: 8
+                            }}
+                        >
+                            Saida
+                        </TextClean>
+                        <Icon
+                            style={{
+                                // fontSize: 30
+                                right: 10,
+                                position: 'absolute',
+                                opacity: .2
+                                // backgroundColor:'purple'
+                            }}
+                            size={100}
+                            lib={'Feather'}
+                            color={'white'}
+                            name={'trending-down'}
+                        />
+                    </LinearGradient>
+                </ScrollView>
+            </View>
         </SafeAreaView>
     )
 }

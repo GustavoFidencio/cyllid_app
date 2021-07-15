@@ -17,7 +17,6 @@ export const TouchableTemporari = ({ navigation, user }) => {
 
     useEffect(() => {
         if (valueSelect.length == 6) _checkPassword()
-        console.log(valueSelect, 'useeffect');
     }, [valueSelect])
 
     const _onChange = (numbers) => {
@@ -27,9 +26,8 @@ export const TouchableTemporari = ({ navigation, user }) => {
 
     const _checkPassword = () => {
         setLoad(true)
-        console.log(user, valueSelect);
         StorageAuth.validPassword(user, valueSelect)
-            .then(() => navigation.replace('Home'))
+            .then(() => navigation.replace('TabNav'))
             .catch(err => {
                 setError(err);
                 setSelect('');
