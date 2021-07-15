@@ -6,49 +6,37 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: Color.DARK,
     },
-    textUser:{
-        fontSize: 20,
+    goBack: {
+        left: 0,
+        // padding: 8,
+        // paddingTop: 8,
+        position:'absolute'
+    },
+    container:{
+        paddingHorizontal: 15
+    },
+    textTitle:{
+        top: 45,
+        fontSize: 26,
         color: 'white',
         fontFamily: 'Nunito-Bold',
     },
-    textDay:{
-        fontSize: 20,
-        color: 'white',
-        fontFamily: 'Nunito-Bold',
+    containerMoney:{
+        top:30,
+        width:'100%',
+        flexDirection:'row',
     },
     textMoney:{
-        fontSize: 18,
+        top: 45,
+        fontSize: 28,
         color: 'white',
-        marginTop:30,
-        fontFamily: 'Nunito',
-    },
-    containerValues:{
-        flexDirection: 'row',
-    },
-    textReal:{
-        top: 3,
-        fontSize: 13,
-        color: Color.BLUE,
-        fontFamily: 'Nunito-Bold',
-    },
-    valueMoney:{
-        left: 5,
-        fontSize: 30,
-        color: Color.BLUE,
         fontFamily: 'Nunito-Black',
     },
-    containerInfoDay:{
-        width: '100%',
-        marginTop: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    scrollview:{
-        top: 5,
-        height: 165
-    },
-    containerContent:{
-        flex: 1,
-        paddingHorizontal: 13,
-    },
+    textNumberMoney:{
+        left:10,
+        top: 45,
+        fontSize: 28,
+        color: 'white',
+        fontFamily: 'Nunito-Black',
+    }
 })

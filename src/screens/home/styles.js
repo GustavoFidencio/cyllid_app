@@ -23,8 +23,8 @@ export default StyleSheet.create({
         fontFamily: 'Nunito',
     },
     containerValues:{
+        top: 2,
         flexDirection: 'row',
-        top: 2
     },
     textReal:{
         top: 3,
