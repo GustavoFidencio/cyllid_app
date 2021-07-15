@@ -6,10 +6,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { TabNav } from './tab';
 import Color from 'cyllid/src/assets/colors'
 import {
+    Input,
     Login,
     Splash,
     Password,
-    SolicitAccess
+    SolicitAccess,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -81,10 +82,15 @@ export const StackNav = () => {
                     name="TabNav"
                     component={TabNav}
                     options={{ header: _noneArrow }}
-                />
+                /> 
                 <Stack.Screen
                     name="SolicitAccess"
                     component={SolicitAccess}
+                    options={{ header: _noneArrow }}
+                />
+                <Stack.Screen
+                    name="Input"
+                    component={Input}
                     options={{ header: _noneArrow }}
                 />
             </Stack.Navigator>
