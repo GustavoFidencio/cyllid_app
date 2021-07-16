@@ -5,7 +5,6 @@ import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-
 import { Input } from '../input';
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
-import { Animate } from 'cyllid/src/services';
 import { TextClean, Load, Icon } from "cyllid/src/helpers";
 import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
 
@@ -32,16 +31,16 @@ export const Important = ({ next, back }) => {
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
-            <View style={styles.videoAnimation}>
+            {/* <View style={styles.videoAnimation}>
                 <LottieView
                     autoPlay
                     loop={false}
                     source={Animation}
                 />
-            </View>
-            <TextClean style={styles.titleScreen} >
+            </View> */}
+            {/* <TextClean style={styles.titleScreen} >
                 Como vamos te achar.
-            </TextClean>
+            </TextClean> */}
             <View style={styles.containerInputs}>
                 <Input
                     type={'cpf'}
@@ -60,7 +59,7 @@ export const Important = ({ next, back }) => {
                     placeholder={'Ex: gustavo@gmail.com'}
                 />
             </View>
-            <View style={{ width: '100%' }}>
+            {/* <View style={{ width: '100%' }}> */}
                 <TouchableOpacity
                     onPress={_validRegisters}
                     style={styles.buttonNext}
@@ -72,7 +71,7 @@ export const Important = ({ next, back }) => {
                         Avançar
                     </TextClean>
                 </TouchableOpacity>
-            </View>
+            {/* </View> */}
         </Animated.View>
     )
 }
@@ -103,6 +102,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     buttonNext: {
+        bottom:20,
         padding: 10,
         width: '100%',
         marginTop: 20,
@@ -118,8 +118,9 @@ const styles = StyleSheet.create({
     },
     goBack: {
         left: 0,
+        zIndex:3,
+        opacity: .5,
         padding: 8,
-        paddingTop: 16,
         position: 'absolute',
-    }
+    },
 })

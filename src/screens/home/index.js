@@ -1,13 +1,27 @@
 import styles from './styles';
-import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import { Text, View, SafeAreaView, ScrollView, StatusBar } from 'react-native'
 
-import { Card } from './commons';
+import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import { View, SafeAreaView, ScrollView, StatusBar } from 'react-native';
+
+import { StorageHome } from './storage';
+import { Card, Balance } from './commons';
 import Color from 'cyllid/src/assets/colors';
-import { TextClean, Icon } from 'cyllid/src/helpers';
+import { TextClean } from 'cyllid/src/helpers';
 
 export const HomeInitial = ({ navigation }) => {
+
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        _getUserName()
+    }, [])
+
+    const _getUserName = async () => {
+        let name = JSON.parse(await AsyncStorage.getItem('user'));
+        name = StorageHome.toCaptalize(name.username);
+        setName(name);
+    }
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -15,23 +29,13 @@ export const HomeInitial = ({ navigation }) => {
             <View style={styles.containerContent}>
                 <View style={styles.containerInfoDay}>
                     <TextClean style={styles.textUser}>
-                        Giovane
+                        {name}
                     </TextClean>
                     <TextClean style={styles.textDay}>
                         Jun/21
                     </TextClean>
                 </View>
-                <TextClean style={styles.textMoney} >
-                    Seu saldo hoje:
-                </TextClean>
-                <View style={styles.containerValues}>
-                    <TextClean style={styles.textReal}>
-                        R$
-                    </TextClean>
-                    <TextClean style={styles.valueMoney}>
-                        4.513,20
-                    </TextClean>
-                </View>
+                <Balance />
             </View>
             <View >
                 <ScrollView

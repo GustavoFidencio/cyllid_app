@@ -1,11 +1,12 @@
-import React, { useRef, memo, useState } from 'react';
-import { Animated, FlatList, StyleSheet, View } from 'react-native';
+import React, { useRef, memo, useState, useEffect } from 'react';
+import { Animated, FlatList, StyleSheet, Dimensions } from 'react-native';
 
 import { Basic } from './basic';
 import { Progress } from '../';
 import { Important } from './important';
 import { AccessApp } from './accessApp';
 import { StoragePhases } from './storage';
+import { Animate } from 'cyllid/src/services';
 import { StorageSolicitAccess } from '../../storage';
 
 const phases = [
@@ -19,6 +20,12 @@ export const ListPhases = memo(({ show, navigation }) => {
     let list = useRef(null);
     const [user, setUser] = useState({});
     const scrollX = useRef(new Animated.Value(0)).current;
+    const valueAnimate = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        if (show)
+            setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600)
+    }, [show])
 
     const _solicitAccess = val => {
         StorageSolicitAccess.solicitAccess(user, val)
@@ -52,26 +59,29 @@ export const ListPhases = memo(({ show, navigation }) => {
         <item.Comp
             back={() => _back(index)}
             next={val => _next(index + 1, val)}
+            valueAnimate={index == 0 && valueAnimate}
         />
 
     return (
         show &&
         <>
             <Progress
-                valueAnimate={scrollX}
+                scroll={scrollX}
+                valueAnimate={valueAnimate}
             />
             <FlatList
                 ref={list}
                 horizontal
                 data={phases}
-                pagingEnabled
-                bounces={false}
+                // pagingEnabled
+                // bounces={false}
                 style={styles.flat}
+                // decelerationRate={0.5}
                 scrollEnabled={false}
-                initialNumToRender={1}
-                decelerationRate={`fast`}
+                // initialNumToRender={1}
+                // decelerationRate={`fast`}
                 renderItem={_renderItem}
-                maxToRenderPerBatch={1}
+                // maxToRenderPerBatch={1}
                 keyboardShouldPersistTaps="handled"
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(_, index) => String(index)}

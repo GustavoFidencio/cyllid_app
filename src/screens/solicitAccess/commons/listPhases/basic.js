@@ -1,26 +1,20 @@
-import LottieView from 'lottie-react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { Input } from '../input';
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
-import { Animate } from 'cyllid/src/services';
 import { TextClean, Icon } from "cyllid/src/helpers";
-import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
 
-export const Basic = ({ next, back }) => {
+export const Basic = ({ next, back, valueAnimate }) => {
 
     const [name, setName] = useState('');
     const [isErr, setErr] = useState([false, false]);
     const [sobName, setSobname] = useState('');
-    const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [name]);
 
     useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [sobName]);
-
-    useEffect(() => { setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600) }, [])
 
     const _validRegisters = () => {
         let error = StoragePhases.validBasic(name, sobName, next);
@@ -40,16 +34,9 @@ export const Basic = ({ next, back }) => {
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
-            <View style={styles.videoAnimation}>
-                <LottieView
-                    autoPlay
-                    loop={false}
-                    source={Animation}
-                />
-            </View>
-            <TextClean style={styles.titleScreen} >
+            {/* <TextClean style={styles.titleScreen} >
                 Informações Básicas.
-            </TextClean>
+            </TextClean> */}
             <View style={styles.containerInputs}>
                 <Input
                     value={name}
@@ -66,7 +53,6 @@ export const Basic = ({ next, back }) => {
                     setValue={val => setSobname(val)}
                 />
             </View>
-            {/* <View style={{ width: '100%' }} > */}
             <TouchableOpacity
                 onPress={_validRegisters}
                 style={styles.buttonNext}
@@ -75,7 +61,6 @@ export const Basic = ({ next, back }) => {
                     Avançar
                 </TextClean>
             </TouchableOpacity>
-            {/* </View> */}
         </Animated.View>
     )
 }
@@ -106,6 +91,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     buttonNext: {
+        bottom: 20,
         padding: 10,
         width: '100%',
         marginTop: 20,
@@ -121,8 +107,9 @@ const styles = StyleSheet.create({
     },
     goBack: {
         left: 0,
+        zIndex: 3,
+        opacity: .5,
         padding: 8,
-        paddingTop: 16,
         position: 'absolute',
     },
 })

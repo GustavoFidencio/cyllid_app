@@ -19,7 +19,10 @@ export class StorageAuth {
                     this.setToken(res.data)
                         .finally(() =>
                             this.getDataUser()
-                                .then(() => resolve())
+                                .then(async res => {
+                                    await AsyncStorage.setItem('user', JSON.stringify(res))
+                                    resolve()
+                                })
                         )
                 )
                 .catch(err => reject(err))
@@ -41,7 +44,7 @@ export class StorageAuth {
     static getDataUser() {
         return new Promise((resolve, reject) => {
             Executor.run(new RequestDataUser())
-                .then(res => resolve())
+                .then(res => resolve(res.data))
                 .catch(err => reject(err.response));
         })
     }

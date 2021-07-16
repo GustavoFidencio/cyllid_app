@@ -31,16 +31,16 @@ export const AccessApp = ({ next, back }) => {
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
-            <View style={styles.videoAnimation}>
+            {/* <View style={styles.videoAnimation}>
                 <LottieView
                     autoPlay
                     loop={false}
                     source={Animation}
                 />
-            </View>
-            <TextClean style={styles.titleScreen} >
+            </View> */}
+            {/* <TextClean style={styles.titleScreen} >
                 Acesso ao aplicativo.
-            </TextClean>
+            </TextClean> */}
             <View style={styles.containerInputs}>
                 <Input
                     value={user}
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     buttonNext: {
+        bottom:20,
         padding: 10,
         width: '100%',
         marginTop: 20,
@@ -115,8 +116,9 @@ const styles = StyleSheet.create({
     },
     goBack: {
         left: 0,
+        zIndex:3,
+        opacity: .5,
         padding: 8,
-        paddingTop: 16,
         position: 'absolute',
-    }
+    },
 })

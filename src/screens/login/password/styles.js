@@ -27,10 +27,5 @@ export default StyleSheet.create({
         flex: 1,
         paddingHorizontal: 16,
         backgroundColor: Color.DARK,
-    },
-    goBack: {
-        padding: 8,
-        paddingTop: 16,
-        position: 'absolute',
     }
 })

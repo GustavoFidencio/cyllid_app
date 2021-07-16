@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles';
 import { View, SafeAreaView, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,6 +8,15 @@ import Color from 'cyllid/src/assets/colors';
 import { TextClean } from 'cyllid/src/helpers';
 
 export const User = ({ navigation }) => {
+
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        (async () => {
+            let user = JSON.parse(await AsyncStorage.getItem('user'));
+            setName(`${user.name} ${user.surname}`);
+        })();
+    }, [])
 
     const options = [
         {
@@ -47,7 +56,7 @@ export const User = ({ navigation }) => {
                     </TextClean>
                 </View>
                 <TextClean style={styles.textNameUser}>
-                    Giovane Santos
+                    {name}
                 </TextClean>
             </View>
             <View style={styles.contianerOptions}>

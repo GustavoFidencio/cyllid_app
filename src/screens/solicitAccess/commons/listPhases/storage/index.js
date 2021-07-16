@@ -8,12 +8,17 @@ export class StoragePhases {
         }
     }
 
+    static _toCaptalize(name) {
+        let newName = name[0].toUpperCase() + name.substr(1);
+        return newName;
+    }
+
     static setUser(val, state) {
         let user = state;
         return new Promise(resolve => {
             switch (Object.keys(state).length) {
                 case 0:
-                    return resolve({ name: val[0], surname: val[1] })
+                    return resolve({ name: this._toCaptalize(val[0]), surname: val[1] })
                 case 2:
                     return resolve({ ...user, cpf: val[0], email: val[1] })
                 case 4:

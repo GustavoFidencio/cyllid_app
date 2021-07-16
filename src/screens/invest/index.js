@@ -6,19 +6,27 @@ import Color from 'cyllid/src/assets/colors';
 export const Invest = ({ }) => {
 
     return (
-        <SafeAreaView style={{
-            flex: 1,
-            backgroundColor: Color.DARK,
-        }}>
-            <View style={{
+        <SafeAreaView
+            style={{
                 flex: 1,
-            }}>
+                backgroundColor: Color.DARK,
+            }}
+        >
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
                 <Text
                     style={{
-                        color: 'white'
+                        fontSize: 20,
+                        color: 'white',
+                        fontFamily: 'Nunito-Bold',
                     }}
                 >
-                    Invest
+                    Em Breve!
                 </Text>
             </View>
         </SafeAreaView>

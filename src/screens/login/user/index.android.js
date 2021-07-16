@@ -34,8 +34,10 @@ export class Login extends React.PureComponent {
         this.setState({ isLoad: true })
         StorageAuth.checkUser(this.state.name)
             .then(async () => {
-                if (this.state.remember) await AsyncStorage.setItem('user', this.state.name)
-                this.props.navigation.navigate('Password', { user: this.state.name })
+                if (this.state.remember)  await AsyncStorage.setItem('remember', JSON.stringify(true))
+                else await AsyncStorage.removeItem('remember')
+                await AsyncStorage.setItem('user', JSON.stringify({ username: this.state.name }))
+                this.props.navigation.navigate('Password', { user: this.state.name, login: true })
             })
             .catch(() => this.setState({ error: !this.state.error }))
             .finally(() => this.setState({ isLoad: false }))

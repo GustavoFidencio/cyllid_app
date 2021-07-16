@@ -16,28 +16,6 @@ export default StyleSheet.create({
         color: 'white',
         fontFamily: 'Nunito-Bold',
     },
-    textMoney:{
-        fontSize: 18,
-        color: 'white',
-        marginTop:30,
-        fontFamily: 'Nunito',
-    },
-    containerValues:{
-        top: 2,
-        flexDirection: 'row',
-    },
-    textReal:{
-        top: 3,
-        fontSize: 13,
-        color: Color.BLUE,
-        fontFamily: 'Nunito-Bold',
-    },
-    valueMoney:{
-        left: 5,
-        fontSize: 30,
-        color: Color.BLUE,
-        fontFamily: 'Nunito-Black',
-    },
     containerInfoDay:{
         width: '100%',
         marginTop: 20,

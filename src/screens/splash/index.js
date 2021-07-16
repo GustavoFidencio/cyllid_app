@@ -12,16 +12,25 @@ import Animation from 'cyllid/src/assets/videos/splash.json';
 export const Splash = ({ navigation }) => {
 
     const [user, setUser] = useState(null);
+    const [remember, setRemember] = useState(null);
 
     useEffect(() => {
-        (async () => {
-            let storage = await AsyncStorage.getItem('user');
-            setUser(storage)
-        })();
+        _validRemember()
     }, [])
 
+    const _validRemember = async () => {
+        let remember = JSON.parse(await AsyncStorage.getItem('remember')) || false;
+        if (remember) {
+            let storage = JSON.parse(await AsyncStorage.getItem('user'));
+            setUser(storage.username);
+            setRemember(remember);
+        } else {
+            await AsyncStorage.clear();
+        }
+    }
+
     const _checkToken = () => {
-        if (user) navigation.replace('Password', { user })
+        if (remember) navigation.replace('Password', { user })
         else navigation.replace('Login')
     }
 

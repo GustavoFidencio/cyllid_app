@@ -2,12 +2,12 @@ import styles from './styles';
 
 import React from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { View, SafeAreaView, StatusBar, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 import { StorageAuth } from '../storage';
 import Color from 'cyllid/src/assets/colors';
-import { DescText, Ilustrator, Input, SolicitAcces } from './commons';
-import { Switch, InputValidation, TitleAnimated, TextClean, Load } from "cyllid/src/helpers";
+import { TitleAnimated, TextClean, Load } from "cyllid/src/helpers";
+import { DescText, Ilustrator, Input, SolicitAcces, Switch } from './commons';
 
 export class Login extends React.PureComponent {
 
@@ -17,6 +17,7 @@ export class Login extends React.PureComponent {
             name: '',
             error: false,
             isLoad: false,
+            remember: false,
             showKeyboard: false,
         }
         this._validateUser = this._validateUser.bind(this);
@@ -26,8 +27,10 @@ export class Login extends React.PureComponent {
         this.setState({ isLoad: true })
         StorageAuth.checkUser(this.state.name)
             .then(async () => {
-                await AsyncStorage.setItem('user', this.state.name)
-                this.props.navigation.navigate('Password', { user: this.state.name })
+                if (this.state.remember) await AsyncStorage.setItem('remember', JSON.stringify(true))
+                else await AsyncStorage.removeItem('remember')
+                await AsyncStorage.setItem('user', JSON.stringify({ username: this.state.name }))
+                this.props.navigation.navigate('Password', { user: this.state.name, login: true })
             })
             .catch(() => this.setState({ error: !this.state.error }))
             .finally(() => this.setState({ isLoad: false }))
@@ -74,7 +77,10 @@ export class Login extends React.PureComponent {
                                     <TextClean style={styles.textLembrar}>
                                         Lembrar
                                     </TextClean>
-                                    <Switch />
+                                    <Switch
+                                        value={this.state.remember}
+                                        setValue={remember => this.setState({ remember })}
+                                    />
                                 </View>
                                 <TouchableOpacity
                                     style={styles.buttonNext}

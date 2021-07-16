@@ -1,19 +1,35 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo } from "react";
 import { View, Animated, StyleSheet, Dimensions } from "react-native";
 
 import Color from 'cyllid/src/assets/colors';
+import { TextClean } from "cyllid/src/helpers";
 
 const { width } = Dimensions.get('window');
 
-export const Progress = memo(({ valueAnimate }) => {
+export const Progress = memo(({ scroll, valueAnimate }) => {
 
-    const largeProgress = valueAnimate.interpolate({
-        inputRange: [0, width * 2],
-        outputRange: [width / 3.1, width]
+    const largeProgress = scroll.interpolate({
+        inputRange: [-width, width * 2],
+        outputRange: [0, width],
+        extrapolate: 'clamp'
     });
 
+    const opacity = valueAnimate.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 1],
+        extrapolate: 'clamp'
+    })
+
+    const transform = [{
+        translateY: scroll.interpolate({
+            inputRange: [0, width * 2],
+            outputRange: [0, -50],
+            extrapolate: 'clamp'
+        })
+    }];
+
     return (
-        <View>
+        <Animated.View style={{ opacity, justifyContent: 'center' }}>
             <View style={styles.containerProgress}>
                 {
                     Array(3).fill("").map((_, index) =>
@@ -24,12 +40,9 @@ export const Progress = memo(({ valueAnimate }) => {
                     )
                 }
             </View>
-            <Animated.View style={{
-                width: largeProgress,
-                ...styles.containerProgressBlue,
-            }}>
+            <Animated.View style={{ width: largeProgress, ...styles.containerProgressBlue }} >
                 {
-                    Array(3).fill("").map((item, index) =>
+                    Array(3).fill("").map((_, index) =>
                         <Animated.View
                             key={index}
                             style={styles.itemPrincipal}
@@ -37,7 +50,20 @@ export const Progress = memo(({ valueAnimate }) => {
                     )
                 }
             </Animated.View>
-        </View>
+            <View style={styles.containerLabels}>
+                <Animated.View style={{ ...styles.labels, transform }} >
+                    <TextClean style={styles.titleScreen} >
+                        Informações Básicas
+                    </TextClean>
+                    <TextClean style={styles.titleScreen} >
+                        Como vamos te achar
+                    </TextClean>
+                    <TextClean style={styles.titleScreen} >
+                        Acesso ao aplicativo
+                    </TextClean>
+                </Animated.View>
+            </View>
+        </Animated.View>
     )
 })
 
@@ -49,14 +75,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     containerProgressBlue: {
-        marginTop: 5,
+        top: 5,
         borderRadius: 99,
         overflow: 'hidden',
         flexDirection: 'row',
         position: 'absolute',
     },
     itemBackground: {
-        height: 4,
+        height: 3,
         opacity: .2,
         borderRadius: 99,
         width: width * .32,
@@ -64,11 +90,27 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     itemPrincipal: {
-        height: 4,
+        height: 3,
         borderRadius: 99,
         overflow: 'hidden',
         width: width * .32,
         marginHorizontal: 2,
         backgroundColor: Color.BLUE,
+    },
+    titleScreen: {
+        fontSize: 20,
+        color: 'white',
+        textAlign: 'center',
+        fontFamily: 'Nunito-SemiBold',
+    },
+    containerLabels: {
+        width,
+        top: 12,
+        height: 30,
+        overflow: 'hidden',
+        position: 'absolute',
+    },
+    labels: {
+        alignItems: 'center',
     }
 })
