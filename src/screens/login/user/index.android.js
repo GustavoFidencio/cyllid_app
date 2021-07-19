@@ -6,7 +6,7 @@ import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react
 
 import { StorageAuth } from '../storage';
 import Color from 'cyllid/src/assets/colors';
-import { DescText, Ilustrator, SolicitAcces, Switch } from './commons';
+import { DescText, Ilustrator, SolicitAcces, Switch, Input } from './commons';
 import { InputValidation, TitleAnimated, TextClean, Load, } from "cyllid/src/helpers";
 
 export class Login extends React.PureComponent {
@@ -68,13 +68,13 @@ export class Login extends React.PureComponent {
                         </View>
                         <Ilustrator show={!showKeyboard} />
                         <View style={styles.container}>
-                            <InputValidation
+                            <InputValidation //mudar pro input do commmom
                                 title={'Usuário'}
                                 error={this.state.error}
                                 value={this.state.name}
                                 placeholder={'Digite seu usuário'}
                                 setValue={name => {
-                                    this.setState({ name })
+                                    this.setState({ name }) 
                                     this.state.error && this.setState({ error: false })
                                 }}
                             />

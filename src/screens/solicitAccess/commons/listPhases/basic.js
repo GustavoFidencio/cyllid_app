@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
-import { Input } from '../input';
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
-import { TextClean, Icon } from "cyllid/src/helpers";
+import { TextClean, Icon, InputValidation } from "cyllid/src/helpers";
 
 export const Basic = ({ next, back, valueAnimate }) => {
 
+    const refName = useRef(null);
+    const refSobName = useRef(null);
     const [name, setName] = useState('');
     const [isErr, setErr] = useState([false, false]);
     const [sobName, setSobname] = useState('');
 
+    useEffect(() => refName.current.focus(), []);
     useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [name]);
-
     useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [sobName]);
 
     const _validRegisters = () => {
-        let error = StoragePhases.validBasic(name, sobName, next);
-        setErr(error);
-    }
+        if (isErr[0] || isErr[1] && isErr[0]) refName.current.focus()
+        else if (isErr[1]) refSobName.current.focus()
+        else {
+            let error = StoragePhases.validBasic(name, sobName, next);
+            setErr(error);
+        }
+    };
 
     const opacity = valueAnimate.interpolate({
         inputRange: [0, 100],
@@ -34,23 +39,28 @@ export const Basic = ({ next, back, valueAnimate }) => {
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
-            {/* <TextClean style={styles.titleScreen} >
-                Informações Básicas.
-            </TextClean> */}
             <View style={styles.containerInputs}>
-                <Input
+                <InputValidation
+                    ref={refName}
                     value={name}
                     title={'Nome'}
                     error={isErr[0]}
                     placeholder={'Ex: Giovane'}
                     setValue={val => setName(val)}
+                    setShow={show => {
+                        if (!show) StoragePhases.validName(name, isErr, setErr)
+                    }}
                 />
-                <Input
+                <InputValidation
                     error={isErr[1]}
                     value={sobName}
+                    ref={refSobName}
                     title={'Sobrenome'}
                     placeholder={'Ex: Santos Silva'}
                     setValue={val => setSobname(val)}
+                    setShow={show => {
+                        if (!show) StoragePhases.validSobName(sobName, isErr, setErr)
+                    }}
                 />
             </View>
             <TouchableOpacity
@@ -79,12 +89,6 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
     },
-    videoAnimation: {
-        flex: 1,
-        width: '100%',
-        maxWidth: width * .6,
-        maxHeight: width * .6,
-    },
     textAvancar: {
         fontSize: 17,
         color: 'white',
@@ -99,11 +103,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
-    },
-    titleScreen: {
-        fontSize: 25,
-        color: 'white',
-        fontFamily: 'Nunito-SemiBold',
     },
     goBack: {
         left: 0,

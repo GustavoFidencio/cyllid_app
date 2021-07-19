@@ -1,9 +1,9 @@
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { useEffect, useState, forwardRef, memo } from 'react';
 import { View, Animated, Easing, StyleSheet, TextInput, Text } from 'react-native';
 
-import Color from '../assets/colors'
+import Color from '../assets/colors';
 
- export const InputValidation = ({ title, placeholder, error, value, setValue, setShow }) => {
+export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow }, ref) => {
 
     const [valueAnimate] = useState(new Animated.Value(0));
 
@@ -17,54 +17,47 @@ import Color from '../assets/colors'
     }
 
     useEffect(() => {
-        if (error)
-            animation(100)
-        else
-            animation(0)
-    }, [error])
+        if (error) animation(100)
+        else animation(0)
+    }, [error]);
+
+    const borderColor = valueAnimate.interpolate({
+        inputRange: [0, 100],
+        outputRange: ['transparent', Color.ERROR]
+    });
+
+    const opacity = valueAnimate.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 1]
+    });
 
     return (
         <View style={{ width: '100%' }}>
             <Text style={styles.textUser}> {title} </Text>
-            <Animated.View
-                style={{
-                    ...styles.backgroundInput,
-                    borderColor: valueAnimate.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: ['transparent', Color.ERROR]
-                    })
-                }}
-            >
+            <Animated.View style={{ ...styles.backgroundInput, borderColor }}>
                 <TextInput
-                    onFocus={() => console.log("focus ")}
-                    onBlur={() => console.log("saiu de foco")}
+                    ref={ref}
                     value={value}
-                    selectTextOnFocus
                     spellCheck={false}
                     style={styles.input}
+                    selectTextOnFocus
                     autoCorrect={false}
                     autoCapitalize='none'
                     autoCompleteType={'off'}
                     placeholder={placeholder}
+                    onBlur={() => setShow(false)}
+                    onFocus={() => setShow(true)}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     onChangeText={val => setValue(val)}
                 />
             </Animated.View>
-            <Animated.Text
-                style={{
-                    ...styles.textError,
-                    opacity: valueAnimate.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: [0, 1]
-                    })
-                }}
-            >
-                Ops, usuário incorreto
+            <Animated.Text style={{ ...styles.textError, opacity }} >
+                {error}
             </Animated.Text>
         </View>
     )
-}
+}))
 
 const styles = StyleSheet.create({
     input: {

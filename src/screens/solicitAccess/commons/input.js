@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo, forwardRef } from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const Input = memo(({ placeholder, error, value, setValue, title, type = 'default', labelError = 'Mínimo 3 caracteres' }) => {
+export const Input = memo(forwardRef(({ placeholder, error, value, setValue, title, type = 'default', labelError = 'Mínimo 3 caracteres' }, ref) => {
 
     const err = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
@@ -47,6 +47,7 @@ export const Input = memo(({ placeholder, error, value, setValue, title, type = 
                 }}
             >
                 <TextInputMask
+                    ref={ref}
                     value={value}
                     selectTextOnFocus
                     spellCheck={false}
@@ -69,7 +70,7 @@ export const Input = memo(({ placeholder, error, value, setValue, title, type = 
             </Animated.Text>
         </Animated.View>
     )
-})
+}))
 
 const styles = StyleSheet.create({
     input: {

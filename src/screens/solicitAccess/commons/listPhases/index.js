@@ -1,8 +1,8 @@
 import React, { useRef, memo, useState, useEffect } from 'react';
-import { Animated, FlatList, StyleSheet, Dimensions } from 'react-native';
+import { Animated, StyleSheet, Dimensions, View } from 'react-native';
 
-import { Basic } from './basic';
 import { Progress } from '../';
+import { Basic } from './basic';
 import { Important } from './important';
 import { AccessApp } from './accessApp';
 import { StoragePhases } from './storage';
@@ -15,17 +15,22 @@ const phases = [
     { Comp: AccessApp }
 ];
 
+const { width } = Dimensions.get('window');
+
 export const ListPhases = memo(({ show, navigation }) => {
 
-    let list = useRef(null);
     const [user, setUser] = useState({});
     const scrollX = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        if (show)
-            setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600)
+        if (show) setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600)
     }, [show])
+
+    useEffect(() => {
+        setTimeout(() => Animate.smooth(100, scrollX), 5500);
+        //tentar fazer isso executar somente quando realmente aparece... trocar o show por { show && .... }
+    }, [])
 
     const _solicitAccess = val => {
         StorageSolicitAccess.solicitAccess(user, val)
@@ -46,65 +51,49 @@ export const ListPhases = memo(({ show, navigation }) => {
         if (index == 0) navigation.goBack();
         else {
             setUser(await StoragePhases.deleteInfo(user, index));
-            list.current.scrollToIndex({ animated: true, index: index - 1 });
+            Animate.smooth(index * 100, scrollX)
         }
     }
 
     const _setUser = async (val, index) => {
         setUser(await StoragePhases.setUser(val, user));
-        list.current.scrollToIndex({ animated: true, index });
+        Animate.smooth((index + 1) * 100, scrollX)
     }
 
-    const _renderItem = ({ item, index }) =>
-        <item.Comp
-            back={() => _back(index)}
-            next={val => _next(index + 1, val)}
-            valueAnimate={index == 0 && valueAnimate}
-        />
+    const transform = [{
+        translateX: scrollX.interpolate({
+            inputRange: [100, 300],
+            outputRange: [0, -width * 2],
+            extrapolate: 'clamp'
+        })
+    }];
 
     return (
         show &&
-        <>
+        <View style={{ width }}>
             <Progress
                 scroll={scrollX}
                 valueAnimate={valueAnimate}
             />
-            <FlatList
-                ref={list}
-                horizontal
-                data={phases}
-                // pagingEnabled
-                // bounces={false}
-                style={styles.flat}
-                // decelerationRate={0.5}
-                scrollEnabled={false}
-                // initialNumToRender={1}
-                // decelerationRate={`fast`}
-                renderItem={_renderItem}
-                // maxToRenderPerBatch={1}
-                keyboardShouldPersistTaps="handled"
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(_, index) => String(index)}
-                onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                    { useNativeDriver: false }
+            <Animated.View style={{ ...styles.containerPhases, transform }} >
+                {phases.map((item, index) =>
+                    <item.Comp
+                        key={index}
+                        back={() => _back(index)}
+                        next={val => _next(index + 1, val)}
+                        valueAnimate={index == 0 && valueAnimate}
+                    />
                 )}
-            />
-        </>
+            </Animated.View>
+        </View>
     )
 })
 
 const styles = StyleSheet.create({
-    flat: {
-        flex: 1,
+    containerPhases: {
         height: '100%',
-    },
-    containerProgress: {
-        height: 10,
-        width: '100%',
+        width: width * 3,
+        overflow: 'hidden',
         flexDirection: 'row',
-        alignItems: 'flex-end',
-        paddingHorizontal: 2,
-        justifyContent: 'space-around',
     }
 })

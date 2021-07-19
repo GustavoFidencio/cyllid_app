@@ -41,11 +41,29 @@ export class StoragePhases {
 
     //basic/Access
     static validBasic(name, sobName, next) {
-        let error = [false, false]; //nome nao pode ter espaço
-        if (name.length < 3) error[0] = true;
-        if (sobName.length < 3) error[1] = true;
+        let error = [false, false];
+        if (name.length < 3) error[0] = 'Mínimo 3 caracteres';
+        else if (name.indexOf(' ') != -1) error[0] = 'Informe somente seu primeiro nome';
+        if (sobName.length < 3) error[1] = 'Mínimo 3 caracteres';
+        else if (sobName.length > 28) error[1] = 'Abrevie um pouco seu nome';
         if (!error[0] && !error[1]) next([name, sobName]);
         return error;
+    }
+
+    static validName(name, errs, setErr) {
+        let error = errs;
+        if (name.indexOf(' ') != -1) {
+            error[0] = 'Informe somente seu primeiro nome';
+        }
+        setErr(error);
+    }
+
+    static validSobName(sobName, errs, setErr) {
+        let error = errs;
+        if (sobName.length > 28) {
+            error[1] = 'Abrevie um pouco seu nome';
+        }
+        setErr(error);
     }
 
     //important

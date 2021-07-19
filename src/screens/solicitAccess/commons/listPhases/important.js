@@ -1,12 +1,10 @@
-import LottieView from 'lottie-react-native';
 import React, { useEffect, useState } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { Input } from '../input';
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
-import { TextClean, Load, Icon } from "cyllid/src/helpers";
-import Animation from 'cyllid/src/assets/videos/firstSolicitAccess.json';
+import { TextClean, Icon } from "cyllid/src/helpers";
 
 export const Important = ({ next, back }) => {
 
@@ -31,16 +29,6 @@ export const Important = ({ next, back }) => {
             >
                 <Icon size={40} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
-            {/* <View style={styles.videoAnimation}>
-                <LottieView
-                    autoPlay
-                    loop={false}
-                    source={Animation}
-                />
-            </View> */}
-            {/* <TextClean style={styles.titleScreen} >
-                Como vamos te achar.
-            </TextClean> */}
             <View style={styles.containerInputs}>
                 <Input
                     type={'cpf'}
@@ -59,19 +47,14 @@ export const Important = ({ next, back }) => {
                     placeholder={'Ex: gustavo@gmail.com'}
                 />
             </View>
-            {/* <View style={{ width: '100%' }}> */}
-                <TouchableOpacity
-                    onPress={_validRegisters}
-                    style={styles.buttonNext}
-                >
-                    {/* this.state.isLoad ?
-                        <Load />
-                        : */}
-                    <TextClean style={styles.textAvancar}>
-                        Avançar
-                    </TextClean>
-                </TouchableOpacity>
-            {/* </View> */}
+            <TouchableOpacity
+                style={styles.buttonNext}
+                onPress={_validRegisters}
+            >
+                <TextClean style={styles.textAvancar}>
+                    Avançar
+                </TextClean>
+            </TouchableOpacity>
         </Animated.View>
     )
 }
@@ -90,19 +73,13 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
     },
-    videoAnimation: {
-        flex: 1,
-        width: '100%',
-        maxWidth: width * .6,
-        maxHeight: width * .6,
-    },
     textAvancar: {
         fontSize: 17,
         color: 'white',
         fontFamily: 'Nunito-Bold',
     },
     buttonNext: {
-        bottom:20,
+        bottom: 20,
         padding: 10,
         width: '100%',
         marginTop: 20,
@@ -111,14 +88,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
     },
-    titleScreen: {
-        fontSize: 25,
-        color: 'white',
-        fontFamily: 'Nunito-SemiBold',
-    },
     goBack: {
         left: 0,
-        zIndex:3,
+        zIndex: 3,
         opacity: .5,
         padding: 8,
         position: 'absolute',

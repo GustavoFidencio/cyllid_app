@@ -9,20 +9,20 @@ const { width } = Dimensions.get('window');
 export const Progress = memo(({ scroll, valueAnimate }) => {
 
     const largeProgress = scroll.interpolate({
-        inputRange: [-width, width * 2],
+        inputRange: [0, 300],
         outputRange: [0, width],
         extrapolate: 'clamp'
     });
 
     const opacity = valueAnimate.interpolate({
-        inputRange: [0, 100],
+        inputRange: [0, 50],
         outputRange: [0, 1],
         extrapolate: 'clamp'
     })
 
     const transform = [{
         translateY: scroll.interpolate({
-            inputRange: [0, width * 2],
+            inputRange: [100, 300],
             outputRange: [0, -50],
             extrapolate: 'clamp'
         })
@@ -40,7 +40,12 @@ export const Progress = memo(({ scroll, valueAnimate }) => {
                     )
                 }
             </View>
-            <Animated.View style={{ width: largeProgress, ...styles.containerProgressBlue }} >
+            <Animated.View
+                style={{
+                    width: largeProgress,
+                    ...styles.containerProgressBlue
+                }}
+            >
                 {
                     Array(3).fill("").map((_, index) =>
                         <Animated.View
@@ -51,7 +56,10 @@ export const Progress = memo(({ scroll, valueAnimate }) => {
                 }
             </Animated.View>
             <View style={styles.containerLabels}>
-                <Animated.View style={{ ...styles.labels, transform }} >
+                <Animated.View style={{
+                    ...styles.labels,
+                     transform
+                }} >
                     <TextClean style={styles.titleScreen} >
                         Informações Básicas
                     </TextClean>
