@@ -1,3 +1,5 @@
+import HapticFeedback from "react-native-haptic-feedback";
+
 export class StoragePhases {
 
     static effectDates(name, setErr, index) {
@@ -18,11 +20,11 @@ export class StoragePhases {
         return new Promise(resolve => {
             switch (Object.keys(state).length) {
                 case 0:
-                    return resolve({ name: this._toCaptalize(val[0]), surname: val[1] })
+                    return resolve({ name: this._toCaptalize(val[0]), surname: val[1] });
                 case 2:
-                    return resolve({ ...user, cpf: val[0], email: val[1] })
+                    return resolve({ ...user, cpf: val[0], email: val[1] });
                 case 4:
-                    return resolve({ ...user, username: val[0], password: val[1] })
+                    return resolve({ ...user, username: val[0], password: val[1] });
             }
         })
     }
@@ -50,28 +52,44 @@ export class StoragePhases {
         return error;
     }
 
-    static validName(name, errs, setErr) {
-        let error = errs;
+    static validName(name, err = false) {
         if (name.indexOf(' ') != -1) {
-            error[0] = 'Informe somente seu primeiro nome';
+            !err && HapticFeedback.trigger("notificationError");
+            return 'Informe somente seu primeiro nome';
+        } else if (name.length < 3) {
+            !err && HapticFeedback.trigger("notificationError");
+            return 'Mínimo 3 caracteres';
         }
-        setErr(error);
+        return false;
     }
 
-    static validSobName(sobName, errs, setErr) {
-        let error = errs;
+    static validSobName(sobName, err = false) {
         if (sobName.length > 28) {
-            error[1] = 'Abrevie um pouco seu nome';
-        }
-        setErr(error);
+            !err && HapticFeedback.trigger("notificationError");
+            return 'Abrevie um pouco seu nome'
+        } else if (sobName.length < 3) {
+            !err && HapticFeedback.trigger("notificationError");
+            return 'Mínimo 3 caracteres';
+        };
+        return false;
     }
 
     //important
-    static validImportant(cpf, email, next) {
-        let error = [false, false];
-        if (cpf.length != 14) error[0] = true;
-        if (email.length < 3) error[1] = true;
-        if (!error[0] && !error[1]) next([cpf, email]);
-        return error;
+    static validCpf(cpf, err = false) {
+        if (cpf.length != 14) {
+            !err && HapticFeedback.trigger("notificationError");
+            return 'CPF incompleto';
+        }
+        //fazer request pra validar cpf
+        return false;
+    }
+
+    static validEmail(email, err = false) {
+        if (email.length < 3) {
+            !err && HapticFeedback.trigger("notificationError");
+            return 'Mínimo 3 caracteres';
+        }
+        //fazer request pra validar email
+        return false;
     }
 }

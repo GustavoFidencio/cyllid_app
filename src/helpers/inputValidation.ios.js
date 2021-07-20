@@ -1,24 +1,16 @@
+import TextInputMask from 'react-native-text-input-mask';
 import React, { useEffect, useState, forwardRef, memo } from 'react';
-import { View, Animated, Easing, StyleSheet, TextInput, Text } from 'react-native';
+import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 
 import Color from '../assets/colors';
+import { Animate } from 'cyllid/src/services';
 
-export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow }, ref) => {
+export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow, type = 'default' }, ref) => {
 
     const [valueAnimate] = useState(new Animated.Value(0));
 
-    const animation = val => {
-        Animated.timing(valueAnimate, {
-            toValue: val,
-            duration: 1500,
-            useNativeDriver: false,
-            easing: Easing.out(Easing.exp),
-        }).start();
-    }
-
     useEffect(() => {
-        if (error) animation(100)
-        else animation(0)
+        Animate.smooth(error ? 100 : 0, valueAnimate)
     }, [error]);
 
     const borderColor = valueAnimate.interpolate({
@@ -32,10 +24,14 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
     });
 
     return (
-        <View style={{ width: '100%' }}>
+        <View style={styles.container}>
             <Text style={styles.textUser}> {title} </Text>
             <Animated.View style={{ ...styles.backgroundInput, borderColor }}>
-                <TextInput
+                <TextInputMask
+                    mask={
+                        type != 'default' &&
+                        "[000].[000].[000]-[00]"
+                    }
                     ref={ref}
                     value={value}
                     spellCheck={false}
@@ -50,6 +46,7 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     onChangeText={val => setValue(val)}
+                    keyboardType={type != 'default' ? 'phone-pad' : 'default'}
                 />
             </Animated.View>
             <Animated.Text style={{ ...styles.textError, opacity }} >
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundInput: {
         height: 40,
         width: '100%',
-        marginTop: 10,
+        marginTop: 7,
         borderRadius: 6,
         borderWidth: 1.5,
         backgroundColor: Color.DARK_ONE,
@@ -79,6 +76,12 @@ const styles = StyleSheet.create({
     },
     textError: {
         top: 1,
+        right: 5,
+        alignSelf: 'flex-end',
         color: Color.ERROR,
+    },
+    container: {
+        bottom: 2,
+        width: '100%',
     }
 })

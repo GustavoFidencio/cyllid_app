@@ -1,28 +1,55 @@
 import React, { useEffect, useState, useRef } from 'react';
+import HapticFeedback from "react-native-haptic-feedback";
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
 import { TextClean, Icon, InputValidation } from "cyllid/src/helpers";
 
-export const Basic = ({ next, back, valueAnimate }) => {
+export const Basic = ({ next, back, valueAnimate, focus }) => {
 
     const refName = useRef(null);
     const refSobName = useRef(null);
+
     const [name, setName] = useState('');
-    const [isErr, setErr] = useState([false, false]);
+    const [errSob, setErrSob] = useState('');
+    const [errName, setErrName] = useState('');
     const [sobName, setSobname] = useState('');
 
-    useEffect(() => refName.current.focus(), []);
-    useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [name]);
-    useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [sobName]);
+    useEffect(() => {
+        if (focus) refName.current.focus()
+    }, [focus])
+
+    useEffect(() => {
+        if (errName) setErrName(false);
+    }, [name]);
+
+    useEffect(() => {
+        if (sobName) setErrSob(false);
+    }, [sobName]);
 
     const _validRegisters = () => {
-        if (isErr[0] || isErr[1] && isErr[0]) refName.current.focus()
-        else if (isErr[1]) refSobName.current.focus()
+        if (errName || errSob && errName) refName.current.focus()
+        else if (errSob) refSobName.current.focus()
         else {
-            let error = StoragePhases.validBasic(name, sobName, next);
-            setErr(error);
+            let erroName = StoragePhases.validName(name);
+            let erroSobName = StoragePhases.validSobName(sobName);
+
+            if (erroName && erroSobName) {
+                setErrName(erroName);
+                setErrSob(erroSobName);
+                return HapticFeedback.trigger("notificationError");
+            }
+            if (erroName) {
+                HapticFeedback.trigger("notificationError");
+                return setErrName(erroName);
+            }
+            if (erroSobName) {
+                HapticFeedback.trigger("notificationError");
+                return setErrSob(erroSobName);
+            }
+            
+            next([name, sobName]);
         }
     };
 
@@ -37,35 +64,35 @@ export const Basic = ({ next, back, valueAnimate }) => {
                 onPress={back}
                 style={styles.goBack}
             >
-                <Icon size={40} name={'left'} lib={'antdesign'} />
+                <Icon size={25} name={'close'} lib={'antdesign'} color={'white'} />
             </TouchableOpacity>
             <View style={styles.containerInputs}>
                 <InputValidation
                     ref={refName}
                     value={name}
                     title={'Nome'}
-                    error={isErr[0]}
+                    error={errName}
                     placeholder={'Ex: Giovane'}
                     setValue={val => setName(val)}
                     setShow={show => {
-                        if (!show) StoragePhases.validName(name, isErr, setErr)
+                        if (!show) setErrName(StoragePhases.validName(name, errName));
                     }}
                 />
                 <InputValidation
-                    error={isErr[1]}
+                    error={errSob}
                     value={sobName}
                     ref={refSobName}
                     title={'Sobrenome'}
                     placeholder={'Ex: Santos Silva'}
                     setValue={val => setSobname(val)}
                     setShow={show => {
-                        if (!show) StoragePhases.validSobName(sobName, isErr, setErr)
+                        if (!show) setErrSob(StoragePhases.validSobName(sobName, errSob));
                     }}
                 />
             </View>
             <TouchableOpacity
-                onPress={_validRegisters}
                 style={styles.buttonNext}
+                onPress={_validRegisters}
             >
                 <TextClean style={styles.textAvancar}>
                     Avançar
@@ -95,20 +122,19 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     buttonNext: {
-        bottom: 20,
         padding: 10,
         width: '100%',
-        marginTop: 20,
         borderRadius: 30,
         alignItems: 'center',
+        bottom: width * .18, //valor ios
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
     },
     goBack: {
-        left: 0,
+        right: 0,
         zIndex: 3,
         opacity: .5,
-        padding: 8,
+        padding: 12,
         position: 'absolute',
     },
 })

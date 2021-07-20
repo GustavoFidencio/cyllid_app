@@ -1,5 +1,5 @@
 import React, { useRef, memo, useState, useEffect } from 'react';
-import { Animated, StyleSheet, Dimensions, View } from 'react-native';
+import { Animated, StyleSheet, Dimensions, View, KeyboardAvoidingView } from 'react-native';
 
 import { Progress } from '../';
 import { Basic } from './basic';
@@ -20,15 +20,17 @@ const { width } = Dimensions.get('window');
 export const ListPhases = memo(({ show, navigation }) => {
 
     const [user, setUser] = useState({});
+    const [focus, setFocus] = useState(0);
+
     const scrollX = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        if (show) setTimeout(() => Animate.smooth(100, valueAnimate, 800), 600)
+        if (show) Animate.smooth(100, valueAnimate, 800);
     }, [show])
 
     useEffect(() => {
-        setTimeout(() => Animate.smooth(100, scrollX), 5500);
+        setTimeout(() => Animate.smooth(100, scrollX), 5000);
         //tentar fazer isso executar somente quando realmente aparece... trocar o show por { show && .... }
     }, [])
 
@@ -51,12 +53,14 @@ export const ListPhases = memo(({ show, navigation }) => {
         if (index == 0) navigation.goBack();
         else {
             setUser(await StoragePhases.deleteInfo(user, index));
-            Animate.smooth(index * 100, scrollX)
+            setFocus(index - 1);
+            Animate.smooth(index * 100, scrollX);
         }
     }
 
     const _setUser = async (val, index) => {
         setUser(await StoragePhases.setUser(val, user));
+        setFocus(index);
         Animate.smooth((index + 1) * 100, scrollX)
     }
 
@@ -71,20 +75,23 @@ export const ListPhases = memo(({ show, navigation }) => {
     return (
         show &&
         <View style={{ width }}>
-            <Progress
-                scroll={scrollX}
-                valueAnimate={valueAnimate}
-            />
-            <Animated.View style={{ ...styles.containerPhases, transform }} >
-                {phases.map((item, index) =>
-                    <item.Comp
-                        key={index}
-                        back={() => _back(index)}
-                        next={val => _next(index + 1, val)}
-                        valueAnimate={index == 0 && valueAnimate}
-                    />
-                )}
-            </Animated.View>
+            <KeyboardAvoidingView behavior='padding'>
+                <Progress
+                    scroll={scrollX}
+                    valueAnimate={valueAnimate}
+                />
+                <Animated.View style={{ ...styles.containerPhases, transform }} >
+                    {phases.map((item, index) =>
+                        <item.Comp
+                            key={index}
+                            focus={focus == index}
+                            back={() => _back(index)}
+                            next={val => _next(index + 1, val)}
+                            valueAnimate={index == 0 && valueAnimate}
+                        />
+                    )}
+                </Animated.View>
+            </KeyboardAvoidingView>
         </View>
     )
 })

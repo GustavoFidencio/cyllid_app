@@ -1,25 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import HapticFeedback from "react-native-haptic-feedback";
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
-import { Input } from '../input';
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
-import { TextClean, Icon } from "cyllid/src/helpers";
+import { TextClean, Icon, InputValidation } from "cyllid/src/helpers";
 
-export const Important = ({ next, back }) => {
+export const Important = ({ next, back, focus }) => {
+
+    const refCpf = useRef(null);
+    const refEmail = useRef(null);
 
     const [cpf, setCpf] = useState('');
     const [email, setEmail] = useState('');
-    const [isErr, setErr] = useState([false, false]);
+    const [errCpf, setErrCpf] = useState('');
+    const [errEmail, setErrEmail] = useState('');
 
-    useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [cpf]);
+    useEffect(() => {
+        if (focus) refCpf.current.focus()
+    }, [focus])
 
-    useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [email]);
+    useEffect(() => {
+        if (errCpf) setErrCpf(false);
+    }, [cpf]);
+
+    useEffect(() => {
+        if (errEmail) setErrEmail(false);
+    }, [email]);
 
     const _validRegisters = () => {
-        let error = StoragePhases.validImportant(cpf, email, next);
-        setErr(error);
-    }
+        if (errCpf || errEmail && errCpf) refCpf.current.focus()
+        else if (errEmail) refEmail.current.focus()
+        else {
+            let erroCpf = StoragePhases.validCpf(cpf);
+            let erroEmail = StoragePhases.validEmail(email);
+
+            if (erroEmail && erroCpf) {
+                setErrCpf(erroCpf);
+                setErrEmail(erroEmail);
+                return HapticFeedback.trigger("notificationError");
+            }
+            if (erroCpf) {
+                HapticFeedback.trigger("notificationError");
+                return setErrCpf(erroCpf);
+            }
+            if (erroEmail) {
+                HapticFeedback.trigger("notificationError");
+                return setErrEmail(erroEmail);
+            }
+            next([cpf, email]);
+        }
+    };
 
     return (
         <Animated.View style={styles.container}>
@@ -27,24 +58,32 @@ export const Important = ({ next, back }) => {
                 onPress={back}
                 style={styles.goBack}
             >
-                <Icon size={40} name={'left'} lib={'antdesign'} />
+                <Icon size={30} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
             <View style={styles.containerInputs}>
-                <Input
+                <InputValidation
+                    ref={refCpf}
                     type={'cpf'}
                     value={cpf}
                     title={'CPF'}
-                    error={isErr[0]}
+                    error={errCpf}
                     setValue={val => setCpf(val)}
                     labelError={'CPF incompleto'}
                     placeholder={'Ex: 153.523.974-01'}
+                    setShow={show => {
+                        if (!show) setErrCpf(StoragePhases.validCpf(cpf, errCpf))
+                    }}
                 />
-                <Input
+                <InputValidation
+                    ref={refEmail}
                     title={'E-mail'}
                     value={email}
-                    error={isErr[1]}
+                    error={errEmail}
                     setValue={val => setEmail(val)}
                     placeholder={'Ex: gustavo@gmail.com'}
+                    setShow={show => {
+                        if (!show) setErrEmail(StoragePhases.validEmail(email, errEmail))
+                    }}
                 />
             </View>
             <TouchableOpacity
@@ -79,12 +118,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     buttonNext: {
-        bottom: 20,
         padding: 10,
         width: '100%',
-        marginTop: 20,
         borderRadius: 30,
         alignItems: 'center',
+        bottom: width * .18, //valor ios
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
     },
@@ -92,7 +130,7 @@ const styles = StyleSheet.create({
         left: 0,
         zIndex: 3,
         opacity: .5,
-        padding: 8,
+        padding: 10,
         position: 'absolute',
     },
 })

@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     },
     containerLabels: {
         width,
-        top: 12,
+        top: 18,
         height: 30,
         overflow: 'hidden',
         position: 'absolute',
