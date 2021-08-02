@@ -1,24 +1,16 @@
-import React, { useEffect, useState, forwardRef } from 'react';
-import { View, Animated, Easing, StyleSheet, TextInput, Text } from 'react-native';
+import TextInputMask from 'react-native-text-input-mask';
+import React, { useEffect, useState, forwardRef, memo } from 'react';
+import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 
-import Color from '../assets/colors'
+import Color from '../assets/colors';
+import { Animate } from 'cyllid/src/services';
 
-export const InputValidation = ({ title, placeholder, error, value, setValue, setShow }) => {
+export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow, type = 'default' }, ref) => {
 
     const [valueAnimate] = useState(new Animated.Value(0));
 
-    const animation = val => {
-        Animated.timing(valueAnimate, {
-            toValue: val,
-            duration: 1500,
-            useNativeDriver: false,
-            easing: Easing.out(Easing.exp),
-        }).start();
-    }
-
     useEffect(() => {
-        if (error) animation(100)
-        else animation(0)
+        Animate.smooth(error ? 100 : 0, valueAnimate)
     }, [error]);
 
     const borderColor = valueAnimate.interpolate({
@@ -37,30 +29,39 @@ export const InputValidation = ({ title, placeholder, error, value, setValue, se
             <Animated.View
                 style={{ ...styles.backgroundInput, borderColor }}
             >
-                <TextInput
+                <TextInputMask
+                    mask={
+                        type != 'default' &&
+                        "[000].[000].[000]-[00]"
+                    }
+                    ref={ref}
                     value={value}
-                    selectTextOnFocus
                     spellCheck={false}
                     style={styles.input}
+                    selectTextOnFocus
                     autoCorrect={false}
                     autoCapitalize='none'
                     autoCompleteType={'off'}
                     placeholder={placeholder}
+                    onBlur={() => setShow(false)}
+                    onFocus={() => setShow(true)}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
-                    onChangeText={val => setValue(val)}
-                    onFocus={() => console.log("focus ")}
-                    onBlur={() => console.log("saiu de foco")}
+                    // onFocus={() => console.log("focus ")}
+                    // onBlur={() => console.log("saiu de foco")}
+                    onChangeText={(val, teste) => {
+                        if (type != 'default') setValue(teste);
+                        else setValue(val);
+                    }}
+                    keyboardType={type != 'default' ? 'phone-pad' : 'default'}
                 />
             </Animated.View>
-            <Animated.Text
-                style={{ ...styles.textError, opacity }}
-            >
-                Ops, usuário incorreto
+            <Animated.Text style={{ ...styles.textError, opacity }}>
+                {error}
             </Animated.Text>
         </View>
     )
-}
+}))
 
 const styles = StyleSheet.create({
     input: {

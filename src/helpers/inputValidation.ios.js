@@ -1,6 +1,6 @@
 import TextInputMask from 'react-native-text-input-mask';
+import { View, Animated, StyleSheet, Text } from 'react-native';
 import React, { useEffect, useState, forwardRef, memo } from 'react';
-import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 
 import Color from '../assets/colors';
 import { Animate } from 'cyllid/src/services';

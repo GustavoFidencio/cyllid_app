@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         width,
         flex: 1,
         alignItems: 'center',
+        paddingBottom:20,
         paddingHorizontal: 16,
     },
     containerInputs: {
@@ -78,7 +79,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     buttonNext: {
-        bottom: 20,
         padding: 10,
         width: '100%',
         marginTop: 20,

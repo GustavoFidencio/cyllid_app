@@ -21,7 +21,7 @@ export const ListPhases = memo(({ show, navigation }) => {
 
     const [user, setUser] = useState({});
     const [focus, setFocus] = useState(0);
-    
+
     const scrollX = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
@@ -74,7 +74,7 @@ export const ListPhases = memo(({ show, navigation }) => {
 
     return (
         show &&
-        <View style={{ width }}>
+        <View style={{ width, flex: 1 }}>
             <Progress
                 scroll={scrollX}
                 valueAnimate={valueAnimate}

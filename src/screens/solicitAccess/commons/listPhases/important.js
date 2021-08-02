@@ -50,8 +50,8 @@ export const Important = ({ next, back, focus }) => {
         else {
             _validCpf()
             _validEmail()
-            if (erroEmail && errCpf || errCpf) return refCpf.current.focus();
-            if (erroEmail) return refEmail.current.focus();
+            if (errEmail && errCpf || errCpf) return refCpf.current.focus();
+            if (errEmail) return refEmail.current.focus();
             next([cpf, email]);
         }
     };
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
         width,
         flex: 1,
         alignItems: 'center',
+        paddingBottom: 20,
         paddingHorizontal: 16,
     },
     containerInputs: {
@@ -126,7 +127,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 30,
         alignItems: 'center',
-        bottom: width * .18, //valor ios
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
     },

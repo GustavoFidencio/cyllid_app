@@ -10,8 +10,14 @@ export class StorageSolicitAccess {
         };
         return new Promise((resolve, reject) => {
             Executor.run(new RequestSolicitAccess(data))
-                .then(res => resolve(res))
-                .catch(err => reject(err.response));
+                .then(res => {
+                    console.log(res);
+                    resolve(res)
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err.response)
+                });
         })
     }
 

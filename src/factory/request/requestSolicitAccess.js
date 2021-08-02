@@ -4,7 +4,7 @@ import Routes from 'cyllid/src/assets/routes';
 export class RequestSolicitAccess extends Request {
 
     constructor(data) {
-        const url = Routes.validPassword;
+        const url = Routes.solicitUser;
         const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
         super(url, "POST", headers, data)
     }

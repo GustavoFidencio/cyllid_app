@@ -108,7 +108,9 @@ const styles = StyleSheet.create({
     container: {
         width,
         flex: 1,
+        // height: '100%',
         alignItems: 'center',
+        paddingBottom:20,
         paddingHorizontal: 16,
     },
     containerInputs: {
