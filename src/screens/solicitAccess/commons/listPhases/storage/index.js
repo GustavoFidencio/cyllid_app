@@ -1,5 +1,7 @@
 import HapticFeedback from "react-native-haptic-feedback";
 
+import { StorageSolicitAccess } from 'cyllid/src/screens/solicitAccess/storage';
+
 export class StoragePhases {
 
     static effectDates(name, setErr, index) {
@@ -76,20 +78,33 @@ export class StoragePhases {
 
     //important
     static validCpf(cpf, err = false) {
-        if (cpf.length != 14) {
-            !err && HapticFeedback.trigger("notificationError");
-            return 'CPF incompleto';
-        }
-        //fazer request pra validar cpf
-        return false;
+        return new Promise((resolve, reject) => {
+            if (cpf.length != 11) {
+                !err && HapticFeedback.trigger("notificationError");
+                return reject('CPF incompleto');
+            }
+            StorageSolicitAccess.checkCpf(cpf)
+                .then(() => resolve('CPF já cadastrado na plataforma'))
+                .catch(err => {
+                    if (err.status == 404) return reject(false);
+                    else return reject('Número de CPF inválido');
+                })
+        })
     }
 
     static validEmail(email, err = false) {
-        if (email.length < 3) {
-            !err && HapticFeedback.trigger("notificationError");
-            return 'Mínimo 3 caracteres';
-        }
-        //fazer request pra validar email
-        return false;
+        return new Promise((resolve, reject) => {
+            if (email.length < 3) {
+                !err && HapticFeedback.trigger("notificationError");
+                return 'Mínimo 3 caracteres';
+            }
+            StorageSolicitAccess.checkEmail(email)
+                .then(() => resolve('Email já cadastrado na plataforma'))
+                .catch(err => {
+                    if (err.status == 404) return reject(false);
+                    else return reject('Email inválido');
+                })
+            return false;
+        })
     }
 }

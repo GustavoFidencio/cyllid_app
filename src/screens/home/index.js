@@ -5,9 +5,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { View, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 
 import { StorageHome } from './storage';
-import { Card, Balance } from './commons';
-import Color from 'cyllid/src/assets/colors';
 import { TextClean } from 'cyllid/src/helpers';
+import { Card, Balance, ListTransactions } from './commons';
 
 export const HomeInitial = ({ navigation }) => {
 
@@ -25,18 +24,24 @@ export const HomeInitial = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
+            <StatusBar barStyle='light-content' />
             <View style={styles.containerContent}>
                 <View style={styles.containerInfoDay}>
                     <TextClean style={styles.textUser}>
                         {name}
                     </TextClean>
-                    <TextClean style={styles.textDay}>
-                        Jun/21
-                    </TextClean>
+                    <View style={styles.bgDate}>
+                        <TextClean style={styles.numberDay}>
+                            21
+                        </TextClean>
+                        <TextClean style={styles.mothnDay}>
+                            JUN
+                        </TextClean>
+                    </View>
                 </View>
                 <Balance />
             </View>
+            <ListTransactions />
             <View >
                 <ScrollView
                     horizontal

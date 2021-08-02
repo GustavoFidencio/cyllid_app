@@ -23,7 +23,7 @@ PODS:
   - glog (0.3.5)
   - InputMask (6.1.0)
   - lottie-ios (3.1.8)
-  - lottie-react-native (4.0.2):
+  - lottie-react-native (4.0.0):
     - lottie-ios (~> 3.1.8)
     - React-Core
   - RCTRequired (0.63.4)
@@ -419,7 +419,7 @@ SPEC CHECKSUMS:
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
-  lottie-react-native: 4dff8fe8d10ddef9e7880e770080f4a56121397e
+  lottie-react-native: 4ccc2268f97234cf7eb2f129d5996cd563b67ba3
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
   React: b0a957a2c44da4113b0c4c9853d8387f8e64e615

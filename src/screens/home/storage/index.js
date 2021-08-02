@@ -1,4 +1,4 @@
-import { Executor, RequestBalance } from 'cyllid/src/factory/request';
+import { Executor, RequestBalance, RequestTransactionsAll } from 'cyllid/src/factory/request';
 
 export class StorageHome {
 
@@ -10,6 +10,14 @@ export class StorageHome {
     static getBalance() {
         return new Promise((resolve, reject) => {
             Executor.run(new RequestBalance())
+                .then(res => resolve(res.data))
+                .catch(err => reject(err.response));
+        })
+    }
+
+    static getTransactionsAll() {
+        return new Promise((resolve, reject) => {
+            Executor.run(new RequestTransactionsAll())
                 .then(res => resolve(res.data))
                 .catch(err => reject(err.response));
         })

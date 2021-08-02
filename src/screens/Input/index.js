@@ -3,6 +3,7 @@ import styles from './styles';
 import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { TextClean, Icon } from 'cyllid/src/helpers';
+import { Cash } from './commons';
 
 export const Input = ({ navigation }) => {
     return (
@@ -14,11 +15,17 @@ export const Input = ({ navigation }) => {
                 >
                     <Icon size={40} name={'left'} lib={'antdesign'} />
                 </TouchableOpacity>
-                <TextClean style={styles.textTitle}>
-                    Entrada
-                </TextClean>
-                <View style={styles.containerMoney}>
-                    <TextClean  style={styles.textMoney}>
+                <View style={styles.containerLabel} >
+                    <TextClean style={styles.textTitle}>
+                        Entrada
+                    </TextClean>
+                </View>
+                <Cash
+
+                />
+
+                {/* <View style={styles.containerMoney}>
+                    <TextClean style={styles.textMoney}>
                         +
                     </TextClean>
                     <TextClean style={styles.textMoney}>
@@ -27,7 +34,7 @@ export const Input = ({ navigation }) => {
                     <TextClean style={styles.textNumberMoney}>
                         0,00
                     </TextClean>
-                </View>
+                </View> */}
             </View>
         </SafeAreaView>
     )

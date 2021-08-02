@@ -76,10 +76,6 @@ export const ListPhases = memo(({ show, navigation }) => {
         show &&
         <View style={{ width }}>
             <KeyboardAvoidingView behavior='padding'>
-                <Progress
-                    scroll={scrollX}
-                    valueAnimate={valueAnimate}
-                />
                 <Animated.View style={{ ...styles.containerPhases, transform }} >
                     {phases.map((item, index) =>
                         <item.Comp
@@ -91,6 +87,13 @@ export const ListPhases = memo(({ show, navigation }) => {
                         />
                     )}
                 </Animated.View>
+                <View style={{ height: 10 }} /> 
+                {/* tentar convencer o gio de deixar em cima se nao vai ter que mexer em tudo aqui  */}
+                <Progress
+                    scroll={scrollX}
+                    valueAnimate={valueAnimate}
+                />
+                <View style={{ height: 130 }} />
             </KeyboardAvoidingView>
         </View>
     )

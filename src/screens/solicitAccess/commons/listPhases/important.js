@@ -28,26 +28,30 @@ export const Important = ({ next, back, focus }) => {
         if (errEmail) setErrEmail(false);
     }, [email]);
 
+    const _validCpf = async () => {
+        try {
+            setErrCpf(await StoragePhases.validCpf(cpf, errCpf))
+        } catch (error) {
+            setErrCpf(error)
+        }
+    }
+
+    const _validEmail = async () => {
+        try {
+            setErrEmail(await StoragePhases.validEmail(email, errEmail))
+        } catch (error) {
+            setErrEmail(error)
+        }
+    }
+
     const _validRegisters = () => {
         if (errCpf || errEmail && errCpf) refCpf.current.focus()
         else if (errEmail) refEmail.current.focus()
         else {
-            let erroCpf = StoragePhases.validCpf(cpf);
-            let erroEmail = StoragePhases.validEmail(email);
-
-            if (erroEmail && erroCpf) {
-                setErrCpf(erroCpf);
-                setErrEmail(erroEmail);
-                return HapticFeedback.trigger("notificationError");
-            }
-            if (erroCpf) {
-                HapticFeedback.trigger("notificationError");
-                return setErrCpf(erroCpf);
-            }
-            if (erroEmail) {
-                HapticFeedback.trigger("notificationError");
-                return setErrEmail(erroEmail);
-            }
+            _validCpf()
+            _validEmail()
+            if (erroEmail && errCpf || errCpf) return refCpf.current.focus();
+            if (erroEmail) return refEmail.current.focus();
             next([cpf, email]);
         }
     };
@@ -70,8 +74,8 @@ export const Important = ({ next, back, focus }) => {
                     setValue={val => setCpf(val)}
                     labelError={'CPF incompleto'}
                     placeholder={'Ex: 153.523.974-01'}
-                    setShow={show => {
-                        if (!show) setErrCpf(StoragePhases.validCpf(cpf, errCpf))
+                    setShow={async show => {
+                        if (!show) _validCpf()
                     }}
                 />
                 <InputValidation
@@ -81,8 +85,8 @@ export const Important = ({ next, back, focus }) => {
                     error={errEmail}
                     setValue={val => setEmail(val)}
                     placeholder={'Ex: gustavo@gmail.com'}
-                    setShow={show => {
-                        if (!show) setErrEmail(StoragePhases.validEmail(email, errEmail))
+                    setShow={async show => {
+                        if (!show) _validEmail()
                     }}
                 />
             </View>

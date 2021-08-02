@@ -45,7 +45,10 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                     onFocus={() => setShow(true)}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
-                    onChangeText={val => setValue(val)}
+                    onChangeText={(val, teste) => {
+                        if (type != 'default') setValue(teste);
+                        else setValue(val);
+                    }}
                     keyboardType={type != 'default' ? 'phone-pad' : 'default'}
                 />
             </Animated.View>

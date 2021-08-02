@@ -3,9 +3,6 @@ import qs from 'qs';
 export class Request {
 
     constructor(url, method, header, params) {
-        // console.log(url);
-        // console.log(header);
-        // console.log(method);
         this._url = url;
         this._method = method;
         this._header = header;

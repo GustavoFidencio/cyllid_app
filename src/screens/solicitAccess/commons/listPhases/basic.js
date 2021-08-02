@@ -48,7 +48,7 @@ export const Basic = ({ next, back, valueAnimate, focus }) => {
                 HapticFeedback.trigger("notificationError");
                 return setErrSob(erroSobName);
             }
-            
+
             next([name, sobName]);
         }
     };
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 30,
         alignItems: 'center',
-        bottom: width * .18, //valor ios
+        // bottom: width * .18, //valor ios
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
     },

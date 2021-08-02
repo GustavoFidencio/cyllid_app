@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import Color from 'cyllid/src/assets/colors';
 
 export default StyleSheet.create({
-    safeArea:{
+    safeArea: {
         flex: 1,
         backgroundColor: Color.DARK,
     },
@@ -10,33 +10,26 @@ export default StyleSheet.create({
         left: 0,
         // padding: 8,
         // paddingTop: 8,
-        position:'absolute'
+        position: 'absolute'
     },
-    container:{
-        paddingHorizontal: 15
+    container: {
+        paddingHorizontal: 15,
     },
-    textTitle:{
-        top: 45,
+    containerLabel: {
+        width: 120,
+        height: 60,
+        marginRight: -5,
+        alignSelf: 'flex-end',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopLeftRadius: 20,
+        backgroundColor: 'white',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+    },
+    textTitle: {
         fontSize: 26,
-        color: 'white',
+        color: Color.BLUE,
         fontFamily: 'Nunito-Bold',
     },
-    containerMoney:{
-        top:30,
-        width:'100%',
-        flexDirection:'row',
-    },
-    textMoney:{
-        top: 45,
-        fontSize: 28,
-        color: 'white',
-        fontFamily: 'Nunito-Black',
-    },
-    textNumberMoney:{
-        left:10,
-        top: 45,
-        fontSize: 28,
-        color: 'white',
-        fontFamily: 'Nunito-Black',
-    }
 })

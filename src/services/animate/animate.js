@@ -2,12 +2,12 @@ import { Animated, Easing } from 'react-native';
 
 export class Animate {
 
-    static default(toValue, state, duration = 1500, onComplete, useNativeDriver = false) {
+    static default(toValue, state, duration = 1500, useNativeDriver = false, onComplete) {
         Animated.timing(state, {
             toValue,
             duration,
+            onComplete,
             useNativeDriver,
-            onComplete: onComplete
         }).start();
     }
 
@@ -15,9 +15,9 @@ export class Animate {
         Animated.timing(state, {
             toValue,
             duration,
+            onComplete,
             useNativeDriver,
             easing: Easing.out(Easing.exp),
-            onComplete: onComplete,
         }).start();
     }
 
@@ -25,9 +25,9 @@ export class Animate {
         Animated.timing(state, {
             toValue,
             duration,
+            onComplete,
             useNativeDriver,
             easing: Easing.bounce,
-            onComplete: onComplete,
         }).start();
     }
 
@@ -35,8 +35,8 @@ export class Animate {
         Animated.timing(state, {
             toValue,
             duration,
+            onComplete,
             useNativeDriver,
-            onComplete: onComplete,
             easing: Easing.inOut(Easing.elastic(1)),
         }).start();
     }

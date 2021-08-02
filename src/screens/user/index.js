@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import styles from './styles';
+
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -9,12 +10,16 @@ import { TextClean } from 'cyllid/src/helpers';
 
 export const User = ({ navigation }) => {
 
-    const [name, setName] = useState('');
+    const [user, setUser] = useState({ name: '', alias: '' });
 
     useEffect(() => {
         (async () => {
             let user = JSON.parse(await AsyncStorage.getItem('user'));
-            setName(`${user.name} ${user.surname}`);
+            console.log(user);
+            setUser({
+                name: user.full_name,
+                alias: user.small_name
+            });
         })();
     }, [])
 
@@ -52,11 +57,11 @@ export const User = ({ navigation }) => {
             <View style={styles.containerPhoto}>
                 <View style={styles.circle}>
                     <TextClean style={styles.aliasUser}>
-                        GS
+                        {user.alias}
                     </TextClean>
                 </View>
                 <TextClean style={styles.textNameUser}>
-                    {name}
+                    {user.name}
                 </TextClean>
             </View>
             <View style={styles.contianerOptions}>
