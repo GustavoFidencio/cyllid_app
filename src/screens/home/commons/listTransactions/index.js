@@ -19,7 +19,7 @@ export const ListTransactions = ({ }) => {
     const _getTransactions = () => {
         StorageHome.getTransactionsAll()
             .then(transactions => setTrans(transactions))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err, 'cleber'))
             .finally(() => setLoad(false))
     }
 

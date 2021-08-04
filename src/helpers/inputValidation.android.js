@@ -5,7 +5,7 @@ import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 import Color from '../assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow, type = 'default' }, ref) => {
+export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow = false, type = 'default' }, ref) => {
 
     const [valueAnimate] = useState(new Animated.Value(0));
 
@@ -24,7 +24,7 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
     });
 
     return (
-        <View style={{ width: '100%' }}>
+        <View style={styles.container}>
             <Text style={styles.textUser}> {title} </Text>
             <Animated.View
                 style={{ ...styles.backgroundInput, borderColor }}
@@ -43,8 +43,8 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                     autoCapitalize='none'
                     autoCompleteType={'off'}
                     placeholder={placeholder}
-                    onBlur={() => setShow(false)}
-                    onFocus={() => setShow(true)}
+                    onBlur={() => setShow && setShow(false)}
+                    onFocus={() => setShow && setShow(true)}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     // onFocus={() => console.log("focus ")}
@@ -83,6 +83,12 @@ const styles = StyleSheet.create({
     },
     textError: {
         top: 1,
+        right: 5,
+        alignSelf: 'flex-end',
         color: Color.ERROR,
+    },
+    container: {
+        bottom: 2,
+        width: '100%',
     }
 })

@@ -30,6 +30,7 @@ export class StorageAuth {
     }
 
     static setToken({ access_token, expires_in, refresh_token }) {
+        console.log(access_token);
         return new Promise(async resolve => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
             await AsyncStorage.multiSet([

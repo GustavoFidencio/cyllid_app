@@ -8,6 +8,7 @@ import Color from 'cyllid/src/assets/colors'
 import {
     Input,
     Login,
+    Terms,
     Splash,
     Password,
     SolicitAccess,
@@ -74,6 +75,11 @@ export const StackNav = () => {
                     options={{ header: _noneArrow }}
                 />
                 <Stack.Screen
+                    name="Terms"
+                    component={Terms}
+                    options={{ header: _noneArrow }}
+                />
+                <Stack.Screen
                     name="Password"
                     component={Password}
                     options={{ header: _noneArrow }}
@@ -82,7 +88,7 @@ export const StackNav = () => {
                     name="TabNav"
                     component={TabNav}
                     options={{ header: _noneArrow }}
-                /> 
+                />
                 <Stack.Screen
                     name="SolicitAccess"
                     component={SolicitAccess}

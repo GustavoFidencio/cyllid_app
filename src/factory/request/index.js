@@ -5,5 +5,6 @@ export * from './requestCheckCpf';
 export * from './requestCheckUser';
 export * from './requestCheckEmail';
 export * from './requestSolicitAccess';
+export * from './requestPendentTerms';
 export * from './requestValidPassword';
 export * from './requestTransactionsAll';

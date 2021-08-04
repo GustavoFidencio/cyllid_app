@@ -6,6 +6,7 @@ import { Touchable } from './touchable';
 import { StorageAuth } from '../../storage';
 import Color from 'cyllid/src/assets/colors';
 import { Load, Icon } from 'cyllid/src/helpers';
+import { StorageTerms } from 'cyllid/src/screens/terms/storage';
 
 export const TouchableTemporari = ({ navigation, user }) => {
 
@@ -27,7 +28,15 @@ export const TouchableTemporari = ({ navigation, user }) => {
     const _checkPassword = () => {
         setLoad(true)
         StorageAuth.validPassword(user, valueSelect)
-            .then(() => navigation.replace('TabNav'))
+            .then(() => {
+                StorageTerms.getTerms()
+                    .then(res => {
+
+                    })
+                    .catch(err =>
+                        navigation.reset({ index: 0, routes: [{ name: 'TabNav' }] })
+                    )
+            })
             .catch(err => {
                 setError(err);
                 setSelect('');

@@ -7,7 +7,7 @@ export class Request {
         this._method = method;
         this._header = header;
         this._params = params ? qs.stringify(params) : null;
-        // console.log(this._params);
+        console.log(this._header);
     }
 
     get url() {
