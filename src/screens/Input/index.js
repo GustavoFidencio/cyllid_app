@@ -1,11 +1,16 @@
-import React from 'react';
 import styles from './styles';
-import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 
+import React, { useState, useRef } from 'react';
+import { View, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
+
+import { Cash, InputLine } from './commons';
 import { TextClean, Icon } from 'cyllid/src/helpers';
-import { Cash } from './commons';
 
 export const Input = ({ navigation }) => {
+
+    const [name, setName] = useState('');
+    const [valueAnimate] = useState(new Animated.Value(0));
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -21,20 +26,13 @@ export const Input = ({ navigation }) => {
                     </TextClean>
                 </View>
                 <Cash
-
                 />
-
-                {/* <View style={styles.containerMoney}>
-                    <TextClean style={styles.textMoney}>
-                        +
-                    </TextClean>
-                    <TextClean style={styles.textMoney}>
-                        R$
-                    </TextClean>
-                    <TextClean style={styles.textNumberMoney}>
-                        0,00
-                    </TextClean>
-                </View> */}
+                <InputLine
+                    value={name}
+                    placeholder={'Nome'}
+                    setValue={name => setName(name)}
+                />
+                
             </View>
         </SafeAreaView>
     )

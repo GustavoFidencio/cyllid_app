@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInputMask } from 'react-native-masked-text';
+import CurrencyInput from 'react-native-currency-input';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
 
 import Color from 'cyllid/src/assets/colors';
@@ -7,7 +7,7 @@ import { TextClean, Icon } from 'cyllid/src/helpers';
 
 export const Cash = ({ }) => {
 
-    const [val, setVal] = useState()
+    const [val, setVal] = useState(0)
 
     return (
         <View style={styles.containerMoney}>
@@ -17,14 +17,13 @@ export const Cash = ({ }) => {
             <TextClean style={styles.textMoney}>
                 R$
             </TextClean>
-            <TextInputMask
-                type={'money'}
-                keyboardType={'numeric'}
-                onChangeText={val => setVal(val)}
+            <CurrencyInput
+                value={val}
+                delimiter={"."}
+                separator={","}
                 style={styles.textNumberMoney}
-            >
-                0,00
-            </TextInputMask>
+                onChangeValue={val => setVal(!val ? 0 : val)}
+            />
         </View>
     )
 }
@@ -32,19 +31,20 @@ export const Cash = ({ }) => {
 const styles = StyleSheet.create({
     containerMoney: {
         width: '100%',
+        marginTop: 40,
         flexDirection: 'row',
+        alignItems: 'center',
     },
     textMoney: {
-        top: 45,
         fontSize: 28,
         color: 'white',
         fontFamily: 'Nunito-Black',
     },
     textNumberMoney: {
         left: 10,
-        top: 45,
         fontSize: 28,
         color: 'white',
+        minWidth: 80,
         fontFamily: 'Nunito-Black',
     }
 })
