@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import { CirclePass } from './circlePass';
@@ -28,15 +28,11 @@ export const TouchableTemporari = ({ navigation, user }) => {
     const _checkPassword = () => {
         setLoad(true)
         StorageAuth.validPassword(user, valueSelect)
-            .then(() => {
+            .then(() =>
                 StorageTerms.getTerms()
-                    .then(res => {
-
-                    })
-                    .catch(err =>
-                        navigation.reset({ index: 0, routes: [{ name: 'TabNav' }] })
-                    )
-            })
+                    .then(term => navigation.reset({ index: 0, routes: [{ name: 'Terms', params: { term } }] }))
+                    .catch(err => navigation.reset({ index: 0, routes: [{ name: 'TabNav' }] }))
+            )
             .catch(err => {
                 setError(err);
                 setSelect('');

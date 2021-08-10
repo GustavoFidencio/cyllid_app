@@ -1,112 +1,67 @@
+import styles from './styles';
+
 import React, { useEffect, useState, useRef } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { View, SafeAreaView, ScrollView, StatusBar, StyleSheet, Animated } from 'react-native';
+import { View, SafeAreaView, ScrollView, StatusBar, StyleSheet, Animated, Text, TouchableOpacity } from 'react-native';
 
+import { TermsList, Accept } from './commons';
+import { Laws } from 'cyllid/src/services';
 import { StorageTerms } from '../storage';
-import { TextClean, CheckBox } from 'cyllid/src/helpers';
+import Color from 'cyllid/src/assets/colors';
+import { TextClean, CheckBox, Load } from 'cyllid/src/helpers';
 
-export const Terms = ({ navigation }) => {
+export const Terms = ({ navigation, route }) => {
 
-    const [term, setTerm] = useState('');
-    const valueAnimate = useRef(new Animated.Value(0)).current;
+    const [term, setTerm] = useState();
+    const [isLoad, setLoad] = useState(true);
+
+    const { key, version, id } = route.params.term[0];
 
     useEffect(() => {
-        _getTerms()
+        setTerm(Laws.getLaw(key));
     }, [])
 
-    const _getTerms = () => {
-        StorageTerms.getTerms()
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
+    useEffect(() => {
+        term && setLoad(false);
+    }, [term])
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
-                <TextClean style={styles.title}>
-                    Retenção de dados
-                </TextClean>
-                <View style={styles.containerSubTitle}>
-                    <TextClean style={styles.subtitle}>
-                        Descrição:
-                    </TextClean>
-                    <TextClean style={styles.subtitle}>
-                        Requerido
-                    </TextClean>
+            <ScrollView>
+                <View style={styles.container}>
+                    {
+                        isLoad ?
+                            <Load color={Color.BLUE} />
+                            :
+                            <>
+                                <TextClean style={styles.title}>
+                                    {term.title}
+                                </TextClean>
+                                <View style={styles.containerSubTitle}>
+                                    <TextClean style={styles.subtitle}>
+                                        Descrição:
+                                    </TextClean>
+                                    <TextClean style={styles.subtitle}>
+                                        {term.desc}
+                                    </TextClean>
+                                </View>
+                                <View style={styles.containerSubTitle}>
+                                    <TextClean style={styles.subtitle}>
+                                        Versão:
+                                    </TextClean>
+                                    <TextClean style={styles.subtitle}>
+                                        {version}
+                                    </TextClean>
+                                </View>
+                                <TermsList term={term} />
+                                <Accept
+                                    id={id}
+                                    navigation={navigation}
+                                />
+                            </>
+                    }
                 </View>
-                <View style={styles.containerSubTitle}>
-                    <TextClean style={styles.subtitle}>
-                        Versão:
-                    </TextClean>
-                    <TextClean style={styles.subtitle}>
-                        1.0.0.0
-                    </TextClean>
-                </View>
-                <View style={styles.laws}>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            paddingHorizontal: 5,
-                        }}
-                    >
-                        <View
-                            style={{
-                                width: 4,
-                                top: 1.5,
-                                height: 4,
-                                marginRight: 5,
-                                borderRadius: 90,
-                                backgroundColor: 'black',
-                            }}
-                        />
-                        <TextClean
-                            style={{
-                                color: 'black',
-                            }}
-                        >
-                            teste
-                        </TextClean>
-                    </View>
-                </View>
-                <View>
-                    <CheckBox />
-                </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-    container: {
-        flex: 1,
-        padding: 16
-    },
-    title: {
-        fontSize: 27,
-        color: 'black',
-        marginBottom: 25,
-        fontFamily: 'Nunito-Black',
-    },
-    containerSubTitle: {
-        flexDirection: 'row',
-    },
-    subtitle: {
-        fontSize: 18,
-        color: 'black',
-        fontFamily: 'Nunito-Bold',
-    },
-    laws: {
-        marginTop: 25,
-        backgroundColor: 'purple',
-        flex: 1,
-    }
-})

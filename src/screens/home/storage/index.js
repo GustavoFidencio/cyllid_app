@@ -18,14 +18,8 @@ export class StorageHome {
     static getTransactionsAll() {
         return new Promise((resolve, reject) => {
             Executor.run(new RequestTransactionsAll())
-                .then(res => {
-                    console.log(res.data);
-                    resolve(res.data)
-                })
-                .catch(err => {
-                    console.log(err);
-                    reject(err.response)
-                });
+                .then(res => resolve(res.data))
+                .catch(err => reject(err.response));
         })
     }
 }

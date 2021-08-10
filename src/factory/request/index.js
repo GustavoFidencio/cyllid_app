@@ -4,6 +4,7 @@ export * from './requestDataUser';
 export * from './requestCheckCpf';
 export * from './requestCheckUser';
 export * from './requestCheckEmail';
+export * from './requestAcceptTerm';
 export * from './requestSolicitAccess';
 export * from './requestPendentTerms';
 export * from './requestValidPassword';

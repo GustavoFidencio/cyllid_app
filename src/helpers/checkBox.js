@@ -6,19 +6,18 @@ import { Icon } from './icon';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const CheckBox = memo(() => {
+export const CheckBox = memo(({ val, setEnable }) => {
 
-    const [value, setVal] = useState(false);
     const valueAnimate = useRef(new Animated.Value(-1)).current;
 
     useEffect(() => {
-        let val = 0
-        if (value) {
-            val = 100;
+        let value = 0
+        if (val) {
+            value = 100;
             HapticFeedback.trigger("impactLight");
         }
-        Animate.smooth(val, valueAnimate, 600)
-    }, [value])
+        Animate.smooth(value, valueAnimate, 600)
+    }, [val])
 
     const backgroundColor = valueAnimate.interpolate({
         inputRange: [0, 100],
@@ -28,7 +27,7 @@ export const CheckBox = memo(() => {
     return (
         <TouchableOpacity
             activeOpacity={1}
-            onPress={() => setVal(!value)}
+            onPress={() => setEnable(!val)}
         >
             <Animated.View
                 style={{
