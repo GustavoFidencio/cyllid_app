@@ -1,13 +1,14 @@
 import styles from './styles';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
 
-import { Cash, InputLine } from './commons';
 import { TextClean, Icon } from 'cyllid/src/helpers';
+import { Cash, InputLine, Tags } from './commons';
 
 export const Input = ({ navigation }) => {
 
+    const [tag, setTag] = useState();
     const [name, setName] = useState('');
     const [valueAnimate] = useState(new Animated.Value(0));
 
@@ -32,7 +33,15 @@ export const Input = ({ navigation }) => {
                     placeholder={'Nome'}
                     setValue={name => setName(name)}
                 />
-                
+                <Tags
+                    selected={tag}
+                    tagEnable={setTag}
+                />
+
+
+
+
+
             </View>
         </SafeAreaView>
     )
