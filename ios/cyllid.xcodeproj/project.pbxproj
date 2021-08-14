@@ -30,6 +30,7 @@
 		D112AA585C334E7CAA5092CA /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26A6B9F902694FFBA17C93C8 /* Nunito-Bold.ttf */; };
 		D115E8201B2A078C23E9000F /* libPods-cyllid-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A21E89A39AC77C865067051 /* libPods-cyllid-tvOS.a */; };
 		EC2BC1FD26C6BF5300D79F86 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
+		ECC8179026C8374C0088045D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC8178F26C8374C0088045D /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,8 @@
 		EC57762C267523CC004E81FC /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		EC57762D267523CC004E81FC /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		ECAC4842267D747A0049763A /* libRNReactNativeHapticFeedback.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNReactNativeHapticFeedback.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECC8178E26C8374C0088045D /* cyllid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cyllid-Bridging-Header.h"; sourceTree = "<group>"; };
+		ECC8178F26C8374C0088045D /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F4E33A601F156C42AFA205E6 /* Pods-cyllid-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cyllid-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-cyllid-tvOSTests/Pods-cyllid-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -228,6 +231,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				ECC8178F26C8374C0088045D /* File.swift */,
 				13B07FAE1A68108700A75B9A /* cyllid */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* cyllidTests */,
@@ -235,6 +239,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				0BA7EF0D93A0D840B8B25D22 /* Pods */,
 				717D07EDC96947E8960045C2 /* Resources */,
+				ECC8178E26C8374C0088045D /* cyllid-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -372,7 +377,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = G625UPV6D7;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1250;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -721,6 +726,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				ECC8179026C8374C0088045D /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -762,6 +768,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E1E86A7168E7603529E31C20 /* Pods-cyllid-cyllidTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -785,6 +792,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A9033881C7C8F718ADE42410 /* Pods-cyllid-cyllidTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = cyllidTests/Info.plist;
@@ -817,8 +825,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = cyllid;
+				SWIFT_OBJC_BRIDGING_HEADER = "cyllid-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -841,8 +851,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = cyllid;
+				SWIFT_OBJC_BRIDGING_HEADER = "cyllid-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
