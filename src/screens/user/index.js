@@ -10,37 +10,47 @@ import { TextClean } from 'cyllid/src/helpers';
 
 export const User = ({ navigation }) => {
 
-    const [user, setUser] = useState({ name: '', alias: '' });
+    const [user, setUser] = useState({ name: '', alias: '', adm: false });
 
-    useEffect(() => {
-        (async () => {
-            let user = JSON.parse(await AsyncStorage.getItem('user'));
-            console.log(user);
-            setUser({
-                name: user.full_name,
-                alias: user.small_name
-            });
-        })();
-    }, [])
+    useEffect(() => _getUser(), [])
+
+    const _getUser = async () => {
+        let { full_name, small_name, admin } = JSON.parse(await AsyncStorage.getItem('user'));
+        setUser({
+            adm: admin,
+            name: full_name,
+            alias: small_name,
+        });
+    }
 
     const options = [
         {
+            show: true,
             bottom: false,
             text: 'Minha conta',
             onPress: () => console.log('teste'),
         },
         {
+            show: true,
             bottom: true,
             text: 'Termos e políticas',
             onPress: () => console.log('teste'),
         },
         {
+            show: true,
             bottom: true,
             text: 'Senhas de cartões',
             onPress: () => console.log('teste'),
         },
         {
+            bottom: true,
+            show: user.adm,
+            text: 'Lista de Espera',
+            onPress: () => navigation.navigate('ListPending')
+        },
+        {
             text: 'Sair',
+            show: true,
             bottom: true,
             onPress: () => _exit(),
         },
@@ -65,7 +75,8 @@ export const User = ({ navigation }) => {
                 </TextClean>
             </View>
             <View style={styles.contianerOptions}>
-                {options.map(({ text, onPress, bottom }, index) =>
+                {options.map(({ text, onPress, bottom, show }, index) =>
+                    show &&
                     <Options
                         text={text}
                         key={index}

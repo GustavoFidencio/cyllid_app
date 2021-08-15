@@ -8,6 +8,7 @@ export default {
     checkCpf: `${env}/api/v1/user/check/cpf`,
     pendentTerms: `${env}/api/v1/term/verify`,
     transactionsAll: `${env}/api/v1/transaction`,
+    usersPending: `${env}/api/v1/user/pending`,
     balance: `${env}/api/v1/transaction/balance`,
     checkEmail: `${env}/api/v1/user/check/email`,
     checkUser: `${env}/api/v1/user/check/username`,

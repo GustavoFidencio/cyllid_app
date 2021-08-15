@@ -11,6 +11,7 @@ import {
     Terms,
     Splash,
     Password,
+    ListPending,
     SolicitAccess,
 } from '../screens';
 
@@ -61,6 +62,7 @@ export const StackNav = () => {
         <NavigationContainer>
             <Stack.Navigator
                 initialRouteName='Splash'
+                // initialRouteName='ListPending'
                 screenOptions={_getScreenOptions}
             >
                 <Stack.Screen
@@ -92,6 +94,11 @@ export const StackNav = () => {
                 <Stack.Screen
                     name="SolicitAccess"
                     component={SolicitAccess}
+                    options={{ header: _noneArrow }}
+                />
+                <Stack.Screen
+                    name="ListPending"
+                    component={ListPending}
                     options={{ header: _noneArrow }}
                 />
                 <Stack.Screen

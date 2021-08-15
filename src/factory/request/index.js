@@ -6,6 +6,7 @@ export * from './requestCheckUser';
 export * from './requestCheckEmail';
 export * from './requestAcceptTerm';
 export * from './requestSolicitAccess';
+export * from './requestUsersPending';
 export * from './requestPendentTerms';
 export * from './requestValidPassword';
 export * from './requestTransactionsAll';

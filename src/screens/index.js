@@ -5,4 +5,5 @@ export * from './invest';
 export * from './home';
 export * from './terms';
 export * from './splash';
+export * from './listPending';
 export * from './solicitAccess';
