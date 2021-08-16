@@ -1,12 +1,14 @@
-import { Animated, StyleSheet, Text } from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
-import React, { useEffect, useRef, memo, forwardRef } from 'react';
+import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef, memo, forwardRef, useState } from 'react';
 
+import { Icon } from 'cyllid/src/helpers';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const Input = memo(forwardRef(({ placeholder, error, value, setValue, title, type = 'default', labelError = 'Mínimo 3 caracteres' }, ref) => {
+export const Input = memo(forwardRef(({ placeholder, error, value, setValue, title, type = 'default', labelError = 'Mínimo 3 caracteres', password = false }, ref) => {
 
+    const [show, setShow] = useState(password);
     const err = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
@@ -39,27 +41,41 @@ export const Input = memo(forwardRef(({ placeholder, error, value, setValue, tit
     });
 
     return (
-        <Animated.View style={{ width: '100%', opacity: opacityBackground }} >
-            <Text style={styles.textUser}> {title} </Text>
-            <Animated.View
-                style={{
-                    borderColor, width: width, ...styles.backgroundInput,
-                }}
-            >
+        <Animated.View style={{ ...styles.container, opacity: opacityBackground }}>
+            <Text style={styles.textUser}>
+                {title}
+            </Text>
+            <Animated.View style={{ borderColor, width: width, ...styles.backgroundInput }}>
+                {
+                    password &&
+                    <TouchableOpacity
+                        onPress={() => setShow(!show)}
+                        style={styles.containerTouchable}
+                    >
+                        <Icon
+                            size={25}
+                            color={'white'}
+                            name={!show ? 'eye' : 'eye-slash'}
+                        />
+                    </TouchableOpacity>
+                }
                 <TextInputMask
                     ref={ref}
                     value={value}
-                    selectTextOnFocus
                     spellCheck={false}
+                    selectTextOnFocus
                     style={styles.input}
                     autoCorrect={false}
-                    autoCapitalize='none'
+                    keyboardType={type}
+                    autoCapitalize={'none'}
+                    secureTextEntry={show}
                     autoCompleteType={'off'}
                     placeholder={placeholder}
+                    maxLength={password ? 6: 40}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     mask={
-                        type != 'default' &&
+                        type != 'default' && !password &&
                         "[000].[000].[000]-[00]"
                     }
                     onChangeText={val => setValue(val)}
@@ -98,4 +114,16 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Nunito-SemiBold',
     },
+    containerTouchable: {
+        right: 0,
+        zIndex: 2,
+        width: 60,
+        height: '100%',
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    container: {
+        width: '100%',
+    }
 })

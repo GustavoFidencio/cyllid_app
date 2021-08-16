@@ -1,5 +1,6 @@
 import HapticFeedback from "react-native-haptic-feedback";
 
+import { StorageAuth } from 'cyllid/src/screens/login/storage';
 import { StorageSolicitAccess } from 'cyllid/src/screens/solicitAccess/storage';
 
 export class StoragePhases {
@@ -84,7 +85,7 @@ export class StoragePhases {
                 return reject('CPF incompleto');
             }
             StorageSolicitAccess.checkCpf(cpf)
-                .then(() => resolve('CPF já cadastrado na plataforma'))
+                .then(() => reject('CPF já cadastrado na plataforma'))
                 .catch(err => {
                     if (err.status == 404) return reject(false);
                     else return reject('Número de CPF inválido');
@@ -105,6 +106,29 @@ export class StoragePhases {
                     else return reject('Email inválido');
                 })
             return false;
+        })
+    }
+
+    static validUser(user, err = false) {
+        return new Promise((resolve, reject) => {
+            if (user.length < 3) {
+                !err && HapticFeedback.trigger("notificationError");
+                return 'Mínimo 3 caracteres';
+            }
+            StorageAuth.checkUser(user)
+                .then(() => resolve('Nome de usuário ja cadastrado'))
+                .catch(() => reject(false))
+            return false;
+        })
+    }
+
+    static validPass(pass, err = false) {
+        return new Promise((resolve, reject) => {
+            if (pass.length != 6) {
+                !err && HapticFeedback.trigger("notificationError");
+                return reject('Senha deve ter 6 dígitos');
+            }
+            return reject(false);
         })
     }
 }

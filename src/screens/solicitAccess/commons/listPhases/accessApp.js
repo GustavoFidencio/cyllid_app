@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
 import { Input } from '../input';
@@ -8,16 +8,48 @@ import { TextClean, Icon } from "cyllid/src/helpers";
 
 export const AccessApp = ({ next, back }) => {
 
+    const refUser = useRef(null);
+    const refPass = useRef(null);
+
     const [user, setUser] = useState('');
     const [password, setPass] = useState('');
-    const [isErr, setErr] = useState([false, false]);
+    const [errUser, setErrUser] = useState('');
+    const [errPass, setErrPass] = useState('');
 
-    useEffect(() => StoragePhases.effectDates(isErr, setErr, 0), [user]);
-    useEffect(() => StoragePhases.effectDates(isErr, setErr, 1), [password]);
+    useEffect(() => {
+        if (errUser) setErrUser(false);
+    }, [user]);
+
+    useEffect(() => {
+        if (errPass) setErrEmail(false);
+    }, [password]);
 
     const _validRegisters = () => {
-        let error = StoragePhases.validBasic(user, password, next);
-        setErr(error);
+        if (refUser || refPass && refUser) refUser.current.focus()
+        else if (refPass) refPass.current.focus()
+        else {
+            _validUser()
+            _validPass()
+            if (refPass && refUser || refUser) return refUser.current.focus();
+            if (refPass) return refPass.current.focus();
+            next([user, password]);
+        }
+    }
+
+    const _validUser = async () => {
+        try {
+            setErrUser(await StoragePhases.validUser(user, errUser))
+        } catch (error) {
+            setErrUser(error)
+        }
+    }
+
+    const _validPass = async () => {
+        try {
+            setErrPass(await StoragePhases.validPass(password, errPass))
+        } catch (error) {
+            setErrPass(error)
+        }
     }
 
     return (
@@ -31,17 +63,29 @@ export const AccessApp = ({ next, back }) => {
             <View style={styles.containerInputs}>
                 <Input
                     value={user}
-                    error={isErr[0]}
+                    ref={refUser}
+                    error={errUser}
                     placeholder={'Ex: Josi'}
                     title={'Nome de usuario'}
                     setValue={val => setUser(val)}
+                    setShow={show => {
+                        console.log(show);
+                        if (!show) _validUser()
+                    }}
                 />
                 <Input
-                    error={isErr[1]}
+                    password
+                    ref={refPass}
+                    error={errPass}
+                    type={'numeric'}
                     value={password}
                     title={'Senha do aplicativo'}
                     setValue={val => setPass(val)}
                     placeholder={'Ex: josias81264'}
+                    setShow={show => {
+                        console.log(show);
+                        if (!show) _validPass()
+                    }}
                 />
             </View>
             <View style={{ width: '100%' }}>
@@ -65,7 +109,7 @@ const styles = StyleSheet.create({
         width,
         flex: 1,
         alignItems: 'center',
-        paddingBottom:20,
+        paddingBottom: 20,
         paddingHorizontal: 16,
     },
     containerInputs: {

@@ -13,7 +13,6 @@ export class StorageTerms {
     }
 
     static setAcceptTerm(id) {
-        console.log('estou no storage');
         return new Promise((resolve, reject) => {
             Executor.run(new RequestAcceptTerm(id))
                 .then(({ data }) => {

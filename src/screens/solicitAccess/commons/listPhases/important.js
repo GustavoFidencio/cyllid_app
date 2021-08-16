@@ -67,10 +67,10 @@ export const Important = ({ next, back, focus }) => {
             <View style={styles.containerInputs}>
                 <InputValidation
                     ref={refCpf}
-                    type={'cpf'}
                     value={cpf}
                     title={'CPF'}
                     error={errCpf}
+                    type={'numeric'}
                     setValue={val => setCpf(val)}
                     labelError={'CPF incompleto'}
                     placeholder={'Ex: 153.523.974-01'}
