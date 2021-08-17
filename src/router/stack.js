@@ -13,6 +13,7 @@ import {
     Password,
     ListPending,
     SolicitAccess,
+    SuccessModal,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -62,7 +63,7 @@ export const StackNav = () => {
         <NavigationContainer>
             <Stack.Navigator
                 initialRouteName='Splash'
-                // initialRouteName='ListPending'
+                // initialRouteName='SuccessModal'
                 screenOptions={_getScreenOptions}
             >
                 <Stack.Screen
@@ -74,6 +75,11 @@ export const StackNav = () => {
                 <Stack.Screen
                     name="Splash"
                     component={Splash}
+                    options={{ header: _noneArrow }}
+                />
+                <Stack.Screen
+                    name="SuccessModal"
+                    component={SuccessModal}
                     options={{ header: _noneArrow }}
                 />
                 <Stack.Screen

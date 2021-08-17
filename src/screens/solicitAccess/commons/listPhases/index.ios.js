@@ -21,6 +21,7 @@ export const ListPhases = memo(({ show, navigation }) => {
 
     const [user, setUser] = useState({});
     const [focus, setFocus] = useState(0);
+    const [isLoad, setLoad] = useState(false);
 
     const scrollX = useRef(new Animated.Value(0)).current;
     const valueAnimate = useRef(new Animated.Value(0)).current;
@@ -35,12 +36,22 @@ export const ListPhases = memo(({ show, navigation }) => {
     }, [])
 
     const _solicitAccess = val => {
+        setLoad(true)
         StorageSolicitAccess.solicitAccess(user, val)
-            .then((res) => {
-                console.log(res);
-            })
+            .then(() =>
+                navigation.navigate('SuccessModal', {
+                    text: {
+                        title: 'Parabénss!',
+                        desc: 'Iremos analizar seu cadastro e retornaremos em breve!'
+                    },
+                    next: () => navigation.reset({ index: 0, routes: [{ name: 'Splash' }] })
+                })
+            )
             .catch((err) => {
                 console.log(err);
+            })
+            .finally(() => {
+                setLoad(false)
             })
     }
 
@@ -80,6 +91,7 @@ export const ListPhases = memo(({ show, navigation }) => {
                     {phases.map((item, index) =>
                         <item.Comp
                             key={index}
+                            load={isLoad}
                             focus={focus == index}
                             back={() => _back(index)}
                             next={val => _next(index + 1, val)}
@@ -87,7 +99,7 @@ export const ListPhases = memo(({ show, navigation }) => {
                         />
                     )}
                 </Animated.View>
-                <View style={{ height: 10 }} /> 
+                <View style={{ height: 10 }} />
                 {/* tentar convencer o gio de deixar em cima se nao vai ter que mexer em tudo aqui  */}
                 <Progress
                     scroll={scrollX}

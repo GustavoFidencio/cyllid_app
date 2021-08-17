@@ -74,6 +74,7 @@ export default StyleSheet.create({
     },
     textAvancar: {
         color: 'white',
+        fontFamily: 'Nunito-SemiBold',
     },
     container: {
         width: '100%',

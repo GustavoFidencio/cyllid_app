@@ -6,7 +6,7 @@ import { Icon } from 'cyllid/src/helpers';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const Input = memo(forwardRef(({ placeholder, error, value, setValue, title, type = 'default', labelError = 'Mínimo 3 caracteres', password = false }, ref) => {
+export const Input = memo(forwardRef(({ placeholder, error, value, setValue, title, type = 'default', password = false }, ref) => {
 
     const [show, setShow] = useState(password);
     const err = useRef(new Animated.Value(0)).current;
@@ -71,7 +71,7 @@ export const Input = memo(forwardRef(({ placeholder, error, value, setValue, tit
                     secureTextEntry={show}
                     autoCompleteType={'off'}
                     placeholder={placeholder}
-                    maxLength={password ? 6: 40}
+                    maxLength={password ? 6 : 40}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     mask={

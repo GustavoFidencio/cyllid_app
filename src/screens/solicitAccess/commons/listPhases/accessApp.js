@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 
-import { Input } from '../input';
+// import { Input } from '../input';
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
-import { TextClean, Icon } from "cyllid/src/helpers";
+import { TextClean, Icon, InputValidation, Load } from "cyllid/src/helpers";
 
-export const AccessApp = ({ next, back }) => {
+export const AccessApp = ({ next, back, load }) => {
 
     const refUser = useRef(null);
     const refPass = useRef(null);
@@ -21,17 +21,19 @@ export const AccessApp = ({ next, back }) => {
     }, [user]);
 
     useEffect(() => {
-        if (errPass) setErrEmail(false);
+        if (errPass) setErrPass(false);
     }, [password]);
 
     const _validRegisters = () => {
-        if (refUser || refPass && refUser) refUser.current.focus()
-        else if (refPass) refPass.current.focus()
+        if (errUser || errPass && errUser) refUser.current.focus()
+        else if (errPass) refPass.current.focus()
         else {
+
+            console.log('passei pro ultimo teste aq ent n tem nenhum erro ainda');
             _validUser()
             _validPass()
-            if (refPass && refUser || refUser) return refUser.current.focus();
-            if (refPass) return refPass.current.focus();
+            if (errPass && errUser) return refUser.current.focus();
+            if (errPass) return refPass.current.focus();
             next([user, password]);
         }
     }
@@ -61,7 +63,7 @@ export const AccessApp = ({ next, back }) => {
                 <Icon size={40} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
             <View style={styles.containerInputs}>
-                <Input
+                <InputValidation
                     value={user}
                     ref={refUser}
                     error={errUser}
@@ -69,12 +71,14 @@ export const AccessApp = ({ next, back }) => {
                     title={'Nome de usuario'}
                     setValue={val => setUser(val)}
                     setShow={show => {
-                        console.log(show);
-                        if (!show) _validUser()
+                        if (!show) {
+                            console.log('valid user');
+                            _validUser()
+                        }
                     }}
                 />
-                <Input
-                    password
+                <InputValidation
+                    password={true}
                     ref={refPass}
                     error={errPass}
                     type={'numeric'}
@@ -93,9 +97,17 @@ export const AccessApp = ({ next, back }) => {
                     style={styles.buttonNext}
                     onPress={_validRegisters}
                 >
-                    <TextClean style={styles.textAvancar}>
-                        Avançar
-                    </TextClean>
+                    {
+                        load ?
+                            <Load
+                                size={20}
+                                color={'white'}
+                            />
+                            :
+                            <TextClean style={styles.textAvancar}>
+                                Avançar
+                            </TextClean>
+                    }
                 </TouchableOpacity>
             </View>
         </Animated.View>

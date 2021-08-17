@@ -111,9 +111,10 @@ export class StoragePhases {
 
     static validUser(user, err = false) {
         return new Promise((resolve, reject) => {
+            console.log('estou aqui dentro');
             if (user.length < 3) {
                 !err && HapticFeedback.trigger("notificationError");
-                return 'Mínimo 3 caracteres';
+                return reject('Mínimo 3 caracteres');
             }
             StorageAuth.checkUser(user)
                 .then(() => resolve('Nome de usuário ja cadastrado'))

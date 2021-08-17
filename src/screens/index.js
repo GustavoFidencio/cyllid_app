@@ -7,3 +7,4 @@ export * from './terms';
 export * from './splash';
 export * from './listPending';
 export * from './solicitAccess';
+export * from './successModal';

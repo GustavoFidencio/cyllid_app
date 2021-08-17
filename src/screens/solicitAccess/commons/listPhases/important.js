@@ -50,7 +50,7 @@ export const Important = ({ next, back, focus }) => {
         else {
             _validCpf()
             _validEmail()
-            if (errEmail && errCpf || errCpf) return refCpf.current.focus();
+            if (errEmail && errCpf) return refCpf.current.focus();
             if (errEmail) return refEmail.current.focus();
             next([cpf, email]);
         }
