@@ -1,11 +1,11 @@
 import TextInputMask from 'react-native-text-input-mask';
-import React, { useEffect, useState, forwardRef, memo } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const InputLine = memo(forwardRef(({ placeholder, disable = true, error, value, setValue, setShow = false }, ref) => {
+export const InputLine = memo(({ placeholder, disable = true, error, value, setValue, setFocus }) => {
 
     // const [valueAnimate] = useState(new Animated.Value(0));
 
@@ -18,11 +18,12 @@ export const InputLine = memo(forwardRef(({ placeholder, disable = true, error, 
     //     outputRange: ['transparent', Color.ERROR]
     // });
 
+
+
     return (
         <View style={styles.container} >
             <Animated.View style={styles.backgroundInput}>
                 <TextInputMask
-                    ref={ref}
                     value={value}
                     editable={disable}
                     spellCheck={false}
@@ -36,13 +37,13 @@ export const InputLine = memo(forwardRef(({ placeholder, disable = true, error, 
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     onChangeText={val => setValue(val)}
-                    onBlur={() => setShow && setShow(false)}
-                    onFocus={() => setShow && setShow(true)}
+                    onBlur={() => setFocus && setFocus('')}
+                    onFocus={() => setFocus && setFocus(placeholder)}
                 />
             </Animated.View>
         </View>
     )
-}))
+})
 
 const styles = StyleSheet.create({
     input: {

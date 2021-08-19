@@ -15,14 +15,8 @@ export class StorageTerms {
     static setAcceptTerm(id) {
         return new Promise((resolve, reject) => {
             Executor.run(new RequestAcceptTerm(id))
-                .then(({ data }) => {
-                    console.log(data);
-                    resolve()
-                })
-                .catch(err => {
-                    console.log(err.response, 'termoo');
-                    reject(err.response)
-                })
+                .then(({ data }) => resolve())
+                .catch(err => reject(err.response))
         })
     }
 }

@@ -9,10 +9,9 @@ import { Cash, InputLine, Tags, Repeat, Pickers } from './commons';
 export const Input = ({ navigation }) => {
 
     const [tag, setTag] = useState();
+    const [focus, setFocus] = useState('');
     const [name, setName] = useState('');
     const [date, setDate] = useState(new Date());
-
-    const [valueAnimate] = useState(new Animated.Value(0));
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -29,12 +28,17 @@ export const Input = ({ navigation }) => {
                     </TextClean>
                 </View>
                 <Cash
+                    focus={focus != ''}
+                    setFocus={setFocus}
                 />
+
                 <InputLine
                     value={name}
+                    setFocus={setFocus}
                     placeholder={'Nome'}
                     setValue={name => setName(name)}
                 />
+
                 <Tags
                     selected={tag}
                     tagEnable={setTag}

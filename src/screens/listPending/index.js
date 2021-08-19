@@ -112,7 +112,6 @@ export const ListPending = ({ navigation }) => {
                                 data={users}
                                 keyExtractor={(_, index) => String(index)}
                                 renderItem={({ item }) => {
-                                    console.log(item);
                                     const { cpf, email, full_name } = item;
                                     return (
                                         <View

@@ -49,7 +49,7 @@ export const Pickers = ({ date, setDate }) => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        marginTop: 35
+        marginTop: 35,
     },
     textDate: {
         color: 'white',
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         height: 2,
         width: '100%',
         marginTop: 10,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     containerPicker: {
         bottom: 0,

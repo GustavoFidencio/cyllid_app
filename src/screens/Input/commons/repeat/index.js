@@ -41,8 +41,8 @@ export const Repeat = memo(() => {
 
                 /> */}
                 <InputLine
-                    disable={repeat}
                     value={times}
+                    disable={repeat}
                     setValue={val => setTimes(val)}
                     placeholder={'Repetir até (vezes)'}
                 />
