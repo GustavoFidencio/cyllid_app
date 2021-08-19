@@ -4,12 +4,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
 
 import { TextClean, Icon } from 'cyllid/src/helpers';
-import { Cash, InputLine, Tags } from './commons';
+import { Cash, InputLine, Tags, Repeat, Pickers } from './commons';
 
 export const Input = ({ navigation }) => {
 
     const [tag, setTag] = useState();
     const [name, setName] = useState('');
+    const [date, setDate] = useState(new Date());
+
     const [valueAnimate] = useState(new Animated.Value(0));
 
     return (
@@ -21,7 +23,7 @@ export const Input = ({ navigation }) => {
                 >
                     <Icon size={40} name={'left'} lib={'antdesign'} />
                 </TouchableOpacity>
-                <View style={styles.containerLabel} >
+                <View style={styles.containerLabel}>
                     <TextClean style={styles.textTitle}>
                         Entrada
                     </TextClean>
@@ -37,11 +39,13 @@ export const Input = ({ navigation }) => {
                     selected={tag}
                     tagEnable={setTag}
                 />
+                <Pickers
+                    date={date}
+                    setDate={setDate}
+                />
+                <Repeat
 
-
-
-
-
+                />
             </View>
         </SafeAreaView>
     )

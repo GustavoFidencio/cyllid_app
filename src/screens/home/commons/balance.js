@@ -1,12 +1,13 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useRef, memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import { StorageHome } from '../storage';
 import Color from 'cyllid/src/assets/colors';
-import { TextClean } from 'cyllid/src/helpers';
+import { TextClean, Load } from 'cyllid/src/helpers';
 
 export const Balance = memo(({ }) => {
 
+    const [isLoad, setLoad] = useState(true);
     const [balance, setBalance] = useState('');
 
     useEffect(() => {
@@ -15,12 +16,9 @@ export const Balance = memo(({ }) => {
 
     const _getBalance = () => {
         StorageHome.getBalance()
-            .then((res) => {
-                setBalance(res.balance)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+            .then(({ balance }) => setBalance(balance))
+            .catch(err => console.log(err.response))
+            .finally(() => setLoad(false))
     }
 
     return (
@@ -29,12 +27,21 @@ export const Balance = memo(({ }) => {
                 Seu saldo hoje:
             </TextClean>
             <View style={styles.containerValues}>
-                <TextClean style={styles.textReal}>
-                    R$
-                </TextClean>
-                <TextClean style={styles.valueMoney}>
-                    {balance.toLocaleString('pt-br', { minimumFractionDigits: 2 })}
-                </TextClean>
+                {
+                    isLoad ?
+                        <View style={styles.containerLoad}>
+                            <Load size={'small'} color={'white'} />
+                        </View>
+                        :
+                        <>
+                            <TextClean style={styles.textReal}>
+                                R$
+                            </TextClean>
+                            <TextClean style={styles.valueMoney}>
+                                {balance.toLocaleString('pt-br', { minimumFractionDigits: 2 })}
+                            </TextClean>
+                        </>
+                }
             </View>
         </>
     )
@@ -63,4 +70,9 @@ const styles = StyleSheet.create({
         marginTop: 30,
         fontFamily: 'Nunito',
     },
+    containerLoad: {
+        height: 41,
+        width: 150,
+        justifyContent: 'center',
+    }
 })

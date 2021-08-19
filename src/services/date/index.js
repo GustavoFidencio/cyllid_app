@@ -10,4 +10,8 @@ export class DateService {
         return moment(data).format("HH:mm")
     }
 
+    static estrada(data) {
+        return moment(data).format("DD/MM/YY HH:mm")
+    }
+
 }

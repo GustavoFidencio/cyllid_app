@@ -30,9 +30,7 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
             <Text style={styles.textUser}>
                 {title}
             </Text>
-            <Animated.View
-                style={{ ...styles.backgroundInput, borderColor }}
-            >
+            <Animated.View style={{ ...styles.backgroundInput, borderColor }}>
                 {
                     password &&
                     <TouchableOpacity

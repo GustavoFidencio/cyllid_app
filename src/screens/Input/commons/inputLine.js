@@ -5,7 +5,7 @@ import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const InputLine = memo(forwardRef(({ placeholder, error, value, setValue, setShow = false }, ref) => {
+export const InputLine = memo(forwardRef(({ placeholder, disable = true, error, value, setValue, setShow = false }, ref) => {
 
     // const [valueAnimate] = useState(new Animated.Value(0));
 
@@ -19,11 +19,12 @@ export const InputLine = memo(forwardRef(({ placeholder, error, value, setValue,
     // });
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} >
             <Animated.View style={styles.backgroundInput}>
                 <TextInputMask
                     ref={ref}
                     value={value}
+                    editable={disable}
                     spellCheck={false}
                     style={styles.input}
                     selectTextOnFocus

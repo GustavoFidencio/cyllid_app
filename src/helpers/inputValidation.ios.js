@@ -1,12 +1,14 @@
 import TextInputMask from 'react-native-text-input-mask';
-import { View, Animated, StyleSheet, Text } from 'react-native';
 import React, { useEffect, useState, forwardRef, memo } from 'react';
+import { View, Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import Color from '../assets/colors';
+import { Icon } from 'cyllid/src/helpers';
 import { Animate } from 'cyllid/src/services';
 
-export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow, type = 'default' }, ref) => {
+export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow = false, type = 'default', password = false }, ref) => {
 
+    const [show, setVisible] = useState(password);
     const [valueAnimate] = useState(new Animated.Value(0));
 
     useEffect(() => {
@@ -25,11 +27,26 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
 
     return (
         <View style={styles.container}>
-            <Text style={styles.textUser}> {title} </Text>
+            <Text style={styles.textUser}>
+                {title}
+            </Text>
             <Animated.View style={{ ...styles.backgroundInput, borderColor }}>
+                {
+                    password &&
+                    <TouchableOpacity
+                        onPress={() => setVisible(!show)}
+                        style={styles.containerTouchable}
+                    >
+                        <Icon
+                            size={25}
+                            color={'white'}
+                            name={!show ? 'eye' : 'eye-slash'}
+                        />
+                    </TouchableOpacity>
+                }
                 <TextInputMask
                     mask={
-                        type != 'default' &&
+                        type != 'default' && !password &&
                         "[000].[000].[000]-[00]"
                     }
                     ref={ref}
@@ -39,14 +56,16 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                     selectTextOnFocus
                     autoCorrect={false}
                     autoCapitalize='none'
+                    secureTextEntry={show} 
                     autoCompleteType={'off'}
                     placeholder={placeholder}
-                    onBlur={() => setShow(false)}
-                    onFocus={() => setShow(true)}
                     enablesReturnKeyAutomatically
+                    maxLength={password ? 6 : 40}
                     placeholderTextColor={'#c4c4c4'}
+                    onBlur={() => setShow && setShow(false)}
+                    onFocus={() => setShow && setShow(true)}
                     onChangeText={(val, teste) => {
-                        if (type != 'default') setValue(teste);
+                        if (type != 'default' && !password) setValue(teste);
                         else setValue(val);
                     }}
                     keyboardType={type != 'default' ? 'phone-pad' : 'default'}
@@ -86,5 +105,14 @@ const styles = StyleSheet.create({
     container: {
         bottom: 2,
         width: '100%',
-    }
+    },
+    containerTouchable: {
+        right: 0,
+        zIndex: 2,
+        width: 60,
+        height: '100%',
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 })

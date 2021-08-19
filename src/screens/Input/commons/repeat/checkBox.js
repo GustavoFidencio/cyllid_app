@@ -1,12 +1,12 @@
 import HapticFeedback from "react-native-haptic-feedback";
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { TouchableOpacity, Animated, StyleSheet } from 'react-native';
 
 import { Icon } from './icon';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const CheckBox = memo(({ val, setEnable, background = 'white' }) => {
+export const CheckBox = memo(({ val, setVal }) => {
 
     const valueAnimate = useRef(new Animated.Value(-1)).current;
 
@@ -21,19 +21,19 @@ export const CheckBox = memo(({ val, setEnable, background = 'white' }) => {
 
     const backgroundColor = valueAnimate.interpolate({
         inputRange: [0, 100],
-        outputRange: [background, Color.BLUE]
+        outputRange: ['white', Color.BLUE]
     });
 
     return (
         <TouchableOpacity
             activeOpacity={1}
-            onPress={() => setEnable(!val)}
+            onPress={() => setVal(!val)}
         >
             <Animated.View style={{ backgroundColor, ...styles.containerSwitch }}>
                 <Icon
                     size={22}
+                    color={'white'}
                     name={'check'}
-                    color={!val ? background : 'white'}
                 />
             </Animated.View>
         </TouchableOpacity>

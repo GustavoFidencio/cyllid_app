@@ -13,6 +13,8 @@ export default StyleSheet.create({
         position: 'absolute'
     },
     container: {
+        height: '100%',
+        alignItems: 'center',
         paddingHorizontal: 15,
     },
     containerLabel: {

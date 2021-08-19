@@ -43,9 +43,9 @@ export const Tags = memo(({ tagEnable, selected }) => {
 
 const styles = StyleSheet.create({
     container: {
-        top: 30,
         height: 40,
         width: '100%',
+        marginTop: 30,
     },
     containerList: {
         flex: 1,

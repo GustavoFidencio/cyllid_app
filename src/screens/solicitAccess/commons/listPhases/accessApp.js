@@ -70,26 +70,18 @@ export const AccessApp = ({ next, back, load }) => {
                     placeholder={'Ex: Josi'}
                     title={'Nome de usuario'}
                     setValue={val => setUser(val)}
-                    setShow={show => {
-                        if (!show) {
-                            console.log('valid user');
-                            _validUser()
-                        }
-                    }}
+                    setShow={show => !show && _validUser()}
                 />
                 <InputValidation
-                    password={true}
                     ref={refPass}
                     error={errPass}
                     type={'numeric'}
+                    password={true}
                     value={password}
                     title={'Senha do aplicativo'}
                     setValue={val => setPass(val)}
-                    placeholder={'Ex: josias81264'}
-                    setShow={show => {
-                        console.log(show);
-                        if (!show) _validPass()
-                    }}
+                    placeholder={'Ex: 400289'}
+                    setShow={show => !show && _validPass()}
                 />
             </View>
             <View style={{ width: '100%' }}>
