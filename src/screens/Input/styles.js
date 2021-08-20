@@ -7,31 +7,34 @@ export default StyleSheet.create({
         backgroundColor: Color.DARK,
     },
     goBack: {
-        left: 0,
-        // padding: 8,
-        // paddingTop: 8,
-        position: 'absolute'
+        top: 5,
+        left: 5,
+        position: 'absolute',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     container: {
         height: '100%',
         alignItems: 'center',
         paddingHorizontal: 15,
     },
-    containerLabel: {
-        width: 120,
-        height: 60,
-        marginRight: -5,
-        alignSelf: 'flex-end',
+    buttonNext: {
+        bottom: 10,
+        padding: 10,
+        width: '100%',
+        borderRadius: 30,
+        position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
-        borderTopLeftRadius: 20,
-        backgroundColor: 'white',
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
+        backgroundColor: Color.BLUE,
     },
-    textTitle: {
-        fontSize: 26,
+    textAvancar: {
+        color: 'white',
+        fontFamily: 'Nunito-SemiBold',
+    },
+    textGoBack: {
+        fontSize: 17,
         color: Color.BLUE,
         fontFamily: 'Nunito-Bold',
-    },
+    }
 })

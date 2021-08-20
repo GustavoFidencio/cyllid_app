@@ -5,7 +5,7 @@ import { View, Animated, StyleSheet, TextInput, Text } from 'react-native';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const InputLine = memo(({ placeholder, disable = true, error, value, setValue, setFocus }) => {
+export const InputLine = memo(({ placeholder, disable = true, error, value, setValue, setFocus, keyboardType = 'default' }) => {
 
     // const [valueAnimate] = useState(new Animated.Value(0));
 
@@ -31,13 +31,12 @@ export const InputLine = memo(({ placeholder, disable = true, error, value, setV
                     selectTextOnFocus
                     autoCorrect={false}
                     autoCapitalize='none'
-                    keyboardType={'default'}
                     autoCompleteType={'off'}
                     placeholder={placeholder}
+                    keyboardType={keyboardType}
                     enablesReturnKeyAutomatically
                     placeholderTextColor={'#c4c4c4'}
                     onChangeText={val => setValue(val)}
-                    onBlur={() => setFocus && setFocus('')}
                     onFocus={() => setFocus && setFocus(placeholder)}
                 />
             </Animated.View>

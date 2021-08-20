@@ -15,7 +15,7 @@ export const Cash = ({ setFocus, focus }) => {
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        Animate.smooth(focus ? 5 : 30, marginVertical, 1200)
+        Animate.smooth(focus ? 10 : 30, marginVertical, 1200)
         focus && Animate.smooth(100, valueAnimate, 2000)
     }, [focus]);
 

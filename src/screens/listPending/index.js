@@ -2,193 +2,123 @@ import styles from './styles';
 
 import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, StatusBar, TouchableOpacity, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 
+import { ItemList } from './commons';
 import Color from 'cyllid/src/assets/colors';
 import { StorageListPending } from './storage';
 import { TextClean, Icon, Load, } from 'cyllid/src/helpers';
 
-export const ListPending = ({ navigation }) => {
+export class ListPending extends React.PureComponent {
 
-    const [users, setUsers] = useState([]);
-    const [isLoad, setLoad] = useState(true);
+    constructor(props) {
+        super();
+        this.state = {
+            users: [],
+            isLoad: true,
+            select: false,
+            listSelect: [],
+        }
 
-    useEffect(() => _getUser(), [])
+        this._desc = this._desc.bind(this);
+        this._getUser = this._getUser.bind(this);
+        this._number = this._number.bind(this);
+    }
 
-    const _getUser = () => {
+    componentDidMount() {
+        this._getUser()
+    }
+
+    _getUser() {
         StorageListPending.getUsersPending()
-            .then(res => {
-                setUsers(res)
-                // console.log(res);
+            .then(users => {
+
+                this.setState({ users })
             })
             .catch(err => {
                 console.log(err);
             })
-            .finally(() => {
-                setLoad(false);
-            })
+            .finally(() => this.setState({ isLoad: false }))
     }
 
-    return (
-        <SafeAreaView style={styles.safeArea}>
-            <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
-            <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.goBack}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Icon size={23} name={'left'} lib={'antdesign'} />
-                    <TextClean
-                        style={{
-                            fontSize: 17,
-                            color: Color.BLUE,
-                            fontFamily: 'Nunito-Bold',
-                            // textAlign: 'center'
-                        }}
+    _number() {
+        if (this.state.select) {
+            if (this.state.listSelect.length == 0) return `Nenhum `;
+            return this.state.listSelect.length;
+        }
+        return '';
+    }
+
+    _desc() {
+        if (this.state.select) {
+            if (this.state.listSelect.length > 1) return `usuários selecionados`;
+            return `usuário selecionado`;
+        }
+        return 'Usuários pendentes'
+    }
+
+    render() {
+        const { users, select, isLoad, listSelect } = this.state;
+        return (
+            <SafeAreaView style={styles.safeArea} >
+                <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
+                <View style={styles.container}>
+                    <TouchableOpacity
+                        style={styles.goBack}
+                        onPress={() => this.props.navigation.goBack()}
                     >
-                        Menu
-                    </TextClean>
-
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={{
-                        right: 10,
-                        // top: 10,
-                        padding: 5,
-                        borderRadius: 30,
-                        position: 'absolute',
-                        paddingHorizontal: 10,
-                        backgroundColor: 'white',
-
-                    }}
-                    onPress={() => console.log('opa')}
-                >
-                    <TextClean
-                        style={{
-                            color: Color.DARK,
-                            fontFamily: 'Nunito-Bold',
-
-                        }}
+                        <Icon size={23} name={'left'} lib={'antdesign'} />
+                        <TextClean style={styles.textGoBack}>
+                            Menu
+                        </TextClean>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.backgroundSelect}
+                        onPress={() => this.setState({ setSelect: !select })}
                     >
-                        Selecionar
-                    </TextClean>
-                </TouchableOpacity>
-
-
-                {
-                    isLoad ?
-                        <View
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <Load
-                                size={42}
-                            />
-                        </View>
-                        :
-                        <>
-                            <TextClean
-                                style={{
-                                    fontSize: 20,
-                                    color: 'white',
-                                    marginTop: 40,
-                                    fontFamily: 'Nunito-Bold',
-                                    // textAlign: 'center'
-                                }}
-                            >
-                                Usuários Pendentes
-                            </TextClean>
-                            <FlatList
-                                style={{
-                                    width: '100%',
-                                    marginTop: 15,
-                                    // backgroundColor: 'purple',
-                                }}
-                                data={users}
-                                keyExtractor={(_, index) => String(index)}
-                                renderItem={({ item }) => {
-                                    const { cpf, email, full_name } = item;
-                                    return (
-                                        <View
-                                            style={{
-                                                height: 60,
-                                                width: '100%',
-                                                // backgroundColor: 'red',
-                                                alignItems: 'center',
-                                                flexDirection: 'row',
+                        <TextClean style={styles.textSelect} >
+                            {
+                                select ?
+                                    'Cancelar'
+                                    :
+                                    'Selecionar'
+                            }
+                        </TextClean>
+                    </TouchableOpacity>
+                    {
+                        isLoad ?
+                            <View style={styles.containerLoad}>
+                                <Load size={42} />
+                            </View>
+                            :
+                            <>
+                                <View style={styles.containerDesc}>
+                                    <TextClean style={styles.indexSelect}>
+                                        {this._number()}
+                                    </TextClean>
+                                    <TextClean style={styles.titleScreen}>
+                                        {this._desc()}
+                                    </TextClean>
+                                </View>
+                                <FlatList
+                                    data={users}
+                                    style={styles.list}
+                                    keyExtractor={(_, index) => String(index)}
+                                    renderItem={({ item }) =>
+                                        <ItemList
+                                            item={item}
+                                            select={select}
+                                            setId={id => {
+                                                let teste = [...listSelect, id]
+                                                this.setState({ listSelect: teste })
                                             }}
-                                        >
-                                            <Icon
-                                                size={20}
-                                                style={{
-                                                    opacity: .9,
-                                                    marginHorizontal: 15,
-                                                }}
-                                                name={'user'}
-                                                color={'white'}
-                                            />
-                                            <View style={{ flex: 1 }}>
-                                                <View
-                                                    style={{
-                                                        flexDirection: 'row',
-                                                        // backgroundColor: 'purple',
-                                                        justifyContent: 'space-between'
-                                                    }}
-                                                >
-                                                    <TextClean
-                                                        style={{
-                                                            opacity: .9,
-                                                            fontSize: 16,
-                                                            color: 'white',
-                                                            fontFamily: 'Nunito-Bold',
-                                                        }}
-                                                    >
-                                                        {full_name}
-                                                    </TextClean>
-                                                    <TextClean
-                                                        style={{
-                                                            opacity: .3,
-                                                            fontSize: 12,
-                                                            color: 'white',
-                                                            fontFamily: 'Nunito-Bold',
-                                                        }}
-                                                    >
-                                                        {cpf}
-                                                    </TextClean>
-                                                </View>
-                                                <TextClean
-                                                    style={{
-                                                        opacity: .75,
-                                                        fontSize: 13,
-                                                        color: 'white',
-                                                        fontFamily: 'Nunito-Regular',
-                                                    }}
-                                                >
-                                                    {email}
-                                                </TextClean>
-                                            </View>
-                                        </View>
-                                    )
-                                }
-                                }
-                                ItemSeparatorComponent={() =>
-                                    <View
-                                        style={{
-                                            height: .5,
-                                            width: '100%',
-                                            backgroundColor: 'gray',
-                                        }}
-                                    />
-                                }
-                            />
-                        </>
-                }
-            </View>
-        </SafeAreaView>
-    )
+                                        />
+                                    }
+                                    ItemSeparatorComponent={() => <View style={styles.separatorComponent} />}
+                                />
+                            </>
+                    }
+                </View>
+            </SafeAreaView>
+        )
+    }
 }

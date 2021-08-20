@@ -11,6 +11,7 @@ import Success from 'cyllid/src/assets/img/success.svg';
 const { width } = Dimensions.get('screen');
 
 export const SuccessModal = ({ route }) => {
+
     const { title, desc } = route.params.text;
 
     return (

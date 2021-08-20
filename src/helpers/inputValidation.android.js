@@ -68,7 +68,7 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                         if (type != 'default' && !password) setValue(teste);
                         else setValue(val);
                     }}
-                    keyboardType={type != 'default' ? 'phone-pad' : 'default'}
+                    keyboardType={type != 'default' ? 'number-pad' : 'default'}
                 />
             </Animated.View>
             <Animated.Text style={{ ...styles.textError, opacity }}>

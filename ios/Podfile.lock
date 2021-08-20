@@ -210,7 +210,7 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - React-jsinspector (0.64.2)
-  - react-native-date-picker (3.3.2):
+  - react-native-date-picker (3.4.0):
     - React-Core
   - react-native-orientation-locker (1.3.1):
     - React-Core
@@ -463,7 +463,7 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-date-picker: 96a07ca27a6225da8a3935324d85046028456b0f
+  react-native-date-picker: 8c5a9cbf6d311ae85230543ae0d8d378c7be0c74
   react-native-orientation-locker: 998c0744e26624407dac068c04c605b4af7304a2
   react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   react-native-text-input-mask: 36a546b378fadd2efe1b7484a859d34bc2c80395

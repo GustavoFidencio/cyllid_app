@@ -1,20 +1,27 @@
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-native-date-picker';
-import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Animated, Keyboard } from 'react-native';
 
-import { InputLine } from '../inputLine';
+import { TextClean } from 'cyllid/src/helpers';
 import { DateService, Animate } from 'cyllid/src/services';
-import { TextClean, Icon, CheckBox } from 'cyllid/src/helpers';
 
-export const Pickers = ({ date, setDate }) => {
+export const Pickers = ({ date, setDate, focus, setFocus }) => {
 
     const [show, setShow] = useState(false);
 
     const [valueAnimate] = useState(new Animated.Value(0));
 
     useEffect(() => {
+        if (show && focus) {
+            Keyboard.dismiss();
+            setFocus('');
+        }
         Animate.smooth(show ? 100 : 0, valueAnimate, 2000)
     }, [show]);
+
+    useEffect(() => {
+        focus && show && setShow(false);
+    }, [focus])
 
     const opacity = valueAnimate.interpolate({
         inputRange: [0, 100],
