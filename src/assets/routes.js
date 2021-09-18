@@ -1,4 +1,4 @@
-const env = 'https://cyllid.hopto.org'
+const env = 'https://apicyllid.ddns.net'
 
 export default {
     validPassword: `${env}/auth/v1/token`,
