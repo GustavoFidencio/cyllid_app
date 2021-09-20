@@ -61,9 +61,9 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                     placeholder={placeholder}
                     enablesReturnKeyAutomatically
                     maxLength={password ? 6 : 40}
-                    placeholderTextColor={'#c4c4c4'}
                     onBlur={() => setShow && setShow(false)}
                     onFocus={() => setShow && setShow(true)}
+                    placeholderTextColor={'rgba(256, 256, 256, .5)'}
                     onChangeText={(val, teste) => {
                         if (type != 'default' && !password) setValue(teste);
                         else setValue(val);
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundInput: {
         height: 40,
         width: '100%',
-        marginTop: 10,
+        marginTop: 5,
         borderRadius: 6,
         borderWidth: 1.5,
         backgroundColor: Color.DARK_ONE,

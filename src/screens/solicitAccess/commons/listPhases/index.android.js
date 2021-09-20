@@ -27,11 +27,11 @@ export const ListPhases = memo(({ show, navigation }) => {
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        if (show) Animate.smooth(100, valueAnimate, 800);
+        if (show) Animate.default(100, valueAnimate, 800);
     }, [show])
 
     useEffect(() => {
-        setTimeout(() => Animate.smooth(100, scrollX), 5000);
+        setTimeout(() => Animate.default(100, scrollX), 5000);
         //tentar fazer isso executar somente quando realmente aparece... trocar o show por { show && .... }
     }, [])
 

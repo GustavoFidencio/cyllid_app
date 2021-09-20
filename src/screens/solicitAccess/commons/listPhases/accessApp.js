@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { View, Dimensions, StyleSheet, Animated, TouchableOpacity, Keyboard } from 'react-native';
 
 // import { Input } from '../input';
 import { StoragePhases } from './storage';
@@ -28,8 +28,7 @@ export const AccessApp = ({ next, back, load }) => {
         if (errUser || errPass && errUser) refUser.current.focus()
         else if (errPass) refPass.current.focus()
         else {
-
-            console.log('passei pro ultimo teste aq ent n tem nenhum erro ainda');
+            Keyboard.dismiss();
             _validUser()
             _validPass()
             if (errPass && errUser) return refUser.current.focus();
@@ -60,7 +59,7 @@ export const AccessApp = ({ next, back, load }) => {
                 onPress={back}
                 style={styles.goBack}
             >
-                <Icon size={40} name={'left'} lib={'antdesign'} />
+                <Icon size={30} name={'left'} lib={'antdesign'} />
             </TouchableOpacity>
             <View style={styles.containerInputs}>
                 <InputValidation
@@ -129,7 +128,6 @@ const styles = StyleSheet.create({
     buttonNext: {
         padding: 10,
         width: '100%',
-        marginTop: 20,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
@@ -139,7 +137,7 @@ const styles = StyleSheet.create({
         left: 0,
         zIndex: 3,
         opacity: .5,
-        padding: 8,
+        padding: 10,
         position: 'absolute',
     },
 })
