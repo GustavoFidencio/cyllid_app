@@ -43,7 +43,6 @@ export const ListTransactions = ({ }) => {
                                     width: '100%',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    // backgroundColor: 'purple'
                                 }}
                             >
                                 <TextClean

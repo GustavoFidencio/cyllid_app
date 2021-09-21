@@ -18,6 +18,7 @@ export default StyleSheet.create({
     },
     containerApresentation: {
         width: '100%',
+        backgroundColor: 'orange'
     },
     textNameApp: {
         fontSize: 32,
@@ -72,12 +73,22 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
     },
+    buttonNextAndroid: {
+        padding: 10,
+        width: '100%',
+        borderRadius: 30,
+        marginVertical: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Color.BLUE,
+    },
     textAvancar: {
         color: 'white',
         fontFamily: 'Nunito-SemiBold',
     },
     container: {
         width: '100%',
+        backgroundColor: 'red'
     },
     safeArea: {
         flexGrow: 0,

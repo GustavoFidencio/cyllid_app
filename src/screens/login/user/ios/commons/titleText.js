@@ -1,7 +1,7 @@
 import { Animated, Dimensions } from 'react-native';
 import React, { useRef, useEffect, memo } from 'react';
 
-import { Animate } from '../services';
+import { Animate } from 'cyllid/src/services';
 
 export const TitleAnimated = memo(({ text, styled, opacity, sized = false }) => {
 
@@ -53,6 +53,7 @@ export const TitleAnimated = memo(({ text, styled, opacity, sized = false }) => 
                 marginLeft: sized ? margin : 0,
                 fontSize: sized ? sizeText : styled.fontSize,
                 opacity: sized ? opacityDefault : opacityAnimate,
+                backgroundColor: 'purple'
             }}
         >
             {text}
