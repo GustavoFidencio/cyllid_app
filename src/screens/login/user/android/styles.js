@@ -59,7 +59,7 @@ export default StyleSheet.create({
         padding: 10,
         width: '100%',
         borderRadius: 30,
-        marginVertical: 20,
+        marginVertical: 12,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Color.BLUE,

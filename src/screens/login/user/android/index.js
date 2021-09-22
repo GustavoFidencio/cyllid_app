@@ -6,8 +6,8 @@ import { View, SafeAreaView, StatusBar, TouchableOpacity, Keyboard } from 'react
 
 import { StorageAuth } from '../../storage';
 import Color from 'cyllid/src/assets/colors';
-import { InputValidation, TextClean, Load, } from "cyllid/src/helpers";
-import { DescText, Ilustrator, SolicitAcces, Switch, AnimateText } from './commons';
+import { TextClean, Load, } from "cyllid/src/helpers";
+import { Ilustrator, SolicitAcces, Switch, AnimateText, Input } from './commons';
 
 export class Login extends React.PureComponent {
 
@@ -21,13 +21,18 @@ export class Login extends React.PureComponent {
             showKeyboard: false,
         }
         this._validateUser = this._validateUser.bind(this);
-        this.KeyboardHide = Keyboard.addListener('keyboardDidHide', () => this.setState({ showKeyboard: false }));
-        this.KeyboardShow = Keyboard.addListener('keyboardDidShow', () => this.setState({ showKeyboard: true }));
+        this._visibleKeyboard = this.visibleKeyboard.bind(this);
+        this.KeyboardHide = Keyboard.addListener('keyboardDidHide', () => this._visibleKeyboard(false));
+        // this.KeyboardShow = Keyboard.addListener('keyboardDidShow', () => this._visibleKeyboard(true));
+    }
+
+    visibleKeyboard(bol) {
+        this.setState({ showKeyboard: bol })
     }
 
     componentWillUnmount() {
         this.KeyboardHide.remove();
-        this.KeyboardShow.remove();
+        // this.KeyboardShow.remove();
     }
 
     _validateUser() {
@@ -50,17 +55,15 @@ export class Login extends React.PureComponent {
                 <View style={styles.containerAll}>
                     <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
                     <View style={styles.containerSeparation}>
-                        <AnimateText
-                            show={showKeyboard}
-                        />
+                        <AnimateText show={showKeyboard} />
                         <Ilustrator show={!showKeyboard} />
                         <View style={styles.container}>
-                            <InputValidation //mudar pro input do commmom
-                                title={'Usuário'}
+                            <Input
                                 error={error}
-                                value={name}
-                                placeholder={'Digite seu usuário'}
-                                setValue={name => {
+                                name={name}
+                                showKeyboard={showKeyboard}
+                                focus={() => this._visibleKeyboard(true)}
+                                change={name => {
                                     this.setState({ name })
                                     error && this.setState({ error: false })
                                 }}

@@ -22,7 +22,10 @@ export const Ilustrator = memo(({ show }) => {
             }}
             style={{ ...styles.container, opacity: valueAnimate }}
         >
-            <Image height={height} />
+            {
+                show &&
+                <Image height={height} />
+            }
         </Animated.View>
     )
 })

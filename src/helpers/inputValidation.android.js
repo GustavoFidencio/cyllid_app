@@ -20,9 +20,9 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
         outputRange: ['transparent', Color.ERROR]
     });
 
-    const opacity = valueAnimate.interpolate({
+    const height = valueAnimate.interpolate({
         inputRange: [0, 100],
-        outputRange: [0, 1]
+        outputRange: [12, 22]
     });
 
     return (
@@ -71,7 +71,7 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                     keyboardType={type != 'default' ? 'number-pad' : 'default'}
                 />
             </Animated.View>
-            <Animated.Text style={{ ...styles.textError, opacity }}>
+            <Animated.Text style={{ ...styles.textError, height }}>
                 {error}
             </Animated.Text>
         </View>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundInput: {
         height: 40,
         width: '100%',
-        marginTop: 5,
+        marginTop: 2,
         borderRadius: 6,
         borderWidth: 1.5,
         backgroundColor: Color.DARK_ONE,
@@ -97,13 +97,13 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     textError: {
-        top: 1,
+        // top: 1,
         right: 5,
         alignSelf: 'flex-end',
         color: Color.ERROR,
     },
     container: {
-        bottom: 2,
+        // bottom: 2,
         width: '100%',
     },
     containerTouchable: {

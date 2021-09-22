@@ -24,13 +24,6 @@ export const AnimateText = memo(({ show }) => {
         )();
     }, [show])
 
-    const transform = [{
-        translateY: valueAnimate.interpolate({
-            inputRange: [0, 50],
-            outputRange: [8, 0]
-        })
-    }];
-
     const opacityDefault = valueAnimate.interpolate({
         inputRange: [0, 80],
         outputRange: [0, 1]
@@ -46,19 +39,24 @@ export const AnimateText = memo(({ show }) => {
         outputRange: [(width / 3) - (widthScale / 2) - 16, 0]
     });
 
+    const height = opacityAnimate.interpolate({
+        inputRange: [0, .5],
+        outputRange: [0, 55],
+        extrapolate: 'clamp'
+    });
+
     const opacityTextFast = opacityAnimate.interpolate({
-        inputRange: [0, .2],
+        inputRange: [0, 1],
         outputRange: [0, 1],
         extrapolate: 'clamp',
     });
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={styles.containerTitle}>
                 <Animated.Text
                     style={{
                         ...styles.textNameApp,
-                        transform,
                         fontSize: sizeText,
                         marginLeft: margin,
                         opacity: opacityDefault,
@@ -66,28 +64,13 @@ export const AnimateText = memo(({ show }) => {
                     onLayout={e => widthScale = e.nativeEvent.layout.width}
                 >
                     Cyllid
-                </Animated.Text >
+                </Animated.Text>
             </View>
-            <View
-                style={{
-                    width: 160,
-                    marginTop: 20,
-                }}
-            >
-                <Animated.Text
-                    style={{
-                        ...{
-                            fontSize: 22,
-                            color: 'white',
-                            fontWeight: 'bold',
-                        },
-                        opacity:
-                            opacityTextFast
-                    }}
-                >
+            <Animated.View style={{ height, ...styles.containerDesc }}>
+                <Animated.Text style={{ ...styles.textDesc, opacity: opacityTextFast }} >
                     Online, simples e prático.
                 </Animated.Text >
-            </View>
+            </Animated.View>
         </View>
     )
 })
@@ -95,10 +78,24 @@ export const AnimateText = memo(({ show }) => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        justifyContent: 'center'
     },
     textNameApp: {
         fontSize: 32,
         color: Color.BLUE,
         fontWeight: 'bold',
+    },
+    containerDesc: {
+        width: 160,
+        marginTop: 20,
+    },
+    textDesc: {
+        fontSize: 22,
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    containerTitle: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 })
