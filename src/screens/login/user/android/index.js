@@ -91,10 +91,11 @@ export class Login extends React.PureComponent {
                                 }
                             </TouchableOpacity>
                         </View>
-                        <SolicitAcces
+                        <View style={{ height:30 }} />
+                        {/* <SolicitAcces
                             show={!showKeyboard}
                             navigation={this.props.navigation}
-                        />
+                        /> */}
                     </View>
                 </View>
             </SafeAreaView>

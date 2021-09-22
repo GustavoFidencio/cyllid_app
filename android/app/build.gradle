@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.cyllid"
+        applicationId "com.cyllid.org.br.me"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -145,10 +145,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('chave.jks')
+            storePassword 'Fulltime123'
+            keyAlias 'cyllid01'
+            keyPassword 'Fulltime123'
         }
     }
     buildTypes {

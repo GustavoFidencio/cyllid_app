@@ -1,4 +1,4 @@
-package com.cyllid;
+package com.cyllid.org.br.me;
 
 import com.facebook.react.ReactActivity;
 
