@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Animated, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
 import { TabNav } from './tab';
 import Color from 'cyllid/src/assets/colors'
@@ -80,7 +80,10 @@ export const StackNav = () => {
                 <Stack.Screen
                     name="SuccessModal"
                     component={SuccessModal}
-                    options={{ header: _noneArrow }}
+                    options={{
+                        header: _noneArrow,
+                        ...TransitionPresets.FadeFromBottomAndroid,
+                    }}
                 />
                 <Stack.Screen
                     name="Terms"
