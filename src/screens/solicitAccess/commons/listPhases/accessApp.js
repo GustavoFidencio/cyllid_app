@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { View, Dimensions, StyleSheet, Animated, TouchableOpacity, Keyboard } from 'react-native';
 
-// import { Input } from '../input';
 import { StoragePhases } from './storage';
 import Color from 'cyllid/src/assets/colors';
+import { PasswordInput } from './passwordInput';
 import { TextClean, Icon, InputValidation, Load } from "cyllid/src/helpers";
 
 export const AccessApp = ({ next, back, load }) => {
@@ -71,15 +71,22 @@ export const AccessApp = ({ next, back, load }) => {
                     setValue={val => setUser(val)}
                     setShow={show => !show && _validUser()}
                 />
-                <InputValidation
+                {/* <InputValidation
                     ref={refPass}
                     error={errPass}
                     type={'numeric'}
                     password={true}
                     value={password}
+                    placeholder={'Ex: 400289'}
                     title={'Senha do aplicativo'}
                     setValue={val => setPass(val)}
-                    placeholder={'Ex: 400289'}
+                    setShow={show => !show && _validPass()}
+                /> */}
+                <PasswordInput
+                    ref={refPass}
+                    error={errPass}
+                    value={password}
+                    setValue={val => setPass(val)}
                     setShow={show => !show && _validPass()}
                 />
             </View>

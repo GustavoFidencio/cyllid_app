@@ -99,19 +99,18 @@ export class StoragePhases {
                 !err && HapticFeedback.trigger("notificationError");
                 return 'Mínimo 3 caracteres';
             }
+
             StorageSolicitAccess.checkEmail(email)
                 .then(() => resolve('Email já cadastrado na plataforma'))
                 .catch(err => {
                     if (err.status == 404) return reject(false);
                     else return reject('Email inválido');
                 })
-            return false;
         })
     }
 
     static validUser(user, err = false) {
         return new Promise((resolve, reject) => {
-            console.log('estou aqui dentro');
             if (user.length < 3) {
                 !err && HapticFeedback.trigger("notificationError");
                 return reject('Mínimo 3 caracteres');

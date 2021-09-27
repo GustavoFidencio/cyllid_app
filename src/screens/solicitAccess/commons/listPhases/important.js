@@ -33,25 +33,26 @@ export const Important = ({ next, back, focus }) => {
             setErrCpf(await StoragePhases.validCpf(cpf, errCpf))
         } catch (error) {
             setErrCpf(error)
+            return error
         }
     }
 
     const _validEmail = async () => {
         try {
             setErrEmail(await StoragePhases.validEmail(email, errEmail))
+            return true
         } catch (error) {
             setErrEmail(error)
+            return error
         }
     }
 
-    const _validRegisters = () => {
+    const _validRegisters = async () => {
         if (errCpf || errEmail && errCpf) refCpf.current.focus()
         else if (errEmail) refEmail.current.focus()
         else {
-            _validCpf()
-            _validEmail()
-            if (errEmail && errCpf) return refCpf.current.focus();
-            if (errEmail) return refEmail.current.focus();
+            if (await _validEmail()) return refEmail.current.focus();
+            if (await _validCpf()) return refCpf.current.focus();
             next([cpf, email]);
         }
     };
@@ -85,7 +86,7 @@ export const Important = ({ next, back, focus }) => {
                     error={errEmail}
                     setValue={val => setEmail(val)}
                     placeholder={'Ex: gustavo@gmail.com'}
-                    setShow={async show => {
+                    setShow={show => {
                         if (!show) _validEmail()
                     }}
                 />

@@ -1,10 +1,10 @@
 import TextInputMask from 'react-native-text-input-mask';
 import React, { useEffect, useState, forwardRef, memo } from 'react';
-import { View, Animated, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, Animated, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Color from '../assets/colors';
-import { Icon } from 'cyllid/src/helpers';
 import { Animate } from 'cyllid/src/services';
+import { Icon, TextClean } from 'cyllid/src/helpers';
 
 export const InputValidation = memo(forwardRef(({ title, placeholder, error, value, setValue, setShow = false, type = 'default', password = false }, ref) => {
 
@@ -27,9 +27,9 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
 
     return (
         <View style={styles.container}>
-            <Text style={styles.textUser}>
+            <TextClean style={styles.textUser}>
                 {title}
-            </Text>
+            </TextClean>
             <Animated.View style={{ ...styles.backgroundInput, borderColor }}>
                 {
                     password &&
@@ -52,9 +52,12 @@ export const InputValidation = memo(forwardRef(({ title, placeholder, error, val
                     ref={ref}
                     value={value}
                     spellCheck={false}
+                    affineFormats={[]}
                     style={styles.input}
                     selectTextOnFocus
                     autoCorrect={false}
+                    customNotations={[]}
+                    affinityCalculationStrategy={'WHOLE_STRING'}
                     autoCapitalize={'none'}
                     secureTextEntry={show} //nao funciona n sei pq 
                     autoCompleteType={'off'}
