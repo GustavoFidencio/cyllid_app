@@ -12,6 +12,7 @@ export const Input = ({ navigation }) => {
     const [tag, setTag] = useState();
     const [focus, setFocus] = useState('');
     const [name, setName] = useState('');
+    const [isLoad, setLoad] = useState(false);
     const [date, setDate] = useState(new Date());
 
     return (
@@ -31,22 +32,10 @@ export const Input = ({ navigation }) => {
                             Home
                         </TextClean>
                     </TouchableOpacity>
-
-                    {/* <View style={styles.containerLabel}>
-                    <TextClean style={styles.textTitle}>
-                        Entrada
-                    </TextClean>
-                </View> */}
-                    <TextEntrada
-                        focus={focus}
-                    />
-                    <Cash
-                        focus={focus != ''}
-                        setFocus={setFocus}
-                    />
+                    <TextEntrada />
+                    <Cash />
                     <InputLine
                         value={name}
-                        setFocus={setFocus}
                         placeholder={'Nome'}
                         setValue={name => setName(name)}
                     />
@@ -54,6 +43,7 @@ export const Input = ({ navigation }) => {
                         selected={tag}
                         tagEnable={setTag}
                     />
+
                     <Pickers
                         date={date}
                         focus={focus}
@@ -72,7 +62,7 @@ export const Input = ({ navigation }) => {
             // onPress={route.params.next}
             >
                 {
-                    false ?
+                    isLoad ?
                         <Load />
                         :
                         <TextClean style={styles.textAvancar}>

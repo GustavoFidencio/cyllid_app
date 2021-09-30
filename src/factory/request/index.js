@@ -1,5 +1,6 @@
 export * from './executor';
 export * from './requestBalance';
+export * from './requestListTags';
 export * from './requestDataUser';
 export * from './requestCheckCpf';
 export * from './requestCheckUser';

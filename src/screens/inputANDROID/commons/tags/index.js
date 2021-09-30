@@ -2,21 +2,27 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import React, { useEffect, useState, memo } from 'react';
 
 import { ItemList } from './itemList';
+import { Load } from 'cyllid/src/helpers';
+import { StorageInput } from '../../storage';
 
 export const Tags = memo(({ tagEnable, selected }) => {
 
-    const [tags, setTag] = useState([
-        { name: 'teste' },
-        { name: 'chave' },
-        { name: 'salario' }
-    ]);
+    const [tags, setTag] = useState([]);
+    const [isLoad, setLoad] = useState(true);
 
     useEffect(() => {
         _getTags()
     }, [])
 
     const _getTags = () => {
-        //fazer rest das tags
+        StorageInput.getTags()
+            .then(tags => setTag(tags))
+            .catch(err => {
+                console.log(err)
+            })
+            .finally(() => {
+                setLoad(false)
+            })
     }
 
     const _renderItem = ({ item, index }) =>
@@ -29,13 +35,19 @@ export const Tags = memo(({ tagEnable, selected }) => {
     return (
         <View style={styles.container}>
             <View style={styles.containerList}>
-                <FlatList
-                    horizontal
-                    data={tags}
-                    renderItem={_renderItem}
-                    keyExtractor={(_, index) => String(index)}
-                    ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
-                />
+                {
+                    isLoad ?
+                        <Load />
+                        :
+                        <FlatList
+                            horizontal
+                            data={tags}
+                            renderItem={_renderItem}
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={(_, index) => String(index)}
+                            ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
+                        />
+                }
             </View>
         </View>
     )
