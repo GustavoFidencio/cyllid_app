@@ -9,7 +9,7 @@ export const ItemList = memo(({ item, onPress, selected }) => {
     const { name } = item;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => Animate.default(selected ? 100 : 0, valueAnimate, 500), [selected])
+    useEffect(() => Animate.default(selected ? 100 : 0, valueAnimate, 400), [selected])
 
     const backgroundColor = valueAnimate.interpolate({
         inputRange: [0, 100],

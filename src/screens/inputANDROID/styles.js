@@ -15,16 +15,9 @@ export default StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
     },
-    container: {
-        height: '100%',
-        alignItems: 'center',
-        paddingHorizontal: 15,
-    },
     buttonNext: {
-        width,
         bottom: 0,
         padding: 10,
-        position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Color.BLUE,
