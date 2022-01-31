@@ -6,7 +6,7 @@ import { View, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Touchable
 
 import Color from 'cyllid/src/assets/colors';
 import { TextClean, Icon, Load } from 'cyllid/src/helpers';
-import { Cash, InputLine, Tags, Repeat, LabelDate, TextEntrada, Picker } from './commons';
+import { Cash, InputLine, Tags, Repeat, LabelDate, LabelInput, Picker, GoBack } from './commons';
 
 export const Input = ({ navigation }) => {
 
@@ -20,39 +20,33 @@ export const Input = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar backgroundColor={Color.DARK} barStyle="light-content" />
-            <ScrollView
-                style={{
-                    flex: 1,
-                    height: '100%',
-                    paddingHorizontal: 15,
-                }}
-            >
-                <TouchableOpacity
-                    style={styles.goBack}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Icon size={23} name={'left'} lib={'antdesign'} />
-                    <TextClean style={styles.textGoBack}>
-                        Home
-                    </TextClean>
-                </TouchableOpacity>
-                <TextEntrada />
-                <Cash />
+            <ScrollView style={styles.scrollView}>
+                <GoBack navigation={navigation} />
+                <LabelInput />
+
+                <Cash
+
+                />
+
                 <InputLine
                     value={name}
                     placeholder={'Nome'}
                     setValue={name => setName(name)}
                 />
+
                 <Tags
                     selected={tag}
                     tagEnable={setTag}
                 />
+
                 <LabelDate
                     date={date}
                     setShowPicker={setShowPicker}
                 />
+
                 <Repeat
                 />
+
             </ScrollView>
 
             <Picker
@@ -74,6 +68,7 @@ export const Input = ({ navigation }) => {
                         </TextClean>
                 }
             </TouchableOpacity>
+
 
         </SafeAreaView >
     )

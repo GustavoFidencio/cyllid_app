@@ -62,7 +62,7 @@ export const StackNav = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName='Splash'
+                initialRouteName='Input'
                 // initialRouteName='SuccessModal'
                 screenOptions={_getScreenOptions}
             >

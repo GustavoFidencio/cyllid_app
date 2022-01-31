@@ -1,44 +1,115 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import CurrencyInput from 'react-native-currency-input';
-import { StyleSheet, View, Animated, Dimensions } from 'react-native';
+import { StyleSheet, View, Animated, TextInput, Text } from 'react-native';
 
 import { TextClean } from 'cyllid/src/helpers';
 
-const { width } = Dimensions.get('window');
+export const Cash = memo(() => {
 
-export const Cash = () => {
+    const [val, setVal] = useState('0,00');
 
-    const [val, setVal] = useState(0);
+    // const _renderCash = () => {
+
+    //     let value = String(val)
+    //     let end = value.length - 1
+
+    //     console.log(value.length);
+
+
+    //     console.log(value.substring(0, end - 1));
+
+    //     return (
+    //         <Text
+    //             style={{
+    //                 fontSize: 28,
+    //                 color: 'white',
+    //                 fontFamily: 'Nunito-Black',
+    //             }}
+    //         >
+    //             {
+    //                 `${value.substring(0, end - 1)},${value[end - 1]}${value[end]}`
+    //             }
+    //         </Text>
+    //     )
+    // }
 
     return (
-        <Animated.View style={styles.containerMoney}>
-            <View style={styles.containerAbsolute}>
-                <View style={styles.containerAlign}>
-                    <TextClean style={styles.textMoney}>
-                        +
-                    </TextClean>
-                    <TextClean style={styles.textMoney}>
-                        R$
-                    </TextClean>
-                    <CurrencyInput
-                        value={val}
-                        delimiter={"."}
-                        separator={","}
-                        style={styles.textNumberMoney}
-                        onChangeValue={val => setVal(!val ? 0 : val)}
-                    />
-                </View>
+        <Animated.View style={styles.container}>
+            <View style={styles.containerAlign}>
+                <TextClean style={styles.textMoney}>
+                    +
+                </TextClean>
+                <TextClean style={styles.textMoney}>
+                    R$
+                </TextClean>
+
+
+                {/* <CurrencyInput
+                    value={val}
+                    delimiter={"."}
+                    separator={","}
+                    onChangeValue={_setVal}
+                    style={styles.textNumberMoney}
+                /> */}
+                {/* <View
+                    style={{
+                        left: 10,
+                        height: 60,
+                        minWidth: 100,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'pink',
+                    }}
+                > */}
+                <TextInput
+                    value={val}
+                    maxLength={7}
+                    defaultValue={val}
+                    keyboardType={'numeric'}
+
+                    // onChange={({ nativeEvent }) => {
+                    //     console.log(nativeEvent);
+                    // }}
+
+                    onKeyPress={({ nativeEvent: { key: keyValue } }) => {
+                        console.log(keyValue);
+
+                    }}
+
+                    onChangeText={text => {
+
+                        let value = String(text)
+                        if (value.length < 4) return
+                        setVal(text)
+                    }}
+                    style={{
+                        left: 10,
+                        zIndex: 2,
+                        fontSize: 28,
+                        color: 'white',
+                        fontFamily: 'Nunito-Regular',
+                    }}
+                />
+                {/* <View>
+                        {_renderCash()}
+                    </View> */}
+
+                {/* </View> */}
+
+
+
             </View>
-        </Animated.View>
+        </Animated.View >
     )
-}
+});
 
 const styles = StyleSheet.create({
-    containerMoney: {
+    container: {
         top: 10,
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
+        marginHorizontal: 15
     },
     textMoney: {
         fontSize: 28,
@@ -51,14 +122,9 @@ const styles = StyleSheet.create({
         fontSize: 28,
         color: 'white',
         minWidth: 80,
-        fontFamily: 'Nunito-Black',
-    },
-    containerAbsolute: {
-        width: width,
-        alignItems: 'center',
+        // fontFamily: 'Nunito-Black',
     },
     containerAlign: {
-        right: 20,
         flexDirection: 'row',
     }
 })

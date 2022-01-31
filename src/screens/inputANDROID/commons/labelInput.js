@@ -1,10 +1,10 @@
-import { StyleSheet, View } from 'react-native';
 import React, { memo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import Color from 'cyllid/src/assets/colors';
 import { TextClean } from 'cyllid/src/helpers';
 
-export const TextEntrada = memo(() =>
+export const LabelInput = memo(() =>
     <View style={styles.containerLabel} >
         <TextClean style={styles.textTitle}>
             Entrada
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
         borderTopLeftRadius: 20,
+        backgroundColor: 'white',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
     },
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
         color: Color.BLUE,
         fontFamily: 'Nunito-Bold',
     },
-})
+});

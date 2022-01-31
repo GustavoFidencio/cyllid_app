@@ -8,12 +8,9 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: Color.DARK,
     },
-    goBack: {
-        top: 5,
-        left: 5,
-        position: 'absolute',
-        alignItems: 'center',
-        flexDirection: 'row',
+    scrollView: {
+        flex: 1,
+        height: '100%',
     },
     buttonNext: {
         bottom: 0,
@@ -26,9 +23,4 @@ export default StyleSheet.create({
         color: 'white',
         fontFamily: 'Nunito-SemiBold',
     },
-    textGoBack: {
-        fontSize: 17,
-        color: Color.BLUE,
-        fontFamily: 'Nunito-Bold',
-    }
 })
