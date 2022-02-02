@@ -4,22 +4,23 @@ import { Animated, StyleSheet, TouchableOpacity } from 'react-native';
 import Color from 'cyllid/src/assets/colors';
 import { Animate } from 'cyllid/src/services';
 
-export const ItemList = memo(({ item, onPress, selected }) => {
+export const ItemList = memo(({ item: { name }, onPress, selected }) => {
 
-    const { name } = item;
     const valueAnimate = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => Animate.default(selected ? 100 : 0, valueAnimate, 400), [selected])
+    useEffect(() => {
+        Animate.default(selected ? 100 : 0, valueAnimate, 400)
+    }, [selected]);
 
     const backgroundColor = valueAnimate.interpolate({
         inputRange: [0, 100],
         outputRange: [Color.DARK, 'white']
-    })
+    });
 
     const color = valueAnimate.interpolate({
         inputRange: [0, 100],
         outputRange: ['white', Color.DARK]
-    })
+    });
 
     return (
         <Animated.View style={{ ...styles.container, backgroundColor }}>
@@ -57,4 +58,4 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'Nunito-SemiBold',
     }
-})
+});

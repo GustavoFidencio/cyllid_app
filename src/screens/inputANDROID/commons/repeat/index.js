@@ -1,4 +1,4 @@
-import { View, StyleSheet, Animated, Keyboard } from 'react-native';
+import { View, StyleSheet, Animated, TextInput } from 'react-native';
 import React, { useState, useRef, useEffect, memo } from 'react';
 
 import { InputLine } from '../inputLine';
@@ -21,6 +21,45 @@ export const Repeat = memo(({ }) => {
         outputRange: [0, 1]
     });
 
+    const _input = () => {
+        return (
+            <View
+                style={{
+                    top: 15,
+                    height: 50,
+                    marginHorizontal: 15,
+                }}
+            >
+                <View
+                    style={{
+                        height: 40,
+                        width: '100%',
+                        borderBottomWidth: 2,
+                        borderBottomColor: 'white',
+                    }}
+                >
+                    <TextInput
+                        // value={value}
+                        style={{
+                            right: 10,
+                            height: '100%',
+                            color: '#fdfdfd',
+                            paddingLeft: 15,
+                        }}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
+                        autoCompleteType={'off'}
+                        // enablesReturnKeyAutomatically
+                        placeholderTextColor={'#c4c4c4'}
+                        placeholder={'Repetir até (vezes)'}
+                    // onChangeText={val => setValue(val)}
+                    />
+                </View>
+            </View>
+        )
+    }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.checkbox}>
@@ -34,20 +73,47 @@ export const Repeat = memo(({ }) => {
                 </TextClean>
             </View>
 
-            <Animated.View style={{ opacity }} >
+            {/* <Animated.View style={{ opacity }} > */}
 
-                {/* <TextInput
+            {/* <TextInput
                     val={times}
 
                 /> */}
-                <InputLine
-                    value={times}
-                    disable={repeat}
-                    keyboardType={'number-pad'}
-                    setValue={val => setTimes(val)}
-                    placeholder={'Repetir até (vezes)'}
-                />
-            </Animated.View>
+
+            {/* {_input()} */}
+            <View
+                style={{
+                    height: 50,
+                    marginTop: 15,
+                    backgroundColor: 'pink'
+                }}
+            >
+                <View
+                    style={{
+                        height: 40,
+                        borderBottomWidth: 2,
+                        borderBottomColor: 'white',
+                        // backgroundColor: 'red'
+                    }}
+                >
+                    <TextInput
+                        // value={value}
+                        style={{
+                            // right: 10,
+                            color: '#fdfdfd',
+                            // paddingLeft: 15,
+                        }}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
+                        autoCompleteType={'off'}
+                        // enablesReturnKeyAutomatically
+                        placeholderTextColor={'#c4c4c4'}
+                        placeholder={'Repetir até (vezes)'}
+                    // onChangeText={val => setValue(val)}
+                    />
+                </View>
+            </View>
+            {/* </Animated.View> */}
 
         </View>
     )
@@ -58,6 +124,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         marginTop: 25,
+        marginHorizontal: 15
     },
     checkbox: {
         flexDirection: 'row',

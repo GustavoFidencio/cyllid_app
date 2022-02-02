@@ -1,28 +1,27 @@
-import TextInputMask from 'react-native-text-input-mask';
 import React, { memo } from 'react';
+import TextInputMask from 'react-native-text-input-mask';
 import { View, Animated, StyleSheet } from 'react-native';
 
-export const InputLine = memo(({ placeholder, disable = true, error, value, setValue, keyboardType = 'default' }) =>
-    <View style={styles.container} >
+export const InputLine = memo(({ value, disable, setValue }) =>
+    <View style={styles.container}>
         <Animated.View style={styles.backgroundInput}>
             <TextInputMask
                 value={value}
-                editable={disable}
                 spellCheck={false}
                 style={styles.input}
+                editable={!disable}
                 selectTextOnFocus
                 autoCorrect={false}
-                autoCapitalize='none'
+                placeholder={'Nome'}
+                autoCapitalize={'none'}
                 autoCompleteType={'off'}
-                placeholder={placeholder}
-                keyboardType={keyboardType}
                 enablesReturnKeyAutomatically
                 placeholderTextColor={'#c4c4c4'}
                 onChangeText={val => setValue(val)}
             />
         </Animated.View>
     </View>
-)
+);
 
 const styles = StyleSheet.create({
     input: {
@@ -40,6 +39,6 @@ const styles = StyleSheet.create({
     container: {
         top: 15,
         height: 50,
-        width: '100%',
-    }
-})
+        marginHorizontal: 15,
+    },
+});

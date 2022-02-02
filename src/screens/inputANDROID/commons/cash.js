@@ -1,37 +1,12 @@
 import React, { useState, memo } from 'react';
 import CurrencyInput from 'react-native-currency-input';
-import { StyleSheet, View, Animated, TextInput, Text } from 'react-native';
+import { StyleSheet, View, Animated } from 'react-native';
 
 import { TextClean } from 'cyllid/src/helpers';
 
 export const Cash = memo(() => {
 
-    const [val, setVal] = useState('0,00');
-
-    // const _renderCash = () => {
-
-    //     let value = String(val)
-    //     let end = value.length - 1
-
-    //     console.log(value.length);
-
-
-    //     console.log(value.substring(0, end - 1));
-
-    //     return (
-    //         <Text
-    //             style={{
-    //                 fontSize: 28,
-    //                 color: 'white',
-    //                 fontFamily: 'Nunito-Black',
-    //             }}
-    //         >
-    //             {
-    //                 `${value.substring(0, end - 1)},${value[end - 1]}${value[end]}`
-    //             }
-    //         </Text>
-    //     )
-    // }
+    const [val, setVal] = useState(0);
 
     return (
         <Animated.View style={styles.container}>
@@ -42,62 +17,14 @@ export const Cash = memo(() => {
                 <TextClean style={styles.textMoney}>
                     R$
                 </TextClean>
-
-
-                {/* <CurrencyInput
+                <CurrencyInput
                     value={val}
                     delimiter={"."}
                     separator={","}
-                    onChangeValue={_setVal}
+                    maxLength={10}
                     style={styles.textNumberMoney}
-                /> */}
-                {/* <View
-                    style={{
-                        left: 10,
-                        height: 60,
-                        minWidth: 100,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: 'pink',
-                    }}
-                > */}
-                <TextInput
-                    value={val}
-                    maxLength={7}
-                    defaultValue={val}
-                    keyboardType={'numeric'}
-
-                    // onChange={({ nativeEvent }) => {
-                    //     console.log(nativeEvent);
-                    // }}
-
-                    onKeyPress={({ nativeEvent: { key: keyValue } }) => {
-                        console.log(keyValue);
-
-                    }}
-
-                    onChangeText={text => {
-
-                        let value = String(text)
-                        if (value.length < 4) return
-                        setVal(text)
-                    }}
-                    style={{
-                        left: 10,
-                        zIndex: 2,
-                        fontSize: 28,
-                        color: 'white',
-                        fontFamily: 'Nunito-Regular',
-                    }}
+                    onChangeValue={val => setVal(val)}
                 />
-                {/* <View>
-                        {_renderCash()}
-                    </View> */}
-
-                {/* </View> */}
-
-
-
             </View>
         </Animated.View >
     )
@@ -118,11 +45,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Black',
     },
     textNumberMoney: {
-        left: 10,
+        left: 5,
         fontSize: 28,
         color: 'white',
         minWidth: 80,
-        // fontFamily: 'Nunito-Black',
+        fontFamily: 'Nunito-Black',
     },
     containerAlign: {
         flexDirection: 'row',

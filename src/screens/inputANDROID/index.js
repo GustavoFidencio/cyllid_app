@@ -13,6 +13,7 @@ export const Input = ({ navigation }) => {
     const [tag, setTag] = useState();
     const [name, setName] = useState('');
     const [date, setDate] = useState(new Date());
+    
 
     const [isLoad, setLoad] = useState(false);
     const [showPicker, setShowPicker] = useState(false);
@@ -30,7 +31,7 @@ export const Input = ({ navigation }) => {
 
                 <InputLine
                     value={name}
-                    placeholder={'Nome'}
+                    disable={isLoad}
                     setValue={name => setName(name)}
                 />
 
@@ -39,21 +40,21 @@ export const Input = ({ navigation }) => {
                     tagEnable={setTag}
                 />
 
-                <LabelDate
+                {/* <LabelDate
                     date={date}
                     setShowPicker={setShowPicker}
-                />
+                /> */}
 
                 <Repeat
                 />
 
             </ScrollView>
 
-            <Picker
+            {/* <Picker
                 date={date}
                 setDate={setDate}
                 showPicker={showPicker}
-            />
+            /> */}
 
             <TouchableOpacity
                 style={styles.buttonNext}
